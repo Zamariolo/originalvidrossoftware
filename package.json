@@ -1,0 +1,17 @@
+{
+  "name": "originalvidros",
+  "version": "1.0.0",
+  "description": "Software para controlo de orçamentos, clientes, produtos",
+  "main": "./app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zamariolo",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^8.0.3",
+    "electron-window-manager": "^1.0.6",
+    "mysql": "^2.18.1"
+  }
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <meta name="viewport" content="width=device-width,initial-scale=1"> 
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>OriginalVidros</title>
 </head>
 <body>
@@ -12,14 +13,17 @@
 
     <!-- Menu superior -->
     <div id='top_menu' style="background-color: blue;">
-
-
+        <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg" alt="">
+        <h3>OriginalVidros</h3>
     </div>
+
+    <button class="btn btn-primary">Click me!!</button>
 
 
 
     <!-- Carregar javascript no formato electron -->
     <script>
+        window.$ = require('jQuery');
         require('./renderer.js');
     </script>
     

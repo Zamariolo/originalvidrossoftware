@@ -3,8 +3,9 @@ body {
     background-color: rgb(232,232,232);    
 }
 
-.contentWindow { 
+.menu { 
     height: 76.5vh;
+    display: none;
 }
 
 .linhaHorizontal {

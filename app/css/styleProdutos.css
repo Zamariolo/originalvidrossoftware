@@ -1,0 +1,35 @@
+.novoProdutoTitulo {
+    color:  rgb(4, 109, 194);
+}
+
+.novoProdutoBox {
+    width: 100%;
+    text-align: justify;
+    background-color: rgb(240, 240, 240);
+}
+
+.novoProdutoTituloInput {
+    background-color: rgb(240, 240, 240);
+    width: 90px;
+    text-align: center;
+}
+
+.novoProdutoTextArea{
+    width: 900px;
+}
+
+.novoProdutoInput {
+    width: 100px;
+}
+
+.imagemProduto {
+    max-height: 50px;
+}
+
+.tituloDescricao {
+    width: 250px;
+}
+
+.novoProdutoID {
+    color: rgb(117, 117, 117);
+}

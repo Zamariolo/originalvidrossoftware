@@ -14,6 +14,6 @@ app.on('ready', function(){
     });
 
     mainWindow.webContents.loadFile('app/index.html');
-    mainWindow.removeMenu();
+    // mainWindow.removeMenu();
 });
 

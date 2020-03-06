@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- Estilos das telas -->
     <link rel="stylesheet" href="css/styleMenu.css">
+    <link rel="stylesheet" href="css/styleProdutos.css">
+
+
     <title>OriginalVidros</title>
 </head>
 <body>
@@ -19,51 +22,127 @@
         <h2 class="textoMenuSuperior">15:15:12</h2>
         <h3 class="textoMenuSuperior" style="cursor: pointer;">prompt</h3>
     </div>
-    <!-- --------------------------------------------------------- -->
+    <!-- ------------------------------------------------------------>
+
+
+
     <center>
 
-    <!-- Div do conteudo da janela atual -->
+    <!-- Div que vai ter seu conteudo alterado pra comportar:
+        - Menu
+        - Produtos
+        - Clientes
+        - Servicos
+    -->
     <div class="contentWindow">
 
-        <!-- Div linha preta e separador-->
-        <div class="separador"></div>
+        <!-- Div do conteudo da janela atual -->
+        <div class="menu">
+
+            <!-- Div linha preta e separador-->
+            <div class="separador"></div>
+            <div class="linhaHorizontal"></div>
+
+            <!-- Div botao -->
+            <div class="btn btn-primary botaoOrcamento">
+                <div class="recheioBotao">
+                    <h3>Orçamentos</h3>
+                    <p>Avaliar preços, realizar orçamento</p>
+                </div>
+            </div> 
+            
+
+            <!-- Div linha preta -->
+            <div class="linhaHorizontal"></div>
+            <div class="separador"></div>
+
+            <!-- Div demais funcionalidades -->
+            <div class="outrosBotoes row">
+
+                <!-- Botao produtos -->
+                <div class="col botaoSecundario btn btn-primary">
+                    <h5 class="recheioBotao">Produtos</h5>
+                    <!-- <h6 class="recheioBotao lead">Adicionar, editar, excluir</h6> -->
+                </div>
+
+                <!-- Botao servicos -->
+                <div class="col botaoSecundario btn btn-primary bordaBotaoSecundario">
+                    <h5 class="recheioBotao">Serviços</h5>
+                </div>
+
+                <!-- Botao clientes -->
+                <div class="col botaoSecundario btn btn-primary">
+                    <h5 class="recheioBotao">Clientes</h5>
+                </div>
+            </div> 
+        </div>
+
+        <!-- Div dos produtos -->
+        <div class="produtos">
+
+            <!-- Div das informações -->
+            <div class="separador"></div>
+            <a class="btn btn-primary">Inserir novo produto</a>
+            <div class="linhaHorizontal"></div>
+            <div class="novoProdutoBox">
+            <!-- Modelo de exibicao produto -->
+
+            <div class="novoProdutoTemplate navbar">
+
+                <!-- div imagem -->
+                <div class="imagemBox">
+                        <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="imagemProduto">
+                        <p>src/media/basculante.png</p>
+                </div>
+
+                <!-- div titulo e descricao -->
+                <div class="tituloDescricao">
+
+                    <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Título</span>
+                        </div>
+                        <input type="text" class="form-control novoProdutoTextArea" placeholder="Título do produto" aria-label="titulo" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Descrição</span>
+                        </div>
+                        <textarea class="form-control novoProdutoTextArea" rows="2" cols="6" placeholder="Descrição do produto" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+                    </div>
+                </div>
+
+                <!-- div for prices -->
+                <div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Preço m²</span>
+                        </div>
+                        <input type="number" min="0" class="form-control novoProdutoInput" width="900" placeholder="R$/m²" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Preço kit</span>
+                        </div>
+                        <input type="number" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+                <!-- div do id -->
+                <h4 class="novoProdutoID">#22</h4>
+
+                <!-- div botao Inserir -->
+                <button class="btn btn-primary novoProdutoBotao">Inserir</button>
+            </div>
+        </div> <!-- Fecha novoProdutoBox-->
+
         <div class="linhaHorizontal"></div>
 
-        <!-- Div botao -->
-        <div class="btn btn-primary botaoOrcamento">
-            <div class="recheioBotao">
-                <h3>Orçamentos</h3>
-                <p>Avaliar preços, realizar orçamento</p>
-            </div>
-        </div> 
-        
-
-        <!-- Div linha preta -->
-        <div class="linhaHorizontal"></div>
-        <div class="separador"></div>
-
-        <!-- Div demais funcionalidades -->
-        <div class="outrosBotoes row">
-
-            <!-- Botao produtos -->
-            <div class="col botaoSecundario btn btn-primary">
-                <h5 class="recheioBotao">Produtos</h5>
-                <!-- <h6 class="recheioBotao lead">Adicionar, editar, excluir</h6> -->
-            </div>
-
-            <!-- Botao servicos -->
-            <div class="col botaoSecundario btn btn-primary bordaBotaoSecundario">
-                <h5 class="recheioBotao">Serviços</h5>
-            </div>
-
-            <!-- Botao clientes -->
-            <div class="col botaoSecundario btn btn-primary">
-                <h5 class="recheioBotao">Clientes</h5>
-            </div>
-        </div> 
-    </div>
+        </div> <!-- Fecha janela produtos -->
 
     </center>
+
+    </div> <!--Fecha contentWindow -->
 <!-- 
     <p>Nomes possiveis</p>
     <ul>
@@ -80,6 +159,7 @@
     <!-- Carregar javascript no formato electron -->
     <script>
         window.$ = require('jQuery');
+        require('bootstrap')
         require('./renderer.js');
     </script>
     

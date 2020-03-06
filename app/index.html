@@ -6,18 +6,74 @@
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <meta name="viewport" content="width=device-width,initial-scale=1"> 
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Estilos das telas -->
+    <link rel="stylesheet" href="css/styleMenu.css">
     <title>OriginalVidros</title>
 </head>
 <body>
-    <h1>Hello Universe!</h1>
+    <!-------------------------------------------- Menu superior -->
+    <div class=" navbar menuSuperior">
+         
+        <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg" class="logo_img">
 
-    <!-- Menu superior -->
-    <div id='top_menu' style="background-color: blue;">
-        <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg" alt="">
-        <h3>OriginalVidros</h3>
+        <h2 class="textoMenuSuperior">15:15:12</h2>
+        <h3 class="textoMenuSuperior" style="cursor: pointer;">prompt</h3>
+    </div>
+    <!-- --------------------------------------------------------- -->
+    <center>
+
+    <!-- Div do conteudo da janela atual -->
+    <div class="contentWindow">
+
+        <!-- Div linha preta e separador-->
+        <div class="separador"></div>
+        <div class="linhaHorizontal"></div>
+
+        <!-- Div botao -->
+        <div class="btn btn-primary botaoOrcamento">
+            <div class="recheioBotao">
+                <h3>Orçamentos</h3>
+                <p>Avaliar preços, realizar orçamento</p>
+            </div>
+        </div> 
+        
+
+        <!-- Div linha preta -->
+        <div class="linhaHorizontal"></div>
+        <div class="separador"></div>
+
+        <!-- Div demais funcionalidades -->
+        <div class="outrosBotoes row">
+
+            <!-- Botao produtos -->
+            <div class="col botaoSecundario btn btn-primary">
+                <h5 class="recheioBotao">Produtos</h5>
+                <!-- <h6 class="recheioBotao lead">Adicionar, editar, excluir</h6> -->
+            </div>
+
+            <!-- Botao servicos -->
+            <div class="col botaoSecundario btn btn-primary bordaBotaoSecundario">
+                <h5 class="recheioBotao">Serviços</h5>
+            </div>
+
+            <!-- Botao clientes -->
+            <div class="col botaoSecundario btn btn-primary">
+                <h5 class="recheioBotao">Clientes</h5>
+            </div>
+        </div> 
     </div>
 
-    <button class="btn btn-primary">Click me!!</button>
+    </center>
+<!-- 
+    <p>Nomes possiveis</p>
+    <ul>
+        <li>Dapper</li>
+        <li>Prompt</li>
+        <li>Protostar</li>
+        <li>Ward</li>
+        <li>Robotka</li>
+        <li>Dark matter</li> 
+    </ul>-->
 
 
 

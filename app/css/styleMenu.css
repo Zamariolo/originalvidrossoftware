@@ -1,0 +1,64 @@
+body {
+    min-height: 200px;
+    background-color: rgb(232,232,232);    
+}
+
+.contentWindow { 
+    height: 76.5vh;
+}
+
+.linhaHorizontal {
+    width: 95%;
+    background-image: linear-gradient(to right, rgb(232,232,232),rgb(0, 27, 148), rgb(232,232,232));
+    height: 1px;
+}
+
+.separador {
+    height: 5vh;
+}
+
+.logo_img{
+    height: 50%;
+}
+
+.menuSuperior{
+    height: 13vh;
+    background-color: #000a2b;
+}
+
+.textoMenuSuperior{
+    color: #F5F5F5;
+}
+
+.botaoOrcamento{
+    width: 95%;
+    border-radius: 10px;
+    height: 51vh;
+    color: black;
+}
+
+.recheioBotao {
+    text-align: center;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.outrosBotoes{
+    width: 95%;
+    height: 20vh;
+    resize: vertical;
+}
+
+.botaoSecundario {
+    color: black;
+    border-radius: 10px;
+    height: inherit;
+}
+
+.bordaBotaoSecundario {
+    border: 1px solid;
+    border-image-source: linear-gradient(to bottom, rgb(232,232,232),rgb(0, 27, 148), rgb(232,232,232));
+    border-image-slice: 1;
+}

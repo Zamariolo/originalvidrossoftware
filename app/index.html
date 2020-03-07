@@ -87,16 +87,20 @@
             <div class="novoProdutoBox">
             <!-- Modelo de exibicao produto -->
 
-            <div class="novoProdutoTemplate navbar">
+            <div class="row">
+
+                <!-- div do id -->
+                <h5 class="novoProdutoID col-1">#22</h5>
 
                 <!-- div imagem -->
-                <div class="imagemBox">
-                        <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="imagemProduto">
-                        <p>src/media/basculante.png</p>
+                <div class="imagemBox col-3">
+                    <div class="imagemProduto img-thumbnail"></div>
+                    <!-- <img src="" class="imagemProduto"> -->
+                    <p align="center" class="imagemEndereco">src/media/basculante.png</p>
                 </div>
 
                 <!-- div titulo e descricao -->
-                <div class="tituloDescricao">
+                <div class="tituloDescricao col-3">
 
                     <div class="input-group mb-1">
                         <div class="input-group-prepend">
@@ -108,12 +112,12 @@
                         <div class="input-group-prepend">
                         <span class="input-group-text novoProdutoTituloInput">Descrição</span>
                         </div>
-                        <textarea class="form-control novoProdutoTextArea" rows="2" cols="6" placeholder="Descrição do produto" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+                        <textarea class="form-control novoProdutoTextArea" placeholder="Descrição do produto" aria-label="Username" aria-describedby="basic-addon1"></textarea>
                     </div>
                 </div>
 
                 <!-- div for prices -->
-                <div>
+                <div class="col-3">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                         <span class="input-group-text novoProdutoTituloInput">Preço m²</span>
@@ -128,15 +132,25 @@
                     </div>
                 </div>
 
-                <!-- div do id -->
-                <h4 class="novoProdutoID">#22</h4>
-
                 <!-- div botao Inserir -->
-                <button class="btn btn-primary novoProdutoBotao">Inserir</button>
+                <button class="btn btn-primary novoProdutoBotao col-1">Inserir</button>
+                <div class="col-1"></div>
             </div>
         </div> <!-- Fecha novoProdutoBox-->
 
         <div class="linhaHorizontal"></div>
+
+        <!-- Novo produto box com tables -->
+        <div class="novoProdutoTemplate container">
+            <h5 class="gridID">#22</h5>
+            <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="gridIMAGEM">
+            <p class="gridENDERECO">src/basculante.png</p>
+            <h2 class="gridTITULO">titulo</h2>
+            <h2 class="gridDESCRICAO">descricao</h2>
+            <h2 class="gridPRECOM2">preço m²</h2>
+            <h2 class="gridPRECOKIT">preço kit</h2>
+            <button class="gridBTN">Inserir</button>
+        </div>
 
         </div> <!-- Fecha janela produtos -->
 

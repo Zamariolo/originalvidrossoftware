@@ -1,3 +1,7 @@
+.produtos {
+    /* display: none; */
+}
+
 .novoProdutoTitulo {
     color:  rgb(4, 109, 194);
 }
@@ -9,13 +13,15 @@
 }
 
 .novoProdutoTituloInput {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(61, 61, 61);
     width: 90px;
     text-align: center;
+    color: white;
 }
 
 .novoProdutoTextArea{
-    width: 900px;
+    width: 600px;
+    min-width: 550px;
 }
 
 .novoProdutoInput {
@@ -23,7 +29,15 @@
 }
 
 .imagemProduto {
-    max-height: 50px;
+    height: 100px;
+    width: 200px;
+    align-items: center;
+    background: url('https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg');
+}
+
+.imagemEndereco{
+    font-size: small;
+    color: rgb(117, 117, 117);
 }
 
 .tituloDescricao {
@@ -32,4 +46,57 @@
 
 .novoProdutoID {
     color: rgb(117, 117, 117);
+    background-color: cornflowerblue;
+    text-align: right;
+}
+
+.gridID {
+    grid-area: id;
+}
+
+.gridIMAGEM {
+    grid-area: imagem;
+    height: 75px;
+}
+
+.gridENDERECO {
+    grid-area: enderecoimagem;
+}
+
+.gridTITULO {
+    grid-area: titulo;
+}
+
+.gridDESCRICAO{
+    grid-area: descricao;
+}
+
+.gridPRECOM2 {
+    grid-area: precom2;
+}
+
+.gridPRECOKIT {
+    grid-area: precokit
+}
+
+.gridBTN {
+    grid-area: btn;
+}
+
+.novoProdutoTemplate {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 5% 20% 45% 20% 10%;
+    grid-template-rows: 20px 20px 20px 20px 20px;
+    background-color: brown;
+    grid-template-areas: 
+    ". imagem . . ."
+    ". imagem titulo precom2 btn"
+    "id imagem . . btn"
+    ". imagem descricao precokit btn"
+    ". enderecoimagem . . .";
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    justify-items: center;
+    align-items: center;
 }

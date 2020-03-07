@@ -1,5 +1,5 @@
-.produtos {
-    /* display: none; */
+.janelaProdutos {
+    display: none;
 }
 
 .novoProdutoTitulo {
@@ -9,7 +9,6 @@
 .novoProdutoBox {
     width: 100%;
     text-align: justify;
-    background-color: rgb(240, 240, 240);
 }
 
 .novoProdutoTituloInput {
@@ -19,25 +18,8 @@
     color: white;
 }
 
-.novoProdutoTextArea{
-    width: 600px;
-    min-width: 550px;
-}
-
 .novoProdutoInput {
     width: 100px;
-}
-
-.imagemProduto {
-    height: 100px;
-    width: 200px;
-    align-items: center;
-    background: url('https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg');
-}
-
-.imagemEndereco{
-    font-size: small;
-    color: rgb(117, 117, 117);
 }
 
 .tituloDescricao {
@@ -51,16 +33,24 @@
 }
 
 .gridID {
+    width: 100%;
     grid-area: id;
+    font-size: medium;
+    color: rgb(80, 80, 80);
+    text-justify: center;
+    text-align: center;
 }
 
 .gridIMAGEM {
     grid-area: imagem;
     height: 75px;
+    background-color: chocolate;
 }
 
 .gridENDERECO {
     grid-area: enderecoimagem;
+    font-size: small;
+    color: rgb(117, 117, 117);
 }
 
 .gridTITULO {
@@ -69,6 +59,7 @@
 
 .gridDESCRICAO{
     grid-area: descricao;
+    margin-bottom: 6px;
 }
 
 .gridPRECOM2 {
@@ -81,22 +72,27 @@
 
 .gridBTN {
     grid-area: btn;
+    height: 50%;
+    border: solid;
+    border-color: rgb(61, 61, 61);
+    border-width: 1px;
+    columns: rgb(61, 61, 61);
 }
 
 .novoProdutoTemplate {
     width: 100%;
-    display: grid;
+    display: none;
     grid-template-columns: 5% 20% 45% 20% 10%;
-    grid-template-rows: 20px 20px 20px 20px 20px;
-    background-color: brown;
+    grid-template-rows: 20px 20px 20px auto 20px;
+    /* background-color: rgb(240, 240, 240); */
     grid-template-areas: 
-    ". imagem . . ."
-    ". imagem titulo precom2 btn"
+    ". imagem . . btn"
+    "id imagem titulo precom2 btn"
     "id imagem . . btn"
-    ". imagem descricao precokit btn"
-    ". enderecoimagem . . .";
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
+    "id imagem descricao precokit btn"
+    ". enderecoimagem descricao . btn";
+    grid-column-gap: 7px;
+    grid-row-gap: 8px;
     justify-items: center;
     align-items: center;
 }

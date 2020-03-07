@@ -19,14 +19,14 @@
          
         <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg" class="logo_img">
 
-        <h2 class="textoMenuSuperior">15:15:12</h2>
-        <h3 class="textoMenuSuperior" style="cursor: pointer;">prompt</h3>
+        <h2 class="textoMenuSuperior relogio">00:00:00</h2>
+        <h3 class="textoMenuSuperior logo" style="cursor: pointer;">prompt</h3>
     </div>
     <!-- ------------------------------------------------------------>
 
 
 
-    <center>
+    
 
     <!-- Div que vai ter seu conteudo alterado pra comportar:
         - Menu
@@ -37,7 +37,8 @@
     <div class="contentWindow">
 
         <!-- Div do conteudo da janela atual -->
-        <div class="menu">
+        <center>
+        <div class="janelaMenu">
 
             <!-- Div linha preta e separador-->
             <div class="separador"></div>
@@ -60,7 +61,7 @@
             <div class="outrosBotoes row">
 
                 <!-- Botao produtos -->
-                <div class="col botaoSecundario btn btn-primary">
+                <div class="col botaoSecundario btn btn-primary" id="btnProdutos">
                     <h5 class="recheioBotao">Produtos</h5>
                     <!-- <h6 class="recheioBotao lead">Adicionar, editar, excluir</h6> -->
                 </div>
@@ -76,104 +77,76 @@
                 </div>
             </div> 
         </div>
+        </center>
 
         <!-- Div dos produtos -->
-        <div class="produtos">
+        <div class="janelaProdutos">
 
-            <!-- Div das informações -->
-            <div class="separador"></div>
-            <a class="btn btn-primary">Inserir novo produto</a>
-            <div class="linhaHorizontal"></div>
-            <div class="novoProdutoBox">
-            <!-- Modelo de exibicao produto -->
-
-            <div class="row">
-
-                <!-- div do id -->
-                <h5 class="novoProdutoID col-1">#22</h5>
-
-                <!-- div imagem -->
-                <div class="imagemBox col-3">
-                    <div class="imagemProduto img-thumbnail"></div>
-                    <!-- <img src="" class="imagemProduto"> -->
-                    <p align="center" class="imagemEndereco">src/media/basculante.png</p>
-                </div>
-
-                <!-- div titulo e descricao -->
-                <div class="tituloDescricao col-3">
-
-                    <div class="input-group mb-1">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text novoProdutoTituloInput">Título</span>
-                        </div>
-                        <input type="text" class="form-control novoProdutoTextArea" placeholder="Título do produto" aria-label="titulo" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text novoProdutoTituloInput">Descrição</span>
-                        </div>
-                        <textarea class="form-control novoProdutoTextArea" placeholder="Descrição do produto" aria-label="Username" aria-describedby="basic-addon1"></textarea>
-                    </div>
-                </div>
-
-                <!-- div for prices -->
-                <div class="col-3">
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text novoProdutoTituloInput">Preço m²</span>
-                        </div>
-                        <input type="number" min="0" class="form-control novoProdutoInput" width="900" placeholder="R$/m²" aria-describedby="basic-addon1">
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text novoProdutoTituloInput">Preço kit</span>
-                        </div>
-                        <input type="number" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-
-                <!-- div botao Inserir -->
-                <button class="btn btn-primary novoProdutoBotao col-1">Inserir</button>
-                <div class="col-1"></div>
-            </div>
-        </div> <!-- Fecha novoProdutoBox-->
-
+        <!-- div do botao novo Produto -->
+        <div class="container navbar">
+            <button class="btn btn-primary" id='btnProdutosMenu'>Menu</button>
+            <button class="btn btn-primary" id='btnNovoProduto'>Inserir novo produto</button>
+            <button class="btn btn-primary">Recarregar produtos</button>
+        </div>
         <div class="linhaHorizontal"></div>
 
-        <!-- Novo produto box com tables -->
-        <div class="novoProdutoTemplate container">
+        <!-- Novo produto -->
+        <div class="novoProdutoBox">
+
+        <!-- Novo produto box com grid -->
+        <div class="novoProdutoTemplate shadow">
             <h5 class="gridID">#22</h5>
             <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="gridIMAGEM">
             <p class="gridENDERECO">src/basculante.png</p>
-            <h2 class="gridTITULO">titulo</h2>
-            <h2 class="gridDESCRICAO">descricao</h2>
-            <h2 class="gridPRECOM2">preço m²</h2>
-            <h2 class="gridPRECOKIT">preço kit</h2>
-            <button class="gridBTN">Inserir</button>
+            
+            <!-- Titulo -->
+            <div class="input-group mb-1 gridTITULO">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Título</span>
+                </div>
+                <input type="text" class="form-control novoProdutoTextArea" placeholder="Título do produto" aria-label="titulo" aria-describedby="basic-addon1">
+            </div>
+
+            <!-- Descricao -->
+            <div class="input-group gridDESCRICAO">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Descrição</span>
+                </div>
+                <textarea class="form-control novoProdutoTextArea" placeholder="Descrição do produto"></textarea>
+            </div>
+
+            <!-- Preco m2 -->
+            <div class="input-group mb-2 gridPRECOM2">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Preço m²</span>
+                </div>
+                <input type="number" min="0" class="form-control novoProdutoInput" width="900" placeholder="R$/m²" aria-describedby="basic-addon1">
+            </div>
+
+            <!-- Preco kit -->
+            <div class="input-group gridPRECOKIT">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Preço kit</span>
+                </div>
+                <input type="number" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <button class="gridBTN btn btn-outline-dark">Inserir</button>
         </div>
+
+        <div class="linhaHorizontal"></div>
+
+        <!-- DIV p/ os elementos internos -->
+        <div class="listaProdutos">
+        </div> <!-- fecha div dos produtos carregados (listaProdutos)-->
 
         </div> <!-- Fecha janela produtos -->
 
-    </center>
-
     </div> <!--Fecha contentWindow -->
-<!-- 
-    <p>Nomes possiveis</p>
-    <ul>
-        <li>Dapper</li>
-        <li>Prompt</li>
-        <li>Protostar</li>
-        <li>Ward</li>
-        <li>Robotka</li>
-        <li>Dark matter</li> 
-    </ul>-->
-
-
 
     <!-- Carregar javascript no formato electron -->
     <script>
         window.$ = require('jQuery');
-        require('bootstrap')
         require('./renderer.js');
     </script>
     

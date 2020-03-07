@@ -3,9 +3,9 @@ body {
     background-color: rgb(232,232,232);    
 }
 
-.menu { 
+.janelaMenu { 
     height: 76.5vh;
-    display: none;
+    /* display: none; */
 }
 
 .linhaHorizontal {

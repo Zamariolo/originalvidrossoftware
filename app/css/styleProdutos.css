@@ -79,14 +79,18 @@
     columns: rgb(61, 61, 61);
 }
 
+.gridSUMARIO {
+    grid-area: sumario;
+}
+
 .novoProdutoTemplate {
     width: 100%;
     display: none;
-    grid-template-columns: 20% 45% 25% 10%;
+    grid-template-columns:20% 45% 25% 10%;
     grid-template-rows: 25px 25px 25px auto 25px;
-    /* background-color: rgb(83, 138, 255); */
+    background-color: rgb(80, 80, 80);
     grid-template-areas: 
-    "imagem . . btn"
+    "sumario . . btn"
     "imagem titulo precom2 btn"
     "imagem . . btn"
     "imagem descricao precokit btn"

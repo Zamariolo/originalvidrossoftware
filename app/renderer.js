@@ -1,6 +1,8 @@
 // =========================== GLOBAL ===============================
 // ==================================================================
 
+var {dialog} = require('electron').remote;
+
 //mysql connection
 var mysql = require('mysql');
 var con = mysql.createConnection({  //Conectando ao banco de dados
@@ -258,16 +260,27 @@ function insereProduto(result){
         inputDescricaoNovoProduto.value = '';
         inputPrecoM2NovoProduto.value = null;
         inputPrecoKitNovoProduto.value = null;
-        alert("Produto Inserido!");
+        // alert("Produto Inserido!");
     }
     
 }
 
 function deletarProduto(idElemento){
     let idProduto = idElemento.slice(17);
-    con.query(`delete from produtos where idProduto='${idProduto}'`);
-    alert("Produto excluído!");
-    carregaProdutosDB();
+    const confirmOptions = {
+        type: 'warning',
+        defaultId: 1,
+        buttons: ['Tenho certeza!', 'Cancelar'],
+        title: 'Deletar produto',
+        message: `Você tem certeza que deseja remover o produto ${document.getElementById('tituloProduto'+idProduto).innerHTML} do banco de dados?`,
+        detail: 'Essa ação não pode ser desfeita'
+    };
+    let confirmacao = dialog.showMessageBoxSync(null, confirmOptions)
+    //Aceitou deletar
+    if (confirmacao == 0) {
+        con.query(`delete from produtos where idProduto='${idProduto}'`);
+        carregaProdutosDB();
+    }
 }
 
 function editarProduto(idElemento){

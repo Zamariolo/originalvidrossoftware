@@ -50,7 +50,8 @@
 .gridENDERECO {
     grid-area: enderecoimagem;
     font-size: small;
-    color: rgb(117, 117, 117);
+    color: rgb(158, 158, 158);
+    align-self: left;
 }
 
 .gridTITULO {
@@ -88,7 +89,7 @@
     display: none;
     grid-template-columns:20% 45% 25% 10%;
     grid-template-rows: 25px 25px 25px auto 25px;
-    background-color: rgb(80, 80, 80);
+    background-color: rgb(214, 214, 214);
     grid-template-areas: 
     "sumario . . btn"
     "imagem titulo precom2 btn"
@@ -111,7 +112,7 @@
     "id imagem . precom2 btnEditar"
     "id imagem descricao . ."
     "id imagem descricao precokit btnDeletar"
-    ". enderecoimagem descricao . .";
+    ". enderecoimagem enderecoimagem . .";
     grid-column-gap: 4px;
     grid-row-gap: 8px;
     justify-items: center;

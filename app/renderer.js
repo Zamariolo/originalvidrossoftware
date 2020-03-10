@@ -82,12 +82,14 @@ let btnEditarProduto = document.getElementById('btnEditarProduto');
 
 //NovoProduto
 let inputTituloNovoProduto = document.getElementById('inputTituloNovoProduto');
+let btnEnderecoImagemNovoProduto = document.getElementById('btnEnderecoImagemNovoProduto');
 let pEnderecoImagem = document.getElementById('pEnderecoImagem');
 let inputDescricaoNovoProduto = document.getElementById('inputDescricaoNovoProduto');
 let inputPrecoM2NovoProduto = document.getElementById('inputPrecoM2NovoProduto');
 let inputPrecoKitNovoProduto = document.getElementById('inputPrecoKitNovoProduto');
 
 //EditarProduto
+let editarImagem = document.getElementById('editarImagem');
 let editarEnderecoImagem = document.getElementById('editarEnderecoImagem');
 let editarTituloProduto = document.getElementById('editarTituloProduto');
 let editarDescricaoProduto = document.getElementById('editarDescricaoProduto');
@@ -108,6 +110,9 @@ btnNovoProduto.addEventListener('click', ()=>{exibeEntradaProdutos()});
 
 //Insercao de produto
 btnInserirProduto.addEventListener('click', ()=>{aquisicaoANDcomparacao();});
+
+//Obtem enderecoDaImagem e exibe
+btnEnderecoImagemNovoProduto.addEventListener('click', ()=>{obtemEnderecoImagem(btnEnderecoImagemNovoProduto, pEnderecoImagem)});
 
 //Salvar edições de um produto
 btnEditarProduto.addEventListener('click', ()=> {salvarEdicaoProduto();});
@@ -133,7 +138,7 @@ function mostraProdutos(produtos){
         <div class="modeloProduto">
         <div class="separador"></div>
         <h5 class="gridID">${produto.idProduto}</h5>
-        <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="gridIMAGEM">
+        <img src='${produto.enderecoImagem}' class="gridIMAGEM">
         <p class="gridENDERECO" id='enderecoImagem${produto.idProduto}'>${produto.enderecoImagem}</p>
         
         <!-- Titulo -->
@@ -144,7 +149,7 @@ function mostraProdutos(produtos){
 
         <!-- Descricao -->
         <div class="input-group gridDESCRICAO">
-            <textarea class="form-control novoProdutoTextArea" readonly id='descricaoProduto${produto.idProduto}'>${produto.descricao}</textarea>
+            <textarea class="form-control novoProdutoTextArea" style='border: 0px; background-color: inherit' readonly id='descricaoProduto${produto.idProduto}'>${produto.descricao}</textarea>
         </div>
 
         <!-- Preco m2 -->
@@ -152,20 +157,21 @@ function mostraProdutos(produtos){
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto${produto.idProduto}' width="900" placeholder="${produto.preco_m2}" aria-describedby="basic-addon1">
+            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto${produto.idProduto}' width="900" placeholder="R$ ${produto.preco_m2}" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
         <div class="input-group gridPRECOKIT">
             <div class="input-group-prepend">
-            <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232)";>Preço kit</span>
+            <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="R$ ${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <button class="btn btn-outline-secondary btn-sm btnEditarProduto" id="btnEditarProduto${produto.idProduto}">Editar</button>
         <button class="btn btn-outline-danger btn-sm btnDeletarProduto" id="btnDeletarProduto${produto.idProduto}">Excluir</button>
     </div>
+    <div class="separador"></div>
     <div class="linhaHorizontal"></div><div class="separador"></div>
     `
     }
@@ -201,8 +207,8 @@ function exibeEntradaProdutos(){
     if(divNovoProduto.style.display=='none')
     {
         divNovoProduto.style.display = 'grid';
-        divListaProdutos.style.opacity=0.20; 
-        divListaProdutos.style.filter="alpha(opacity=20)";
+        divListaProdutos.style.opacity=0.08; 
+        divListaProdutos.style.filter="alpha(opacity=8)";
 
         //Desativar botoes
         for (i=0; i<filhosListaProdutos.length; i++)
@@ -226,6 +232,19 @@ function exibeEntradaProdutos(){
     }
 }
 
+function obtemEnderecoImagem(imagemDestino, enderecoDestino){
+    //Obtem o endereco da imagem na hora de inserir e editar o arqui
+    //destino refere-se a quais elementos vao ser exibidos as alteracoes (hora de incluir ou editar)
+
+    //Seleciona arquivo
+    let enderecoImagem = dialog.showOpenDialogSync({title: 'Escolher imagem do produto',filters: [{name: 'Images', extensions: ['jpg','png','jpeg']}],properties: ['openFile']});
+    //Verifica se eh png ou jpeg
+    let extensaoArquivo = enderecoImagem.slice(-3);
+    //Altera imagem
+    imagemDestino.src = enderecoImagem;
+    enderecoDestino.innerHTML = enderecoImagem;
+}
+
 function aquisicaoANDcomparacao(){
     //Verificacao do titulo
     con.query("SELECT titulo FROM produtos", function(err,result, fields){if(err)throw err; insereProduto(result)});
@@ -234,6 +253,7 @@ function aquisicaoANDcomparacao(){
 function insereProduto(result){
     //Getting values
     let enderecoImagem = pEnderecoImagem.innerHTML;
+    enderecoImagem = enderecoImagem.replace(/\\/g, '/'); //Corrigindo bug do slash do mysql (/ -> //)
     let tituloNovoProduto = inputTituloNovoProduto.value;
     let descricao = inputDescricaoNovoProduto.value;
     let precoM2 = inputPrecoM2NovoProduto.value;
@@ -269,7 +289,7 @@ function deletarProduto(idElemento){
     let idProduto = idElemento.slice(17);
     const confirmOptions = {
         type: 'warning',
-        defaultId: 1,
+        defaultId: 0,
         buttons: ['Tenho certeza!', 'Cancelar'],
         title: 'Deletar produto',
         message: `Você tem certeza que deseja remover o produto ${document.getElementById('tituloProduto'+idProduto).innerHTML} do banco de dados?`,
@@ -296,6 +316,7 @@ function editarProduto(idElemento){
     //Abre janela de edicao
     divEditarProduto.style.display = 'grid'
     //Mostrar valores na tela de edicao com aquisicao direto da tela grafica
+    editarImagem.src = document.getElementById('enderecoImagem'+idProduto).innerHTML;
     editarEnderecoImagem.innerHTML = document.getElementById('enderecoImagem'+idProduto).innerHTML;
     editarTituloProduto.value = document.getElementById('tituloProduto'+idProduto).innerHTML;
     editarDescricaoProduto.value = document.getElementById('descricaoProduto'+idProduto).value;
@@ -303,12 +324,11 @@ function editarProduto(idElemento){
     editarPrecoKitProduto.value = document.getElementById('precoKitProduto'+idProduto).placeholder;
     //Desativa botoes listaProdutos
     let botoesListaProdutos = document.querySelectorAll(".modeloProduto > button");
-    divListaProdutos.style.opacity=0.20; 
-    divListaProdutos.style.filter="alpha(opacity=20)";
+    divListaProdutos.style.opacity=0.08; 
+    divListaProdutos.style.filter="alpha(opacity=8)";
     for (k=0; k<botoesListaProdutos.length; k++)
     {
         botoesListaProdutos[k].disabled = true; 
-        console.log(botoesListaProdutos[k].disabled);
     }
     //Os efeitos reversos sao obtidos com o clique do botao btnEditarProduto
 }

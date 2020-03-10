@@ -83,10 +83,10 @@
         <div class="janelaProdutos">
 
         <!-- div do botao novo Produto -->
-        <div class="container navbar">
-            <button class="btn btn-primary menuProdutos" id='btnProdutosMenu'>Menu</button>
-            <button class="btn btn-primary menuProdutos" id='btnNovoProduto'>Inserir novo produto</button>
-            <button class="btn btn-primary menuProdutos" id='btnCarregaProdutosDB'>Recarregar produtos</button>
+        <div class="row">
+            <button class="btn btn-primary menuProdutos col" id='btnProdutosMenu'>Menu</button>
+            <button class="btn btn-primary menuProdutos col" id='btnNovoProduto'>Inserir novo produto</button>
+            <button class="btn btn-primary menuProdutos col" id='btnCarregaProdutosDB'>Recarregar produtos</button>
         </div>
         <div class="linhaHorizontal"></div>
 
@@ -95,7 +95,8 @@
 
         <!--Janela para inserção de novo produto com grid -->
         <div class="novoProdutoTemplate shadow card card-body">
-            <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="gridIMAGEM">
+            <h6 class="gridSUMARIO">Inserir produto</h6>
+            <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" style="cursor: pointer;" id='btnEnderecoImagemNovoProduto' class="gridIMAGEM">
             <p class="gridENDERECO" id="pEnderecoImagem">src/basculante.png</p>
             
             <!-- Titulo -->
@@ -138,7 +139,7 @@
 
             <h6 class="gridSUMARIO">Editar produto</h6>
 
-            <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="gridIMAGEM">
+            <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" style='cursor: pointer;' id='editarImagem' class="gridIMAGEM">
             <p class="gridENDERECO" id="editarEnderecoImagem">src/basculante.png</p>
             
             <!-- Titulo -->

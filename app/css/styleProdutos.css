@@ -82,17 +82,60 @@
 .novoProdutoTemplate {
     width: 100%;
     display: none;
-    grid-template-columns: 5% 20% 45% 20% 10%;
-    grid-template-rows: 20px 20px 20px auto 20px;
-    /* background-color: rgb(240, 240, 240); */
+    grid-template-columns: 20% 45% 25% 10%;
+    grid-template-rows: 25px 25px 25px auto 25px;
+    /* background-color: rgb(83, 138, 255); */
     grid-template-areas: 
-    ". imagem . . btn"
-    "id imagem titulo precom2 btn"
-    "id imagem . . btn"
-    "id imagem descricao precokit btn"
-    ". enderecoimagem descricao . btn";
+    "imagem . . btn"
+    "imagem titulo precom2 btn"
+    "imagem . . btn"
+    "imagem descricao precokit btn"
+    "enderecoimagem descricao . btn";
     grid-column-gap: 7px;
     grid-row-gap: 8px;
     justify-items: center;
     align-items: center;
+}
+
+.modeloProduto {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10% 15% 40% 15% 10%;
+    grid-template-rows: 8px 8px 8px auto 8px;
+    grid-template-areas: 
+    ". imagem titulo . ."
+    "id imagem . precom2 btnEditar"
+    "id imagem descricao . ."
+    "id imagem descricao precokit btnDeletar"
+    ". enderecoimagem descricao . .";
+    grid-column-gap: 4px;
+    grid-row-gap: 8px;
+    justify-items: center;
+    align-items: center;
+    font-size: small;
+}
+
+/* Modelo de produto Novo */
+.tituloProduto {
+    text-align: center;
+}
+
+.btnEditarProduto {
+    grid-area: btnEditar;
+    justify-self: right;
+    text-align: center;
+}
+
+.btnDeletarProduto {
+    grid-area: btnDeletar;
+    justify-self: right;
+    text-align: center;
+}
+
+.novoProdutoTextArea {
+    resize: none;
+}
+
+.menuProdutos {
+    color: black;
 }

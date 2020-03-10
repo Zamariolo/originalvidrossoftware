@@ -84,27 +84,26 @@
 
         <!-- div do botao novo Produto -->
         <div class="container navbar">
-            <button class="btn btn-primary" id='btnProdutosMenu'>Menu</button>
-            <button class="btn btn-primary" id='btnNovoProduto'>Inserir novo produto</button>
-            <button class="btn btn-primary">Recarregar produtos</button>
+            <button class="btn btn-primary menuProdutos" id='btnProdutosMenu'>Menu</button>
+            <button class="btn btn-primary menuProdutos" id='btnNovoProduto'>Inserir novo produto</button>
+            <button class="btn btn-primary menuProdutos" id='btnCarregaProdutosDB'>Recarregar produtos</button>
         </div>
         <div class="linhaHorizontal"></div>
 
         <!-- Novo produto -->
         <div class="novoProdutoBox">
 
-        <!-- Novo produto box com grid -->
-        <div class="novoProdutoTemplate shadow">
-            <h5 class="gridID">#22</h5>
+        <!--Janela para inserção de novo produto com grid -->
+        <div class="novoProdutoTemplate shadow card card-body">
             <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="gridIMAGEM">
-            <p class="gridENDERECO">src/basculante.png</p>
+            <p class="gridENDERECO" id="pEnderecoImagem">src/basculante.png</p>
             
             <!-- Titulo -->
             <div class="input-group mb-1 gridTITULO">
                 <div class="input-group-prepend">
                 <span class="input-group-text novoProdutoTituloInput">Título</span>
                 </div>
-                <input type="text" class="form-control novoProdutoTextArea" placeholder="Título do produto" aria-label="titulo" aria-describedby="basic-addon1">
+                <input type="text" id="inputTituloNovoProduto" class="form-control" placeholder="Título do produto" aria-label="titulo" aria-describedby="basic-addon1">
             </div>
 
             <!-- Descricao -->
@@ -112,7 +111,7 @@
                 <div class="input-group-prepend">
                 <span class="input-group-text novoProdutoTituloInput">Descrição</span>
                 </div>
-                <textarea class="form-control novoProdutoTextArea" placeholder="Descrição do produto"></textarea>
+                <textarea class="form-control novoProdutoTextArea" id="inputDescricaoNovoProduto" placeholder="Descrição do produto"></textarea>
             </div>
 
             <!-- Preco m2 -->
@@ -120,7 +119,7 @@
                 <div class="input-group-prepend">
                 <span class="input-group-text novoProdutoTituloInput">Preço m²</span>
                 </div>
-                <input type="number" min="0" class="form-control novoProdutoInput" width="900" placeholder="R$/m²" aria-describedby="basic-addon1">
+                <input type="number" id="inputPrecoM2NovoProduto" min="0" class="form-control novoProdutoInput" width="900" placeholder="R$/m²" aria-describedby="basic-addon1">
             </div>
 
             <!-- Preco kit -->
@@ -128,16 +127,56 @@
                 <div class="input-group-prepend">
                 <span class="input-group-text novoProdutoTituloInput">Preço kit</span>
                 </div>
-                <input type="number" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="number" id="inputPrecoKitNovoProduto" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
-            <button class="gridBTN btn btn-outline-dark">Inserir</button>
+            <button class="gridBTN btn btn-outline-dark" id="btnInserirProduto">Inserir</button>
         </div>
 
+        <!-- Janela para edição de um produto com grid -->
+        <div class="novoProdutoTemplate shadow card card-body" id='divEditarProduto'>
+            <img src="https://http2.mlstatic.com/janela-basculante-blindex-40h-x-60l-vidro-incolor-c-instal-D_NQ_NP_843477-MLB30320781352_052019-F.jpg" class="gridIMAGEM">
+            <p class="gridENDERECO" id="editarEnderecoImagem">src/basculante.png</p>
+            
+            <!-- Titulo -->
+            <div class="input-group mb-1 gridTITULO">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Título</span>
+                </div>
+                <input type="text" id="editarTituloProduto" class="form-control" placeholder="Título do produto" aria-label="titulo" aria-describedby="basic-addon1">
+            </div>
+
+            <!-- Descricao -->
+            <div class="input-group gridDESCRICAO">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Descrição</span>
+                </div>
+                <textarea class="form-control novoProdutoTextArea" id="editarDescricaoProduto" placeholder="Descrição do produto"></textarea>
+            </div>
+
+            <!-- Preco m2 -->
+            <div class="input-group mb-2 gridPRECOM2">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Preço m²</span>
+                </div>
+                <input type="number" id="editarPrecoM2Produto" min="0" class="form-control novoProdutoInput" width="900" placeholder="R$/m²" aria-describedby="basic-addon1">
+            </div>
+
+            <!-- Preco kit -->
+            <div class="input-group gridPRECOKIT">
+                <div class="input-group-prepend">
+                <span class="input-group-text novoProdutoTituloInput">Preço kit</span>
+                </div>
+                <input type="number" id="editarPrecoKitProduto" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <button class="gridBTN btn btn-outline-dark" id="btnEditarProduto">Salvar alterações</button>
+        </div>
         <div class="linhaHorizontal"></div>
 
         <!-- DIV p/ os elementos internos -->
         <div class="listaProdutos">
+            
         </div> <!-- fecha div dos produtos carregados (listaProdutos)-->
 
         </div> <!-- Fecha janela produtos -->

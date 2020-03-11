@@ -111,8 +111,11 @@ btnNovoProduto.addEventListener('click', ()=>{exibeEntradaProdutos()});
 //Insercao de produto
 btnInserirProduto.addEventListener('click', ()=>{aquisicaoANDcomparacao();});
 
-//Obtem enderecoDaImagem e exibe
+//Obtem enderecoDaImagem e exibindo tela Insercao
 btnEnderecoImagemNovoProduto.addEventListener('click', ()=>{obtemEnderecoImagem(btnEnderecoImagemNovoProduto, pEnderecoImagem)});
+
+//Obtendo enderedoDaImagem e exibindo tela Edicao
+editarImagem.addEventListener('click', ()=>{obtemEnderecoImagem(editarImagem,editarEnderecoImagem)});
 
 //Salvar edições de um produto
 btnEditarProduto.addEventListener('click', ()=> {salvarEdicaoProduto();});
@@ -157,7 +160,7 @@ function mostraProdutos(produtos){
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto${produto.idProduto}' width="900" placeholder="R$ ${produto.preco_m2}" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto${produto.idProduto}' width="900" placeholder="${produto.preco_m2}" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -165,7 +168,7 @@ function mostraProdutos(produtos){
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="R$ ${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <button class="btn btn-outline-secondary btn-sm btnEditarProduto" id="btnEditarProduto${produto.idProduto}">Editar</button>
@@ -320,8 +323,8 @@ function editarProduto(idElemento){
     editarEnderecoImagem.innerHTML = document.getElementById('enderecoImagem'+idProduto).innerHTML;
     editarTituloProduto.value = document.getElementById('tituloProduto'+idProduto).innerHTML;
     editarDescricaoProduto.value = document.getElementById('descricaoProduto'+idProduto).value;
-    editarPrecoM2Produto.value = document.getElementById('precoM2Produto' + idProduto).placeholder;
-    editarPrecoKitProduto.value = document.getElementById('precoKitProduto'+idProduto).placeholder;
+    editarPrecoM2Produto.placeholder = document.getElementById('precoM2Produto' + idProduto).placeholder;
+    editarPrecoKitProduto.placeholder = document.getElementById('precoKitProduto'+idProduto).placeholder;
     //Desativa botoes listaProdutos
     let botoesListaProdutos = document.querySelectorAll(".modeloProduto > button");
     divListaProdutos.style.opacity=0.08; 
@@ -337,10 +340,11 @@ function salvarEdicaoProduto(){
     //Adquire valores
     let enderecoImagem, titulo, descricao, precoM2, precoKit;
     enderecoImagem = editarEnderecoImagem.innerHTML;
+    enderecoImagem = enderecoImagem.replace(/\\/g, '/'); //Corrigindo bug do slash do mysql (/ -> //)
     titulo = editarTituloProduto.value;
     descricao = editarDescricaoProduto.value;
-    precoM2 = editarPrecoM2Produto.value;
-    precoKit = editarPrecoKitProduto.value;
+    precoM2 = editarPrecoM2Produto.placeholder;
+    precoKit = editarPrecoKitProduto.placeholder;
     //Atualiza db
     con.query(`update produtos set enderecoImagem='${enderecoImagem}', titulo='${titulo}', descricao='${descricao}', preco_m2='${precoM2}', preco_kit='${precoKit}' where idProduto='${idProduto}'`);
     //Esconde janela edicao

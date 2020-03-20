@@ -57,11 +57,11 @@
 
 .separador-sm{
     height: 3vh;
+    background-color: rgb(241,241,241);
 }
 
 .insereCliente {
     display: none;
-    background-color: whitesmoke;
 }
 
 .layoutNovoCliente {
@@ -109,3 +109,14 @@
 .gridEndereco {grid-area: endereco;}
 .gridEditaBtn {grid-area: btnEdita;height: 80%;}
 .gridEditaBtnFecha {grid-area: btnFecha; color: red;}
+
+.listaClientes{background-color: rgb(241,241,241);}
+
+#barraPesquisa {
+    background-color: brown;
+    align-content: center;
+    vertical-align: middle;
+    height: inherit;
+    justify-content: center;
+    text-align: center;
+}

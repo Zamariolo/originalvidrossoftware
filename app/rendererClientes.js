@@ -36,7 +36,7 @@ btnFechaInsereCliente.addEventListener('click', ()=> {
 }});
 
 btnFechaEditaCliente = document.querySelector(".gridEditaBtnFecha");
-btnFechaEditaCliente.addEventListener('click', ()=>{divEditaClientes.style.display = 'none';})
+btnFechaEditaCliente.addEventListener('click', ()=>{divEditaClientes.style.display = 'none'; btnClientesMenu.disabled=false; btnCarregaClientes.disabled=false; btnInsereCliente.disabled=false;})
 
 btnSalvaEditaCliente = document.getElementById('btnEditaClienteDB');
 btnSalvaEditaCliente.addEventListener('click', ()=> {renderer.connection.query("SELECT cpf from clientes", function(err, result, fields){if(err) throw err; salvarEditarCliente(result);});})
@@ -44,6 +44,10 @@ btnSalvaEditaCliente.addEventListener('click', ()=> {renderer.connection.query("
 btnAddClienteDB = document.getElementById('btnAddClienteDB');
 btnAddClienteDB.addEventListener('click', ()=>{renderer.connection.query("SELECT cpf from clientes", function(err, result, fields){if(err) throw err; inserirCliente(result);});})
 
+inputBarraPesquisaClientes = document.getElementById('inputBarraPesquisaClientes');
+inputBarraPesquisaClientes.addEventListener('change', ()=>{
+    renderer.connection.query(`SELECT * FROM clientes WHERE nome LIKE '%${inputBarraPesquisaClientes.value}%' OR cpf LIKE '%${inputBarraPesquisaClientes.value}%' OR telefone LIKE '%${inputBarraPesquisaClientes.value}%' OR endereco LIKE '%${inputBarraPesquisaClientes.value}%'`, function(err, result, fields){if(err) throw err; mostraClientes(result);});
+});
 // Divs
 let divListaClientes = document.querySelector('.listaClientes');
 let divInsereClientes = document.querySelector('.insereCliente');
@@ -231,8 +235,8 @@ function validaCPF(cpf, resultQuery, cpfExcecao) {
             dialog.showMessageBoxSync('',{title: 'CPF inválido!', message: 'O CPF inserido é inválido',detail:'Os digitos inseridos não respeitam a lógica do Governo Federal de cadastros', type:'warning'}); return 0;
         }
         //Verifica se o cpf nao é repetido
-        console.log(numerosCPF.join(''));
-        console.log(cpfExcecao);
+        // console.log(numerosCPF.join(''));
+        // console.log(cpfExcecao);
         if (cpfsCadastrados.includes(numerosCPF.join('')) && numerosCPF.join('')!=cpfExcecao)
         {
             dialog.showMessageBoxSync('',{title: 'CPF já cadastrado!', message: 'O CPF inserido já consta na base de dados', type:'warning'}); return 0;

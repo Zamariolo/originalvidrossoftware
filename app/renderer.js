@@ -94,6 +94,7 @@ let pEnderecoImagem = document.getElementById('pEnderecoImagem');
 let inputDescricaoNovoProduto = document.getElementById('inputDescricaoNovoProduto');
 let inputPrecoM2NovoProduto = document.getElementById('inputPrecoM2NovoProduto');
 let inputPrecoKitNovoProduto = document.getElementById('inputPrecoKitNovoProduto');
+let btnFechaInsereProduto = document.getElementById('btnFechaInsereProduto');
 
 //EditarProduto
 let editarImagem = document.getElementById('editarImagem');
@@ -102,12 +103,19 @@ let editarTituloProduto = document.getElementById('editarTituloProduto');
 let editarDescricaoProduto = document.getElementById('editarDescricaoProduto');
 let editarPrecoM2Produto = document.getElementById('editarPrecoM2Produto');
 let editarPrecoKitProduto = document.getElementById('editarPrecoKitProduto');
+let btnFechaEditaProduto = document.getElementById('btnFechaEditaProduto');
 
-let divNovoProduto = document.querySelector('.novoProdutoTemplate');
+let divNovoProduto = document.querySelector('.insereProduto');
 divNovoProduto.style.display='none'
-let divEditarProduto = document.getElementById('divEditarProduto');
+let divEditarProduto = document.querySelector('.editaProduto');
 divEditarProduto.style.display = 'none'
 let divListaProdutos = document.querySelector('.listaProdutos');
+
+//Barra pesquisa
+let inputBarraPesquisaProdutos = document.getElementById('inputBarraPesquisaProdutos');
+inputBarraPesquisaProdutos.addEventListener('change', ()=>{
+    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
+})
 
 //carregamento da janelaProdutos
 btnProdutosMenu.addEventListener('click', ()=>{trocaTela('janelaProdutos', 'janelaMenu');divListaProdutos.innerHTML='';});
@@ -117,6 +125,23 @@ btnNovoProduto.addEventListener('click', ()=>{exibeEntradaProdutos()});
 
 //Insercao de produto
 btnInserirProduto.addEventListener('click', ()=>{aquisicaoANDcomparacao();});
+btnFechaInsereProduto.addEventListener('click', ()=>{
+    divNovoProduto.style.display='none';
+    //Reativa divListaProdutos
+    let botoesListaProdutos = document.querySelectorAll(".modeloProduto > button");
+    for (var i=0; i<botoesListaProdutos.length; i++){botoesListaProdutos[i].disabled = false;}
+})
+
+btnFechaEditaProduto.addEventListener('click', ()=>{
+    divEditarProduto.style.display = 'none';
+    //Reativa botoesMenuSuperior
+    btnProdutosMenu.disabled = false;
+    btnNovoProduto.disabled = false;
+    btnCarregarProdutosDB.disabled = false;
+    //Reativa divListaProdutos
+    let botoesListaProdutos = document.querySelectorAll(".modeloProduto > button");
+    for (var i=0; i<botoesListaProdutos.length; i++){botoesListaProdutos[i].disabled = false;}
+})
 
 //Obtem enderecoDaImagem e exibindo tela Insercao
 btnEnderecoImagemNovoProduto.addEventListener('click', ()=>{obtemEnderecoImagem(btnEnderecoImagemNovoProduto, pEnderecoImagem)});
@@ -207,38 +232,16 @@ function mostraProdutos(produtos){
 }
 
 function exibeEntradaProdutos(){
-
     //Filhos dos divs
     let filhosListaProdutos = document.querySelectorAll(".modeloProduto > button");
     var i;
     var elemento;
-
-    //Se a janela esta oculta
-    if(divNovoProduto.style.display=='none')
+    divNovoProduto.style.display = 'block';
+    //Desativar botoes
+    for (i=0; i<filhosListaProdutos.length; i++)
     {
-        divNovoProduto.style.display = 'grid';
-        divListaProdutos.style.opacity=0.08; 
-        divListaProdutos.style.filter="alpha(opacity=8)";
-
-        //Desativar botoes
-        for (i=0; i<filhosListaProdutos.length; i++)
-        {
-            elemento = filhosListaProdutos[i];
-            elemento.disabled = true;
-        }
-    }
-    else  //Se a janela esta sendo exibida
-    {
-        divNovoProduto.style.display = 'none';
-        divListaProdutos.style.opacity=1; 
-        divListaProdutos.style.filter="alpha(opacity=100)";
-
-        //Reativar botoes
-        for (i=0; i<filhosListaProdutos.length; i++)
-        {
-            elemento = filhosListaProdutos[i];
-            elemento.disabled = false;
-        }
+        elemento = filhosListaProdutos[i];
+        elemento.disabled = true;
     }
 }
 
@@ -288,9 +291,8 @@ function insereProduto(result){
         pEnderecoImagem.innerHTML = '-';
         inputTituloNovoProduto.value = '';
         inputDescricaoNovoProduto.value = '';
-        inputPrecoM2NovoProduto.value = null;
-        inputPrecoKitNovoProduto.value = null;
-        // alert("Produto Inserido!");
+        inputPrecoM2NovoProduto.value = 0;
+        inputPrecoKitNovoProduto.value = 0;
     }
     
 }
@@ -315,7 +317,6 @@ function deletarProduto(idElemento){
 
 function editarProduto(idElemento){
     idProduto = idElemento.slice(16);
-    var k;
     
     //Desativa menuSuperior
     btnProdutosMenu.disabled = true;
@@ -324,19 +325,17 @@ function editarProduto(idElemento){
     //Atualiza valores dos produtos direto do banco de dados
     carregaProdutosDB();
     //Abre janela de edicao
-    divEditarProduto.style.display = 'grid'
+    divEditarProduto.style.display = 'inline'
     //Mostrar valores na tela de edicao com aquisicao direto da tela grafica
     editarImagem.src = document.getElementById('enderecoImagem'+idProduto).innerHTML;
     editarEnderecoImagem.innerHTML = document.getElementById('enderecoImagem'+idProduto).innerHTML;
     editarTituloProduto.value = document.getElementById('tituloProduto'+idProduto).innerHTML;
     editarDescricaoProduto.value = document.getElementById('descricaoProduto'+idProduto).value;
-    editarPrecoM2Produto.placeholder = document.getElementById('precoM2Produto' + idProduto).placeholder;
-    editarPrecoKitProduto.placeholder = document.getElementById('precoKitProduto'+idProduto).placeholder;
+    editarPrecoM2Produto.value = document.getElementById('precoM2Produto' + idProduto).placeholder;
+    editarPrecoKitProduto.value = document.getElementById('precoKitProduto'+idProduto).placeholder;
     //Desativa botoes listaProdutos
     let botoesListaProdutos = document.querySelectorAll(".modeloProduto > button");
-    divListaProdutos.style.opacity=0.08; 
-    divListaProdutos.style.filter="alpha(opacity=8)";
-    for (k=0; k<botoesListaProdutos.length; k++)
+    for (var k=0; k<botoesListaProdutos.length; k++)
     {
         botoesListaProdutos[k].disabled = true; 
     }
@@ -350,8 +349,8 @@ function salvarEdicaoProduto(){
     enderecoImagem = enderecoImagem.replace(/\\/g, '/'); //Corrigindo bug do slash do mysql (/ -> //)
     titulo = editarTituloProduto.value;
     descricao = editarDescricaoProduto.value;
-    precoM2 = editarPrecoM2Produto.placeholder;
-    precoKit = editarPrecoKitProduto.placeholder;
+    precoM2 = editarPrecoM2Produto.value;
+    precoKit = editarPrecoKitProduto.value;
     //Atualiza db
     con.query(`update produtos set enderecoImagem='${enderecoImagem}', titulo='${titulo}', descricao='${descricao}', preco_m2='${precoM2}', preco_kit='${precoKit}' where idProduto='${idProduto}'`);
     //Esconde janela edicao
@@ -364,8 +363,6 @@ function salvarEdicaoProduto(){
     btnCarregarProdutosDB.disabled = false;
     //Reativa divListaProdutos
     let botoesListaProdutos = document.querySelectorAll(".modeloProduto > button");
-    divListaProdutos.style.opacity=1; 
-    divListaProdutos.style.filter="alpha(opacity=100)";
     for (var i=0; i<botoesListaProdutos.length; i++){botoesListaProdutos[i].disabled = false;}
 }
 // =========================== fim janelaProdutos ===========================

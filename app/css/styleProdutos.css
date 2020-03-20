@@ -40,64 +40,51 @@
     text-justify: center;
     text-align: center;
 }
-
 .gridIMAGEM {
     grid-area: imagem;
     height: 75px;
     background-color: chocolate;
 }
-
 .gridENDERECO {
     grid-area: enderecoimagem;
     font-size: small;
     color: rgb(158, 158, 158);
     align-self: left;
+    justify-self: left;
 }
-
-.gridTITULO {
-    grid-area: titulo;
-}
-
-.gridDESCRICAO{
-    grid-area: descricao;
-    margin-bottom: 6px;
-}
-
-.gridPRECOM2 {
-    grid-area: precom2;
-}
-
-.gridPRECOKIT {
-    grid-area: precokit
-}
-
+.gridTITULO {grid-area: titulo;}
+.gridDESCRICAO{grid-area: descricao; margin-bottom: 6px;}
+.gridPRECOM2 {grid-area: precom2;}
+.gridPRECOKIT {grid-area: precokit;}
 .gridBTN {
     grid-area: btn;
-    height: 50%;
+    height: 100%;
     border: solid;
     border-color: rgb(61, 61, 61);
     border-width: 1px;
     columns: rgb(61, 61, 61);
 }
-
-.gridSUMARIO {
-    grid-area: sumario;
-}
+.gridSUMARIO {grid-area: sumario;}
+.gridBtnFechaProduto {grid-area: btnFecha; justify-self: right;}
 
 .novoProdutoTemplate {
     width: 100%;
-    display: none;
-    grid-template-columns:20% 45% 25% 10%;
-    grid-template-rows: 25px 25px 25px auto 25px;
-    background-color: rgb(214, 214, 214);
-    grid-template-areas: 
-    "sumario . . btn"
+    display: grid;
+    grid-template-columns:20% 45% 25% 4%;
+    grid-template-rows: auto auto auto 8px;
+    /* grid-template-areas: 
+    "sumario . . btnFecha"
     "imagem titulo precom2 btn"
     "imagem . . btn"
     "imagem descricao precokit btn"
-    "enderecoimagem descricao . btn";
-    grid-column-gap: 7px;
-    grid-row-gap: 8px;
+    "enderecoimagem descricao . btn"; */
+    grid-template-areas:
+    "sumario . . btnFecha"
+    "imagem titulo precom2 btn"
+    "imagem descricao precokit btn"
+    "enderecoimagem enderecoimagem enderecoimagem enderecoimagem";
+    grid-column-gap: 2%;
+    grid-row-gap: 12px;
     justify-items: center;
     align-items: center;
 }
@@ -143,4 +130,19 @@
 
 .menuProdutos {
     color: black;
+}
+
+.insereProduto {
+    display: none;
+    background-color: rgb(241,241,241);
+}
+
+.editaProduto {
+    display: none;
+    width: 100%;
+    color: blue;
+}
+
+.listaProdutos {
+    background-color: rgb(241, 241, 241); ;
 }

@@ -2,10 +2,11 @@
 // ==================================================================
 
 var {dialog} = require('electron').remote;
+var rendererClientes = require('./rendererClientes.js');
 
 //mysql connection
 var mysql = require('mysql');
-var con = mysql.createConnection({  //Conectando ao banco de dados
+con = mysql.createConnection({  //Conectando ao banco de dados
     host: "localhost",
     port: 3306,
     user: "admin",
@@ -18,6 +19,8 @@ var con = mysql.createConnection({  //Conectando ao banco de dados
     console.log("mysql connected!");
   });
 
+module.exports.connection = con; //Deixa a conexao ao db global p/ todos arquivos
+
 
 function trocaTela(origem, destino){
     let telaOrigem = document.querySelector("."+origem);
@@ -25,6 +28,8 @@ function trocaTela(origem, destino){
     telaOrigem.style.display = 'none';
     telaDestino.style.display = 'inline';
 }
+
+module.exports.trocaTela = trocaTela; //deixa a funcao acessivel p todos arquivos
 
 let idProduto = null;
 // ==================== fim GLOBAL ==================================
@@ -36,6 +41,7 @@ let idProduto = null;
 // getting global elements
 let janelaMenu = document.querySelector('.janelaMenu');
 let janelaProdutos = document.querySelector('.janelaProdutos');
+let janelaClientes = document.querySelector('.janelaClientes')
 
 // >>>>>>>>>>>>>>>>>>>>>>> Relogio
 let relogio = document.querySelector('.relogio');
@@ -63,10 +69,11 @@ setInterval(attRelogio, 1000);
 
 //Troca telas
 let btnProdutos = document.getElementById('btnProdutos');
+let btnClientes = document.getElementById('btnClientes');
 
 //menu -> produtos
 btnProdutos.addEventListener('click', () => {trocaTela('janelaMenu','janelaProdutos'); carregaProdutosDB();});
-
+btnClientes.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaClientes'); con.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; rendererClientes.mostraClientes(result);});});
 
 // =========================== fim JanelaMenu ===========================
 // ==================================================================
@@ -103,7 +110,7 @@ divEditarProduto.style.display = 'none'
 let divListaProdutos = document.querySelector('.listaProdutos');
 
 //carregamento da janelaProdutos
-btnProdutosMenu.addEventListener('click', ()=>{trocaTela('janelaProdutos', 'janelaMenu');});
+btnProdutosMenu.addEventListener('click', ()=>{trocaTela('janelaProdutos', 'janelaMenu');divListaProdutos.innerHTML='';});
 
 //Abre box para adicionar novo produto    
 btnNovoProduto.addEventListener('click', ()=>{exibeEntradaProdutos()});

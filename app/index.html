@@ -9,6 +9,7 @@
     <!-- Estilos das telas -->
     <link rel="stylesheet" href="css/styleMenu.css">
     <link rel="stylesheet" href="css/styleProdutos.css">
+    <link rel="stylesheet" href="css/styleClientes.css">
 
 
     <title>OriginalVidros</title>
@@ -72,7 +73,7 @@
                 </div>
 
                 <!-- Botao clientes -->
-                <div class="col botaoSecundario btn btn-primary">
+                <div class="col botaoSecundario btn btn-primary" id='btnClientes'>
                     <h5 class="recheioBotao">Clientes</h5>
                 </div>
             </div> 
@@ -179,18 +180,127 @@
         <div class="linhaHorizontal"></div>
 
         <!-- DIV p/ os elementos internos -->
-        <div class="listaProdutos">
+        <div class="listaProdutos"></div>
             
         </div> <!-- fecha div dos produtos carregados (listaProdutos)-->
 
         </div> <!-- Fecha janela produtos -->
 
+        <!-- Janela clientes -->
+        <div class="janelaClientes">
+            <div class="row"> <!-- Menu para voltar, add clientes-->
+                <button class="btn btn-primary menuProdutos col" id='btnClientesMenu'>Menu</button>
+                <button class="btn btn-primary menuProdutos col" id='btnNovoCliente'>Inserir novo cliente</button>
+                <div id='barraPesquisa'>
+                    <input type="text" placeholder="Busca cliente">
+                    <button>></button>
+                </div>
+                <button class="btn btn-primary menuProdutos col" id='btnCarregaClientes'>Recarregar clientes</button>
+            </div>
+            <div class="linhaHorizontal"></div>
+
+            <!-- Div para inserir cliente -->
+            <div class="insereCliente" id="collapseExample">
+                <div class="separador-sm"></div>
+                <div class="layoutNovoCliente card container shadow">
+
+                    <!-- Nome -->
+                    <div class="input-group mb-1 gridInsereNome">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Nome</span>
+                        </div>
+                        <input type="text" id="inputInsereNome" class="form-control" placeholder="Nome do cliente (Obrigatório)" aria-label="titulo" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- CPF -->
+                    <div class="input-group mb-1 gridInsereCPF">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">CPF</span>
+                        </div>
+                        <input type="text" id="inputInsereCPF" class="form-control" placeholder="xxxxxxxxxxx (11 digitos)" aria-label="titulo" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- Telefone -->
+                    <div class="input-group mb-1 gridInsereTelefone">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Telefone</span>
+                        </div>
+                        <input type="text" id="inputInsereTelefone" class="form-control" placeholder="(xx)xxxx-xxxx (Obrigatório)" aria-label="titulo" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- Endereco -->
+                    <div class="input-group gridEndereco">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Endereço</span>
+                        </div>
+                        <textarea class="form-control novoProdutoTextArea" id="inputInsereEndereco" placeholder="Ex: Rua Alvaro de Castelões, 564, Paranhos"></textarea>
+                    </div>
+
+                    <button class="btn btn-outline-dark gridInsereBtn" id='btnAddClienteDB'>Inserir cliente</button>
+                    <a class="gridInsereBtnFecha btn-sm btn">x</a>
+                
+                </div>
+            </div>
+
+            <!-- Div para editar cliente -->
+            <div class="editaCliente" id="collapseExample">
+                <div class="separador-sm"></div>
+                <div class="layoutEditaCliente card container shadow">
+
+                    <!-- Nome -->
+                    <div class="input-group mb-1 gridEditaNome">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Nome</span>
+                        </div>
+                        <input type="text" id="inputEditaNome" class="form-control" placeholder="Nome do cliente (Obrigatório)" aria-label="titulo" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- CPF -->
+                    <div class="input-group mb-1 gridEditaCPF">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">CPF</span>
+                        </div>
+                        <input type="text" id="inputEditaCPF" class="form-control" placeholder="xxxxxxxxxxx (11 digitos)" aria-label="titulo" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- Telefone -->
+                    <div class="input-group mb-1 gridEditaTelefone">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Telefone</span>
+                        </div>
+                        <input type="text" id="inputEditaTelefone" class="form-control" placeholder="(xx)xxxx-xxxx (Obrigatório)" aria-label="titulo" aria-describedby="basic-addon1">
+                    </div>
+
+                    <!-- Endereco -->
+                    <div class="input-group gridEndereco">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text novoProdutoTituloInput">Endereço</span>
+                        </div>
+                        <textarea class="form-control novoProdutoTextArea" id="inputEditaEndereco" placeholder="Ex: Rua Alvaro de Castelões, 564, Paranhos"></textarea>
+                    </div>
+
+                    <button class="btn btn-outline-dark gridEditaBtn" id='btnEditaClienteDB'>Salvar alterações</button>
+                    <a class="gridEditaBtnFecha btn-sm btn">x</a>
+                
+                </div>
+            </div>
+
+            <!-- Div onde sao carregados os clientes -->
+            <div class="listaClientes"></div>
+
+        </div> <!-- Fecha janela clientes-->
+
+    
+    
+    
+    
     </div> <!--Fecha contentWindow -->
 
     <!-- Carregar javascript no formato electron -->
     <script>
         window.$ = require('jQuery');
         require('./renderer.js');
+        require('./rendererClientes.js');
     </script>
     
 </body>

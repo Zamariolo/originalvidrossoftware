@@ -1,0 +1,111 @@
+.janelaClientes {
+    display: none;
+}
+
+.gridIDCliente {
+    grid-area: idCliente;
+}
+
+.gridNome {
+    grid-area: nome;
+}
+
+.gridCPF {
+    grid-area: cpf;
+}
+
+.gridTelefone {
+    grid-area: telefone;
+}
+
+
+.gridEndereco {
+    grid-area: endereco;
+}
+
+.gridBtnEditarCliente {
+    grid-area: btnEditarCliente;
+}
+
+.gridBtnExcluirCliente {
+    grid-area: btnExcluirCliente;
+}
+
+.gridDivOrdens {
+    grid-area: ordens;
+    height: 100px;
+    overflow: auto;
+    background-color: white;
+}
+
+.gridDivOrdens:-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.clienteTemplate {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 5% 35% 35% 10% 15%;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+    "idCliente nome telefone ordens btnEditarCliente"
+    "idCliente cpf endereco ordens btnExcluirCliente";
+    grid-row-gap: 4px;
+    justify-items: center;
+    align-items: center;
+}
+
+.separador-sm{
+    height: 3vh;
+}
+
+.insereCliente {
+    display: none;
+    background-color: whitesmoke;
+}
+
+.layoutNovoCliente {
+    width: inherit;
+    display: grid;
+    grid-template-columns: 40% 40% 10% 1%;
+    grid-template-rows: auto auto auto 4px;
+    grid-template-areas:
+    ". . . btnFecha" 
+    "nome telefone btnInsere btnInsere"
+    "cpf endereco btnInsere btnInsere"
+    ". . . .";
+    row-gap: 4px;
+    column-gap: 3%;
+    justify-items: center;
+    align-items: center;
+}
+
+.gridInsereNome {grid-area: nome;}
+.gridInsereCPF {grid-area: cpf;}
+.gridInsereTelefone {grid-area: telefone;}
+.gridInsereEndereco {grid-area: endereco;}
+.gridInsereBtn {grid-area: btnInsere;height: 80%;}
+.gridInsereBtnFecha {grid-area: btnFecha; color: red;}
+
+.layoutEditaCliente {
+    width: inherit;
+    display: grid;
+    grid-template-columns: 40% 40% 10% 1%;
+    grid-template-rows: auto auto auto 4px;
+    grid-template-areas:
+    ". . . btnFecha" 
+    "nome telefone btnEdita btnEdita"
+    "cpf endereco btnEdita btnEdita"
+    ". . . .";
+    row-gap: 4px;
+    column-gap: 3%;
+    justify-items: center;
+    align-items: center;
+}
+
+.gridEditaNome {grid-area: nome;}
+.gridEditaCPF {grid-area: cpf;}
+.gridEditaTelefone {grid-area: telefone;}
+.gridEndereco {grid-area: endereco;}
+.gridEditaBtn {grid-area: btnEdita;height: 80%;}
+.gridEditaBtnFecha {grid-area: btnFecha; color: red;}

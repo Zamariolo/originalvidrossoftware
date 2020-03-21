@@ -128,7 +128,8 @@ function deletarCliente(idElemento) {
     //Aceitou deletar
     if (confirmacao == 0) {
         renderer.connection.query(`delete from clientes where idCliente='${idCliente}'`);
-        renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);});
+        // renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);});
+        renderer.connection.query(`SELECT * FROM clientes WHERE nome LIKE '%${inputBarraPesquisaClientes.value}%' OR cpf LIKE '%${inputBarraPesquisaClientes.value}%' OR telefone LIKE '%${inputBarraPesquisaClientes.value}%' OR endereco LIKE '%${inputBarraPesquisaClientes.value}%'`, function(err, result, fields){if(err) throw err; mostraClientes(result);});
     }
 }
 
@@ -140,7 +141,8 @@ function editarCliente(idElemento) {
     btnInsereCliente.disabled = true;
     btnCarregaClientes.disabled = true;
     //Atualiza pagina de clientes
-    renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);});
+    // renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);});
+    renderer.connection.query(`SELECT * FROM clientes WHERE nome LIKE '%${inputBarraPesquisaClientes.value}%' OR cpf LIKE '%${inputBarraPesquisaClientes.value}%' OR telefone LIKE '%${inputBarraPesquisaClientes.value}%' OR endereco LIKE '%${inputBarraPesquisaClientes.value}%'`, function(err, result, fields){if(err) throw err; mostraClientes(result);});
     //Abre janela de edicao
     divEditaClientes.style.display = 'inline';
     //Insere dados dos clientes nos campos (fazendo direto pra nao criar mais variaveis)
@@ -149,6 +151,8 @@ function editarCliente(idElemento) {
     document.getElementById('inputEditaTelefone').value = document.getElementById(`telefoneCliente${idCliente}`).innerHTML;
     document.getElementById('inputEditaEndereco').value = document.getElementById(`enderecoCliente${idCliente}`).innerHTML;
     g_cpfExcecao = document.getElementById('inputEditaCPF').value;
+    //Scroll para o topo
+    window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function salvarEditarCliente(resultQueryCPFs){
@@ -171,7 +175,8 @@ function salvarEditarCliente(resultQueryCPFs){
     }
 
     //Atualiza tela
-    renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);})
+    renderer.connection.query(`SELECT * FROM clientes WHERE nome LIKE '%${inputBarraPesquisaClientes.value}%' OR cpf LIKE '%${inputBarraPesquisaClientes.value}%' OR telefone LIKE '%${inputBarraPesquisaClientes.value}%' OR endereco LIKE '%${inputBarraPesquisaClientes.value}%'`, function(err, result, fields){if(err) throw err; mostraClientes(result);});
+    // renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);})
 }
 
 function validaCPF(cpf, resultQuery, cpfExcecao) {
@@ -290,7 +295,8 @@ function inserirCliente(cpfsCadastrados){
         }
         //Insere no banco de dados
         renderer.connection.query(`INSERT INTO clientes (nome, cpf, telefone, endereco) values ('${nome}','${numerosCPF.join('')}','${telefone}','${endereco}')`);
-        renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);});
+        // renderer.connection.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; mostraClientes(result);});
+        renderer.connection.query(`SELECT * FROM clientes WHERE nome LIKE '%${inputBarraPesquisaClientes.value}%' OR cpf LIKE '%${inputBarraPesquisaClientes.value}%' OR telefone LIKE '%${inputBarraPesquisaClientes.value}%' OR endereco LIKE '%${inputBarraPesquisaClientes.value}%'`, function(err, result, fields){if(err) throw err; mostraClientes(result);});
         //Limpa a janela de insercao
         inputInsereNome.value = '';
         inputInsereCPF.value = '';

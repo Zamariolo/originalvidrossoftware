@@ -272,6 +272,11 @@ function insereProduto(result){
     let precoM2 = inputPrecoM2NovoProduto.value;
     let preco_kit = inputPrecoKitNovoProduto.value;
 
+    //Verifica se o titulo nao esta vazio
+    if (tituloNovoProduto==''){dialog.showMessageBoxSync('',{title: `Campo 'título' vazio!`, message: 'Não se pode inserir um produto sem título', type:'warning'}); return 0;}
+    //Avisa se precos estao nulos
+    if (precoM2==''){dialog.showMessageBoxSync('',{title: `Campo 'preço do m²' vazio!`, message: 'Como um valor não foi inserido, adotamos um preço de R$ 0 por m²', type:'warning'}); precoM2=0;}
+    if (preco_kit==''){dialog.showMessageBoxSync('',{title: `Campo 'preço do kit' vazio!`, message: 'Como um valor não foi inserido, adotamos um preço de R$ 0 de kit', type:'warning'}); preco_kit=0;}
     let titulos = []; //log all titles
     //Colocando resultados da busca pelos titulos existentes em um list
     for(let j=0; j<result.length; j++)
@@ -281,12 +286,13 @@ function insereProduto(result){
 
     if(titulos.includes(tituloNovoProduto))
     {
-        alert("Título digitado já se encontra no banco de dados e não é permitido sua repetição");
+        dialog.showMessageBoxSync('',{title: 'Título de produto inválido!', message: 'Título digitado já se encontra no banco de dados e não é permitido sua repetição', type:'warning'});
     }
     else
     {
         con.query(`INSERT INTO produtos (enderecoImagem, titulo, descricao, preco_m2, preco_kit) values ('${enderecoImagem}','${tituloNovoProduto}','${descricao}','${precoM2}','${preco_kit}')`)
-        carregaProdutosDB(); //Atualiza pagina
+        // carregaProdutosDB(); //Atualiza pagina
+        con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
         //Limpa valores
         pEnderecoImagem.innerHTML = '-';
         inputTituloNovoProduto.value = '';
@@ -311,7 +317,8 @@ function deletarProduto(idElemento){
     //Aceitou deletar
     if (confirmacao == 0) {
         con.query(`delete from produtos where idProduto='${idProduto}'`);
-        carregaProdutosDB();
+        // carregaProdutosDB();
+        con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
     }
 }
 
@@ -323,7 +330,8 @@ function editarProduto(idElemento){
     btnNovoProduto.disabled = true;
     btnCarregarProdutosDB.disabled = true;
     //Atualiza valores dos produtos direto do banco de dados
-    carregaProdutosDB();
+    // carregaProdutosDB();
+    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
     //Abre janela de edicao
     divEditarProduto.style.display = 'inline'
     //Mostrar valores na tela de edicao com aquisicao direto da tela grafica
@@ -339,6 +347,8 @@ function editarProduto(idElemento){
     {
         botoesListaProdutos[k].disabled = true; 
     }
+    //Scroll to top
+    window.scrollTo({top: 0, behavior: 'smooth'});
     //Os efeitos reversos sao obtidos com o clique do botao btnEditarProduto
 }
 
@@ -356,7 +366,7 @@ function salvarEdicaoProduto(){
     //Esconde janela edicao
     divEditarProduto.style.display = 'none';
     //Recarrega banco de dados e exibe
-    carregaProdutosDB();
+    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
     //Reativa menu superior
     btnProdutosMenu.disabled = false;
     btnNovoProduto.disabled = false;

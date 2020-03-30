@@ -4,7 +4,7 @@ html {
 
 body {
     min-height: 200px;
-    background-color: rgb(232,232,232);    
+    /* background-color: rgb(232,232,232);     */
 }
 
 .janelaMenu { 
@@ -14,7 +14,7 @@ body {
 
 .linhaHorizontal {
     width: 95%;
-    background-image: linear-gradient(to right, rgb(232,232,232),rgb(0, 27, 148), rgb(232,232,232));
+    background-image: linear-gradient(to right, rgb(247,248,249),rgb(0, 27, 148), rgb(247,248,249));
     height: 1px;
 }
 
@@ -28,12 +28,13 @@ body {
 
 .menuSuperior{
     height: 13vh;
-    background-color: #000a2b;
-    background-color: #000000;
+    border-color: rgb(240,241,242);
+    border: 1px solid;
 }
 
 .textoMenuSuperior{
-    color: #F5F5F5;
+    /* color: #F5F5F5; */
+    color: rgb(247,248,249);
 }
 
 .botaoOrcamento{
@@ -41,6 +42,7 @@ body {
     border-radius: 10px;
     height: 51vh;
     color: black;
+    border-color: rgb(247,248,249);
 }
 
 .recheioBotao {
@@ -61,10 +63,11 @@ body {
     color: black;
     border-radius: 10px;
     height: inherit;
+    border-color: rgb(247,248,249);
 }
 
 .bordaBotaoSecundario {
     border: 1px solid;
-    border-image-source: linear-gradient(to bottom, rgb(232,232,232),rgb(0, 27, 148), rgb(232,232,232));
+    border-image-source: linear-gradient(to bottom, rgb(247,248,249),rgb(0, 27, 148), rgb(247,248,249));
     border-image-slice: 1;
 }

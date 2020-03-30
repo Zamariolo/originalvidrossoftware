@@ -130,6 +130,8 @@
 
 .menuProdutos {
     color: black;
+    background-color: rgb(247,248,249);
+    border-color: rgb(247,248,249);
 }
 
 .insereProduto {

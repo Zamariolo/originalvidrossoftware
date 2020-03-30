@@ -1,0 +1,28 @@
+.janelaOrcamento {
+    display: none;
+}
+
+.tituloClienteOrcamento{grid-area: titulo;}
+.jaEhClienteOrcamento{grid-area: jaEhCliente;}
+.nomeClienteOrcamento{grid-area: nome;}
+.comboBoxNomeClienteOrcamento{grid-area: nome;}
+.telefoneClienteOrcamento{grid-area: telefone;}
+.cpfClienteOrcamento{grid-area: cpf;}
+.enderecoClienteOrcamento{grid-area: endereco;}
+
+.clienteOrcamento {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 20% 25% 25% 20%;
+    grid-template-rows: 5px auto auto auto 5px;
+    grid-template-areas: 
+    ". . . ."
+    "titulo . . jaEhCliente"
+    "nome nome nome telefone "
+    "endereco endereco endereco cpf"
+    ". . . .";
+    grid-row-gap: 4px;
+    column-gap: 2%;
+    justify-items: center;
+    align-items: center;
+}

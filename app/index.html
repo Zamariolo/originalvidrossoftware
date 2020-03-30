@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="css/styleMenu.css">
     <link rel="stylesheet" href="css/styleProdutos.css">
     <link rel="stylesheet" href="css/styleClientes.css">
+    <link rel="stylesheet" href="css/styleOrcamento.css">
 
 
     <title>OriginalVidros</title>
 </head>
-<body>
+<body class="bg-light">
     <!-------------------------------------------- Menu superior -->
-    <div class=" navbar menuSuperior">
+    <div class=" navbar menuSuperior bg-dark">
          
         <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg" class="logo_img">
 
@@ -35,7 +36,7 @@
         - Clientes
         - Servicos
     -->
-    <div class="contentWindow">
+    <div class="contentWindow bg-light">
 
         <!-- Div do conteudo da janela atual -->
         <center>
@@ -46,7 +47,7 @@
             <div class="linhaHorizontal"></div>
 
             <!-- Div botao -->
-            <div class="btn btn-primary botaoOrcamento">
+            <div class="btn btn-primary botaoOrcamento bg-light" id="btnOrcamento">
                 <div class="recheioBotao">
                     <h3>Orçamentos</h3>
                     <p>Avaliar preços, realizar orçamento</p>
@@ -62,18 +63,18 @@
             <div class="outrosBotoes row">
 
                 <!-- Botao produtos -->
-                <div class="col botaoSecundario btn btn-primary" id="btnProdutos">
+                <div class="col botaoSecundario btn btn-primary bg-light" id="btnProdutos">
                     <h5 class="recheioBotao">Produtos</h5>
                     <!-- <h6 class="recheioBotao lead">Adicionar, editar, excluir</h6> -->
                 </div>
 
                 <!-- Botao servicos -->
-                <div class="col botaoSecundario btn btn-primary bordaBotaoSecundario">
+                <div class="col botaoSecundario btn btn-primary bordaBotaoSecundario bg-light">
                     <h5 class="recheioBotao">Serviços</h5>
                 </div>
 
                 <!-- Botao clientes -->
-                <div class="col botaoSecundario btn btn-primary" id='btnClientes'>
+                <div class="col botaoSecundario btn btn-primary bg-light" id='btnClientes'>
                     <h5 class="recheioBotao">Clientes</h5>
                 </div>
             </div> 
@@ -97,7 +98,7 @@
             <!-- Novo produto -->
             <div class="novoProdutoBox">
 
-            <!--Janela para inserção de novo produto com grid -->
+            <!--Div para inserir produto -->
             <div class="insereProduto">
                 <div class="separador-sm"></div>
                 <div class="novoProdutoTemplate shadow card container">
@@ -194,7 +195,7 @@
             <div class="separador-sm"></div>
 
             <!-- DIV p/ os elementos internos -->
-            <div class="listaProdutos"></div>
+            <div class="listaProdutos bg-light"></div>
                 
             </div> <!-- fecha div dos produtos carregados (listaProdutos)-->
 
@@ -202,7 +203,7 @@
 
         <!-- Janela clientes -->
         <div class="janelaClientes">
-            <div class="row" style="width: 100%;"> <!-- Menu para voltar, add clientes-->
+            <div class="row bg-light" style="width: 100%;"> <!-- Menu para voltar, add clientes-->
                 <button class="btn btn-primary menuProdutos col" id='btnClientesMenu'>Menu</button>
                 <button class="btn btn-primary menuProdutos col" id='btnNovoCliente'>Inserir novo cliente</button>
                 <div class="md-form mt-0 col">
@@ -299,9 +300,84 @@
             </div>
 
             <!-- Div onde sao carregados os clientes -->
-            <div class="listaClientes"></div>
+            <div class="listaClientes bg-light"></div>
 
         </div> <!-- Fecha janela clientes-->
+
+        <!-- Janela orcamento -->
+        <div class="janelaOrcamento">
+
+            <!-- Menu -->
+            <div class="row bg-light" style="width: 100%;"> <!-- Menu para voltar,-->
+                <button class="btn btn-primary menuProdutos col" id='btnOrcamentoMenu'>Menu</button>
+                <button class="btn btn-primary menuProdutos col" id='btnNovoCliente'></button>
+                <button class="btn btn-primary menuProdutos col" id='btnCarregaClientes'>Recarregar clientes</button>
+            </div>
+
+            <div class="separador-sm"></div>
+
+            <!-- cliente -->
+            <div class="clienteOrcamento card container shadow">
+                <h5 class="card-title tituloClienteOrcamento">Cliente</h5>
+                <a href="#" class="jaEhClienteOrcamento">Já é cliente</a>
+
+                <!-- [TOGGLE] Nome cliente -->
+                <div class="input-group mb-1 nomeClienteOrcamento">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text novoProdutoTituloInput">Nome</span>
+                    </div>
+                    <input type="text" id="inputNomeClienteOrcamento" class="form-control" placeholder="Nome do cliente (Obrigatório)" aria-label="titulo" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- [TOGGLE] Selecionar cliente combobox -->
+                <div class="input-group mb-1 comboBoxNomeClienteOrcamento">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text novoProdutoTituloInput">Nome</span>
+                    </div>
+                    <input list='selectNomeClienteOrcamento' id='inputComboBoxClienteOrcamento' type="text" placeholder="Selecionar cliente" class='form-control'>
+                    <datalist id='selectNomeClienteOrcamento'>
+                        <option value=''>
+                        <option value="Oi">
+                        <option value="Otavio">
+                        <option value="Orixá">
+                    </datalist>
+                </div>
+
+                <!-- Telefone cliente -->
+                <div class="input-group mb-1 telefoneClienteOrcamento">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text novoProdutoTituloInput">Telefone</span>
+                    </div>
+                    <input type="text" id="inputTelefoneClienteOrcamento" class="form-control" placeholder="Telefone (Obrigatório)" aria-label="titulo" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- CPF cliente -->
+                <div class="input-group mb-1 cpfClienteOrcamento">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text novoProdutoTituloInput">CPF</span>
+                    </div>
+                    <input type="text" id="inputCPFClienteOrcamento" class="form-control" placeholder="CPF do cliente" aria-label="titulo" aria-describedby="basic-addon1">
+                </div>
+
+                <!-- Endereco do cliente -->
+                <div class="input-group mb-1 enderecoClienteOrcamento">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text novoProdutoTituloInput">Endereco</span>
+                    </div>
+                    <textarea class="form-control novoProdutoTextArea" id="inputEnderecoClienteOrcamento" placeholder="Endereço do cliente"></textarea>
+                </div>
+                
+            </div>
+
+            <!-- Produtos adicionados -->
+            <div class="produtosAdicionados">
+
+            </div>
+
+            <!--  -->
+
+        </div> <!-- Fecha janela orcamento-->
+
 
     
     
@@ -314,6 +390,7 @@
         window.$ = require('jQuery');
         require('./renderer.js');
         require('./rendererClientes.js');
+        require('./rendererOrcamento.js');
     </script>
     
 </body>

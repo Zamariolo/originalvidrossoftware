@@ -3,6 +3,7 @@
 
 var {dialog} = require('electron').remote;
 var rendererClientes = require('./rendererClientes.js');
+var rendererOrcamento = require('./rendererOrcamento.js');
 
 //mysql connection
 var mysql = require('mysql');
@@ -70,11 +71,12 @@ setInterval(attRelogio, 1000);
 //Troca telas
 let btnProdutos = document.getElementById('btnProdutos');
 let btnClientes = document.getElementById('btnClientes');
+let btnOrcamento = document.getElementById('btnOrcamento');
 
 //menu -> produtos
 btnProdutos.addEventListener('click', () => {trocaTela('janelaMenu','janelaProdutos'); carregaProdutosDB();});
 btnClientes.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaClientes'); con.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; rendererClientes.mostraClientes(result);});});
-
+btnOrcamento.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaOrcamento');})
 // =========================== fim JanelaMenu ===========================
 // ==================================================================
 

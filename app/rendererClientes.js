@@ -72,8 +72,8 @@ function mostraClientes(clientes){
         cliente = clientes[i];
 
         htmlListaClientes = htmlListaClientes + 
-        `<div class="separador-sm"></div>
-        <div class="clienteTemplate">
+        `
+        <div class="clienteTemplate container card">
             <p class="gridIDCliente">${cliente.idCliente}</p>
             <h5 class="gridNome" id='nomeCliente${cliente.idCliente}'>${cliente.nome}</h5>
             <p class="gridCPF" id='cpfCliente${cliente.idCliente}'>${cliente.cpf}</p>
@@ -89,8 +89,7 @@ function mostraClientes(clientes){
             <button class="gridBtnEditarCliente btn btn-sm btn-outline-secondary" id='btnEditarCliente${cliente.idCliente}'>Editar</button>
             <button class="gridBtnExcluirCliente btn btn-sm btn-outline-danger" id='btnExcluirCliente${cliente.idCliente}'>Excluir</button>
         </div>
-        <div class="separador-sm"></div>
-        <div class="linhaHorizontal"></div>`
+        `
     }
     divListaClientes.innerHTML = htmlListaClientes;
 

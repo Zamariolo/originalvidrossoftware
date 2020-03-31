@@ -1,9 +1,10 @@
 let renderer = require('./renderer.js');
-var {dialog, BrowserWindow} = require('electron').remote;
+var {BrowserWindow} = require('electron').remote;
+const fs = require('fs');
 
 //Criando janela de produtos
-let windowListaProdutos = new BrowserWindow({width: 400, height: 600, title: 'Lista de produtos', show: false});
-windowListaProdutos.removeMenu();
+let windowListaProdutos = new BrowserWindow({width: 650, height: 650, title: 'Lista de produtos', show: false});
+// windowListaProdutos.removeMenu();
 
 let btnOrcamentoMenu = document.getElementById('btnOrcamentoMenu');
 btnOrcamentoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaOrcamento', 'janelaMenu');});
@@ -19,7 +20,7 @@ document.querySelector('.comboBoxNomeClienteOrcamento').style.display = 'none';
 
 //Botao de adicionar novo produto ao carrinho
 let btnAddProduto = document.querySelector('.btnAddProduto');
-btnAddProduto.addEventListener('click', ()=>{abreWindowListaProdutos();});
+btnAddProduto.addEventListener('click', ()=>{renderer.connection.query("SELECT * FROM produtos", function(err, result, fields){if(err) throw err; abreWindowListaProdutos(result);})});
 
 function toggleClienteOrcamento(){
 /*  Descr: Troca a sessão de clientes da tela orçamento entre 'novo cliente' ou 'carregar
@@ -108,18 +109,93 @@ function carregaDadosClientes(dados){
     document.getElementById('inputEnderecoClienteOrcamento').value = dados[0].endereco;
 }
 
-function abreWindowListaProdutos () {
+function abreWindowListaProdutos (produtos) {
     /*Descr: Abre uma nova janela com a lista de produtos; Carrega os produtos; gera um 
     html; carrega pra pagina e abre ela; Se a janela tiver sido fechada, é criada uma nova
+    É ativada a partir de uma query para obter todos os produtos disponiveis
+    
+    Input:
+            - produtos: array result da query com todos os dados dos produtos
+    */
+    
+    //Gera html pra ser inserido no html
+    let htmlListaProdutos = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+        <meta name="viewport" content="width=device-width,initial-scale=1"> 
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styleListaProdutosOrcamento.css">
+    
+    
+        <title>OriginalVidros carregado</title>
+    </head>
+    
+    <body>
+    `;
+    let produto = null;
+    //Percorrendo todos os dados
+    for (let i=0; i<produtos.length; i++)
+    {
+        produto = produtos[i];
 
-     */
+        htmlListaProdutos = htmlListaProdutos + `<div class="modeloProduto card shadow border">
+        <div class="separador"></div>
+        <h5 class="gridID">${produto.idProduto}</h5>
+        <img src='${produto.enderecoImagem}' class="gridIMAGEM">
+        <p class="gridENDERECO" id='enderecoImagem${produto.idProduto}'>${produto.enderecoImagem}</p>
+        
+        <!-- Titulo -->
+        <div class="input-group mb-1 gridTITULO">
+            <h5 class="tituloProduto rounded" id='tituloProduto${produto.idProduto}'>${produto.titulo}</h5>
+        </div>
+
+        <!-- Descricao -->
+        <div class="input-group gridDESCRICAO">
+            <textarea class="form-control novoProdutoTextArea" style='border: 0px; background-color: inherit' readonly id='descricaoProduto${produto.idProduto}'>${produto.descricao}</textarea>
+        </div>
+
+        <!-- Preco m2 -->
+        <div class="input-group mb-2 gridPRECOM2">
+            <div class="input-group-prepend">
+            <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
+            </div>
+            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto${produto.idProduto}' width="900" placeholder="${produto.preco_m2}" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+        </div>
+
+        <!-- Preco kit -->
+        <div class="input-group gridPRECOKIT">
+            <div class="input-group-prepend">
+            <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
+            </div>
+            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+        </div>
+
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto${produto.idProduto}">Adicionar</button>
+        </div>
+        <div class="separador"></div>
+        <div class="linhaHorizontal"></div><div class="separador"></div>`;
+    }
+
+    htmlListaProdutos = htmlListaProdutos + `</body></html>`;
+
+    //Definindo html do arquivo
+    fs.writeFile(`${__dirname}/windowProdutosOrcamento.html`, htmlListaProdutos, function (err) {if (err) throw err;
+        windowListaProdutos.loadFile(`${__dirname}/windowProdutosOrcamento.html`);})
+    //Abrindo pagina
 
     try{
         windowListaProdutos.show();
-        console.log(windowListaProdutos.isVisible());
     }
-    finally{
-        windowListaProdutos = new BrowserWindow({width: 400, height: 600, title: 'Lista de produtos', show: false});
-        windowListaProdutos.removeMenu();
+    catch{
+        windowListaProdutos = new BrowserWindow({width: 650, height: 650, title: 'Lista de produtos', show: false});
+        // windowListaProdutos.removeMenu();
+        // windowListaProdutos.loadFile(`${__dirname}/windowProdutosOrcamento.html`);
+        windowListaProdutos.show();
     }
+
+    windowListaProdutos.reload();
+    windowListaProdutos.show();
 }

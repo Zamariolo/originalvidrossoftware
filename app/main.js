@@ -17,5 +17,3 @@ app.on('ready', function(){
     // mainWindow.removeMenu();
 });
 
-// module.exports.mainWindow = mainWindow;
-

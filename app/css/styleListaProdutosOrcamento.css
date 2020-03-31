@@ -1,0 +1,50 @@
+.modeloProduto {
+    width: 100%;
+    display: grid;
+    grid-template-columns:20% 45% 25% 4%;
+    grid-template-rows: auto auto auto 8px;
+    grid-template-areas:
+    "id . . btnFecha"
+    "imagem titulo precom2 btn"
+    "imagem descricao precokit btn"
+    "enderecoimagem enderecoimagem enderecoimagem enderecoimagem";
+    grid-column-gap: 1%;
+    grid-row-gap: 2px;
+    justify-items: center;
+    align-items: center;
+}
+
+.gridID {
+    width: 100%;
+    grid-area: id;
+    font-size: small;
+    color: rgb(80, 80, 80);
+    text-justify: center;
+    text-align: center;
+}
+.gridIMAGEM {
+    grid-area: imagem;
+    height: 75px;
+    background-color: rgb(31, 31, 31) 7);
+}
+.gridENDERECO {
+    grid-area: enderecoimagem;
+    font-size: small;
+    color: rgb(158, 158, 158);
+    align-self: left;
+    justify-self: left;
+}
+.gridTITULO {grid-area: titulo;}
+.gridDESCRICAO{grid-area: descricao; margin-bottom: 6px; resize: none;}
+.gridPRECOM2 {grid-area: precom2;}
+.gridPRECOKIT {grid-area: precokit;}
+.gridBTN {
+    grid-area: btn;
+    height: 100%;
+    border: solid;
+    border-color: rgb(61, 61, 61);
+    border-width: 1px;
+    columns: rgb(61, 61, 61);
+}
+.gridSUMARIO {grid-area: sumario;}
+.gridBtnFechaProduto {grid-area: btnFecha; justify-self: right;}

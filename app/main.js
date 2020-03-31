@@ -1,7 +1,7 @@
 const {app, BrowserWindow} = require('electron');
 
 //Se utilizar mult window
-//const windowManager = require('electron-window-manager');
+// const windowManager = require('electron-window-manager');
 
 let mainWindow = null;
 
@@ -16,4 +16,6 @@ app.on('ready', function(){
     mainWindow.webContents.loadFile('app/index.html');
     // mainWindow.removeMenu();
 });
+
+// module.exports.mainWindow = mainWindow;
 

@@ -1,17 +1,25 @@
 let renderer = require('./renderer.js');
-var {dialog} = require('electron').remote;
+var {dialog, BrowserWindow} = require('electron').remote;
 
-btnOrcamentoMenu = document.getElementById('btnOrcamentoMenu');
+//Criando janela de produtos
+let windowListaProdutos = new BrowserWindow({width: 400, height: 600, title: 'Lista de produtos', show: false});
+windowListaProdutos.removeMenu();
+
+let btnOrcamentoMenu = document.getElementById('btnOrcamentoMenu');
 btnOrcamentoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaOrcamento', 'janelaMenu');});
 
 // btn Ja eh cliente
-btnToggleNovoCarregaCliente = document.querySelector('.jaEhClienteOrcamento');
+let btnToggleNovoCarregaCliente = document.querySelector('.jaEhClienteOrcamento');
 btnToggleNovoCarregaCliente.addEventListener('click', ()=> {toggleClienteOrcamento();});
 
 //Caso o input/datalist tenha sido alterado (cliente selecionado)
 document.getElementById('inputComboBoxClienteOrcamento').addEventListener('change', ()=>{intermediarioCarregaDadosCliente();});
 
 document.querySelector('.comboBoxNomeClienteOrcamento').style.display = 'none';
+
+//Botao de adicionar novo produto ao carrinho
+let btnAddProduto = document.querySelector('.btnAddProduto');
+btnAddProduto.addEventListener('click', ()=>{abreWindowListaProdutos();});
 
 function toggleClienteOrcamento(){
 /*  Descr: Troca a sessão de clientes da tela orçamento entre 'novo cliente' ou 'carregar
@@ -100,3 +108,18 @@ function carregaDadosClientes(dados){
     document.getElementById('inputEnderecoClienteOrcamento').value = dados[0].endereco;
 }
 
+function abreWindowListaProdutos () {
+    /*Descr: Abre uma nova janela com a lista de produtos; Carrega os produtos; gera um 
+    html; carrega pra pagina e abre ela; Se a janela tiver sido fechada, é criada uma nova
+
+     */
+
+    try{
+        windowListaProdutos.show();
+        console.log(windowListaProdutos.isVisible());
+    }
+    finally{
+        windowListaProdutos = new BrowserWindow({width: 400, height: 600, title: 'Lista de produtos', show: false});
+        windowListaProdutos.removeMenu();
+    }
+}

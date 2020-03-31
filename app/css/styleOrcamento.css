@@ -26,3 +26,24 @@
     justify-items: center;
     align-items: center;
 }
+
+.btnVisualAddProduto{
+    grid-area: btn;
+    color: rgb(0, 0, 0);
+    font-size: 80px;
+}
+.textoVisualAddProduto{grid-area: texto; color: black;}
+.btnAddProduto {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 5% 10% 80% 5%;
+    grid-template-rows: 5px 100px 5px;
+    grid-template-areas: 
+    ". . . ."
+    ". btn texto ."
+    ". . . .";
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+    vertical-align: middle;
+}

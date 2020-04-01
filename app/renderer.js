@@ -115,7 +115,7 @@ let divListaProdutos = document.querySelector('.listaProdutos');
 
 //Barra pesquisa
 let inputBarraPesquisaProdutos = document.getElementById('inputBarraPesquisaProdutos');
-inputBarraPesquisaProdutos.addEventListener('change', ()=>{
+inputBarraPesquisaProdutos.addEventListener('keyup', ()=>{
     con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
 })
 

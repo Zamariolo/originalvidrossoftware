@@ -45,7 +45,7 @@ btnAddClienteDB = document.getElementById('btnAddClienteDB');
 btnAddClienteDB.addEventListener('click', ()=>{renderer.connection.query("SELECT cpf from clientes", function(err, result, fields){if(err) throw err; inserirCliente(result);});})
 
 inputBarraPesquisaClientes = document.getElementById('inputBarraPesquisaClientes');
-inputBarraPesquisaClientes.addEventListener('change', ()=>{
+inputBarraPesquisaClientes.addEventListener('keyup', ()=>{
     renderer.connection.query(`SELECT * FROM clientes WHERE nome LIKE '%${inputBarraPesquisaClientes.value}%' OR cpf LIKE '%${inputBarraPesquisaClientes.value}%' OR telefone LIKE '%${inputBarraPesquisaClientes.value}%' OR endereco LIKE '%${inputBarraPesquisaClientes.value}%'`, function(err, result, fields){if(err) throw err; mostraClientes(result);});
 });
 // Divs

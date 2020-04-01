@@ -3,11 +3,11 @@ var {BrowserWindow} = require('electron').remote;
 const fs = require('fs');
 
 //Criando janela de produtos
-let windowListaProdutos = new BrowserWindow({width: 650, height: 650, title: 'Lista de produtos', show: false});
+let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false});
 // windowListaProdutos.removeMenu();
 
 let btnOrcamentoMenu = document.getElementById('btnOrcamentoMenu');
-btnOrcamentoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaOrcamento', 'janelaMenu');});
+btnOrcamentoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaOrcamento', 'janelaMenu');windowListaProdutos.close();});
 
 // btn Ja eh cliente
 let btnToggleNovoCarregaCliente = document.querySelector('.jaEhClienteOrcamento');
@@ -119,6 +119,7 @@ function abreWindowListaProdutos (produtos) {
     */
     
     //Gera html pra ser inserido no html
+    // HTML introdutorio
     let htmlListaProdutos = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -132,15 +133,31 @@ function abreWindowListaProdutos (produtos) {
     
         <title>OriginalVidros carregado</title>
     </head>
+
+    <!-- Barra de pesquisa-->
+    <div class="barraPesquisa">
+        <div class="md-form mt-0 col">
+            <input class="form-control" type="text" placeholder="Pesquisar produto" aria-label="Search" id='barraPesquisa'>
+        </div>
+    </div>
     
     <body>
+
+    <div id="listaProdutos">
+
+    <!-- Servico -->
+    <div class="card shadow border modeloServico">
+        <h5 class="tituloServico">Serviço</h5>
+        <button class="btn btn-outline-primary btn-sm btnServico" id="btnAddServico">Adicionar</button>
+    </div>
+
     `;
     let produto = null;
     //Percorrendo todos os dados
     for (let i=0; i<produtos.length; i++)
     {
         produto = produtos[i];
-
+        // HTML dos itens
         htmlListaProdutos = htmlListaProdutos + `<div class="modeloProduto card shadow border">
         <div class="separador"></div>
         <h5 class="gridID">${produto.idProduto}</h5>
@@ -162,7 +179,7 @@ function abreWindowListaProdutos (produtos) {
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto${produto.idProduto}' width="900" placeholder="${produto.preco_m2}" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto${produto.idProduto}' width="900" placeholder="${produto.preco_m2}" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -170,16 +187,17 @@ function abreWindowListaProdutos (produtos) {
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto${produto.idProduto}">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto${produto.idProduto}">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div>`;
     }
 
-    htmlListaProdutos = htmlListaProdutos + `</body></html>`;
+    // HTML final
+    htmlListaProdutos = htmlListaProdutos + `</div><script src='listaProdutosOrcamento.js'></script></body></html>`;
 
     //Definindo html do arquivo
     fs.writeFile(`${__dirname}/windowProdutosOrcamento.html`, htmlListaProdutos, function (err) {if (err) throw err;
@@ -190,7 +208,7 @@ function abreWindowListaProdutos (produtos) {
         windowListaProdutos.show();
     }
     catch{
-        windowListaProdutos = new BrowserWindow({width: 650, height: 650, title: 'Lista de produtos', show: false});
+        windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false});
         // windowListaProdutos.removeMenu();
         // windowListaProdutos.loadFile(`${__dirname}/windowProdutosOrcamento.html`);
         windowListaProdutos.show();

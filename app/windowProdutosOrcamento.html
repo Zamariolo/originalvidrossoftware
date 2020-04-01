@@ -11,8 +11,24 @@
     
         <title>OriginalVidros carregado</title>
     </head>
+
+    <!-- Barra de pesquisa-->
+    <div class="barraPesquisa">
+        <div class="md-form mt-0 col">
+            <input class="form-control" type="text" placeholder="Pesquisar produto" aria-label="Search" id='barraPesquisa'>
+        </div>
+    </div>
     
     <body>
+
+    <div id="listaProdutos">
+
+    <!-- Servico -->
+    <div class="card shadow border modeloServico">
+        <h5 class="tituloServico">Serviço</h5>
+        <button class="btn btn-outline-primary btn-sm btnServico" id="btnAddServico">Adicionar</button>
+    </div>
+
     <div class="modeloProduto card shadow border">
         <div class="separador"></div>
         <h5 class="gridID">56</h5>
@@ -34,7 +50,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto56' width="900" placeholder="40" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto56' width="900" placeholder="40" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -42,10 +58,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto56' placeholder="52" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto56' placeholder="52" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto56">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto56">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -69,7 +85,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto59' width="900" placeholder="32" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto59' width="900" placeholder="32" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -77,10 +93,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto59' placeholder="40" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto59' placeholder="40" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto59">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto59">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -104,7 +120,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto60' width="900" placeholder="22" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto60' width="900" placeholder="22" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -112,10 +128,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto60' placeholder="23" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto60' placeholder="23" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto60">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto60">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -139,7 +155,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto61' width="900" placeholder="12" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto61' width="900" placeholder="12" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -147,10 +163,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto61' placeholder="123" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto61' placeholder="123" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto61">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto61">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -174,7 +190,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto62' width="900" placeholder="20" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto62' width="900" placeholder="20" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -182,10 +198,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto62' placeholder="19" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto62' placeholder="19" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto62">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto62">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -209,7 +225,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto64' width="900" placeholder="22" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto64' width="900" placeholder="22" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -217,10 +233,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto64' placeholder="33" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto64' placeholder="33" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto64">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto64">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -244,7 +260,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto71' width="900" placeholder="12" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto71' width="900" placeholder="12" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -252,10 +268,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto71' placeholder="3" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto71' placeholder="3" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto71">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto71">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -279,7 +295,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto73' width="900" placeholder="5" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto73' width="900" placeholder="5" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -287,10 +303,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto73' placeholder="5" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto73' placeholder="5" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto73">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto73">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -314,7 +330,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto76' width="900" placeholder="3" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto76' width="900" placeholder="3" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -322,10 +338,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto76' placeholder="0" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto76' placeholder="0" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto76">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto76">Adicionar</button>
         </div>
         <div class="separador"></div>
         <div class="linhaHorizontal"></div><div class="separador"></div><div class="modeloProduto card shadow border">
@@ -349,7 +365,7 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: rgb(232, 232, 232);">Preço m²</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoM2Produto77' width="900" placeholder="12" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precom2 form-control novoProdutoInput" id='precoM2Produto77' width="900" placeholder="12" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
         <!-- Preco kit -->
@@ -357,10 +373,10 @@
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
-            <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto77' placeholder="13" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+            <input type="number" readonly class="precokit form-control novoProdutoInput" id='precoKitProduto77' placeholder="13" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
         </div>
 
-        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnDeletarProduto77">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm gridBTN" id="btnAddProduto77">Adicionar</button>
         </div>
         <div class="separador"></div>
-        <div class="linhaHorizontal"></div><div class="separador"></div></body></html>
+        <div class="linhaHorizontal"></div><div class="separador"></div></div><script src='listaProdutosOrcamento.js'></script></body></html>

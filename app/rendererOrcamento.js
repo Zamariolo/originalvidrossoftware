@@ -3,6 +3,9 @@ var {BrowserWindow} = require('electron').remote;
 const fs = require('fs');
 const ipc = require('electron').ipcRenderer;
 
+//Variabel global para armazenar produtos do carrinho
+let carrinho = [];
+
 //Criando janela de produtos
 // let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
 //     nodeIntegration: true
@@ -227,6 +230,11 @@ function abreWindowListaProdutos (produtos) {
     windowListaProdutos.show();
 }
 
+function addProduto(dados){
+    carrinho.push(dados[0].idProduto);
+    console.log(carrinho);
+}
+
 // #################################################################
 // #################### IPC COMMUNICATION ##########################
 
@@ -238,5 +246,9 @@ Gambiarra mas facilita o trabalho neste caso simples. Em caso de mais um tipo de
 a ipcMain deve estar na main.js e para fazer renderer>renderer deve-se utilizar id das windows
 */
 ipc.on('adicionar-produto-orcamento', function(event, arg){
-    console.log(arg);
+    if (arg!='servico')
+    {
+        renderer.connection.query(`SELECT * FROM produtos WHERE idProduto='${arg}'`, function(err, result, fields){if(err) throw err; addProduto(result);})
+    }
+    
 });

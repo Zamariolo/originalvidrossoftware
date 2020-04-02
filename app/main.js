@@ -1,4 +1,6 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, remote} = require('electron');
+const ipc = require('electron').ipcMain;
+const dialog = require('electron').dialog;
 
 //Se utilizar mult window
 // const windowManager = require('electron-window-manager');
@@ -12,8 +14,24 @@ app.on('ready', function(){
             nodeIntegration: true
         }
     });
-
     mainWindow.webContents.loadFile('app/index.html');
+    mainWindow.webContents.openDevTools();
     // mainWindow.removeMenu();
+
+    //window ListaProdutos
+    let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
+        nodeIntegration: true
+    }});
+    mainWindow.webContents.openDevTools();
+
+    // windowListaProdutos.removeMenu();
+    global.windowListaProdutos = windowListaProdutos;
 });
+
+
+// #################################################################
+// #################### IPC COMMUNICATION ##########################
+ ipc.on('adicionar-produto-main', function(event, arg){
+     mainWindow.webContents.send('adicionar-produto-orcamento', arg); //Envia sinal para rendererOrcamento.js
+ });
 

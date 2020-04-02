@@ -1,10 +1,15 @@
 let renderer = require('./renderer.js');
 var {BrowserWindow} = require('electron').remote;
 const fs = require('fs');
+const ipc = require('electron').ipcRenderer;
 
 //Criando janela de produtos
-let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false});
-// windowListaProdutos.removeMenu();
+// let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
+//     nodeIntegration: true
+// }});
+// // windowListaProdutos.removeMenu();
+// console.log(windowListaProdutos.id);,
+windowListaProdutos = require('electron').remote.getGlobal( "windowListaProdutos" );
 
 let btnOrcamentoMenu = document.getElementById('btnOrcamentoMenu');
 btnOrcamentoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaOrcamento', 'janelaMenu');windowListaProdutos.close();});
@@ -208,7 +213,11 @@ function abreWindowListaProdutos (produtos) {
         windowListaProdutos.show();
     }
     catch{
-        windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false});
+        windowListaProdutos = require('electron').remote.getGlobal( "windowListaProdutos" );
+        windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
+            nodeIntegration: true
+        }});
+        windowListaProdutos.webContents.openDevTools();
         // windowListaProdutos.removeMenu();
         // windowListaProdutos.loadFile(`${__dirname}/windowProdutosOrcamento.html`);
         windowListaProdutos.show();
@@ -217,3 +226,17 @@ function abreWindowListaProdutos (produtos) {
     windowListaProdutos.reload();
     windowListaProdutos.show();
 }
+
+// #################################################################
+// #################### IPC COMMUNICATION ##########################
+
+/*Nota, neste exemplo ha apenas 1 comunicacao necessaria (apenas 2 janelas). Portanto,
+atribui-se a ipcMain no rendererOrcamento.js e nao na main.js. Conforme visto em
+https://stackoverflow.com/questions/47416799/communicate-directly-between-two-renderer-processes-in-electron
+
+Gambiarra mas facilita o trabalho neste caso simples. Em caso de mais um tipo de conexao,
+a ipcMain deve estar na main.js e para fazer renderer>renderer deve-se utilizar id das windows
+*/
+ipc.on('adicionar-produto-orcamento', function(event, arg){
+    console.log(arg);
+});

@@ -1,3 +1,6 @@
+// let renderer = require('./renderer.js');
+const ipc = require('electron').ipcRenderer;
+
 //Obter todos os ids elements
 let ids = document.querySelectorAll('div.modeloProduto > h5.gridID');
 let enderecosImagens = document.querySelectorAll('p.gridENDERECO');
@@ -5,10 +8,16 @@ let titulos = document.querySelectorAll('h5.tituloProduto');
 let descricoes = document.querySelectorAll('textarea.novoProdutoTextArea');
 let precosm2 = document.querySelectorAll('input.precom2');
 let precoskit = document.querySelectorAll('input.precokit');
+let btnAddServico = document.getElementById('btnAddServico');
+
+//Inserindo eventListener aos botoes
+insereEventListenerBotoes();
+//Insere eventListener ao btnServico (ele requisita a mesma funcao mas com id de 'servico')
+btnAddServico.addEventListener('click', function(){ipc.send('adicionar-produto-main', 'servico');});
+
 
 //Colocar valores em array
 let arrayProdutos = [];
-
 for (var k = 0; k<ids.length; k++)
 {
     arrayProdutos.push([ids[k].innerHTML, enderecosImagens[k].innerHTML, titulos[k].innerHTML, descricoes[k].innerHTML, precosm2[k].placeholder, precoskit[k].placeholder]);
@@ -24,8 +33,6 @@ let divListaProdutos = document.getElementById('listaProdutos');
 
 function recarregaListaProdutos(textoPesquisa, arrayProdutos)
 {
-
-    console.log(textoPesquisa);
     //Obtendo quais produtos satisfazem a pesquisa
     var produtosPesquisa = [];
 
@@ -51,7 +58,7 @@ function recarregaListaProdutos(textoPesquisa, arrayProdutos)
     <!-- Servico -->
     <div class="card shadow border modeloServico">
         <h5 class="tituloServico">Serviço</h5>
-        <button class="btn btn-outline-primary btn-sm btnServico" id="btnAddServico">Adicionar</button>
+        <button class="btn btn-outline-primary btn-sm btnServico" id="btnAddServico">Adicionar2</button>
     </div>`;
 
     for (let i=0; i<produtosPesquisa.length; i++)
@@ -97,6 +104,27 @@ function recarregaListaProdutos(textoPesquisa, arrayProdutos)
 
     divListaProdutos.innerHTML = listaProdutosHTML;
 
+    insereEventListenerBotoes();
+
 
 }
+
+//Adiciona funcionalidade a todos os botoes
+function insereEventListenerBotoes(){
+    /* Essa funcao adiciona addEventListener em todos os botoes e ja liga com a main
+    via conexao IPC e envia o sinal para rendererOrcamento.js
+     */
+    let botoesInserir = document.querySelectorAll("button.gridBTN");
+    let idBotao;
+
+    btnAddServico = document.getElementById('btnAddServico');
+    btnAddServico.addEventListener('click', function(){ipc.send('adicionar-produto-main', 'servico');});
+
+    for(var j =0; j<botoesInserir.length; j++)
+    {
+        idBotao = botoesInserir[j].id;
+        botoesInserir[j].addEventListener('click', function(){ipc.send('adicionar-produto-main', this.id.slice(13));});
+    }
+}
+
 

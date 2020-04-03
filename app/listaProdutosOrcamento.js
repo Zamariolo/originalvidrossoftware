@@ -3,7 +3,7 @@ const ipc = require('electron').ipcRenderer;
 
 //Obter todos os ids elements
 let ids = document.querySelectorAll('div.modeloProduto > h5.gridID');
-let enderecosImagens = document.querySelectorAll('p.gridENDERECO');
+let enderecosImagens = document.querySelectorAll('img.gridIMAGEM');
 let titulos = document.querySelectorAll('h5.tituloProduto');
 let descricoes = document.querySelectorAll('textarea.novoProdutoTextArea');
 let precosm2 = document.querySelectorAll('input.precom2');
@@ -20,7 +20,7 @@ btnAddServico.addEventListener('click', function(){ipc.send('adicionar-produto-m
 let arrayProdutos = [];
 for (var k = 0; k<ids.length; k++)
 {
-    arrayProdutos.push([ids[k].innerHTML, enderecosImagens[k].innerHTML, titulos[k].innerHTML, descricoes[k].innerHTML, precosm2[k].placeholder, precoskit[k].placeholder]);
+    arrayProdutos.push([ids[k].innerHTML, enderecosImagens[k].src, titulos[k].innerHTML, descricoes[k].innerHTML, precosm2[k].placeholder, precoskit[k].placeholder]);
 }
 
 //Funcionamento da barra de pesquisa
@@ -63,7 +63,6 @@ function recarregaListaProdutos(textoPesquisa, arrayProdutos)
         <div class="separador"></div>
         <h5 class="gridID">${produtosPesquisa[i][0]}</h5>
         <img src='${produtosPesquisa[i][1]}' class="gridIMAGEM">
-        <p class="gridENDERECO" id='enderecoImagem${produtosPesquisa[i][0]}'>${produtosPesquisa[i][1]}</p>
         
         <!-- Titulo -->
         <div class="input-group mb-1 gridTITULO">

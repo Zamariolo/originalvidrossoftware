@@ -141,7 +141,7 @@ function abreWindowListaProdutos (produtos) {
         <link rel="stylesheet" href="css/styleListaProdutosOrcamento.css">
     
     
-        <title>OriginalVidros carregado</title>
+        <title>Lista de produtos</title>
     </head>
 
     <!-- Barra de pesquisa-->
@@ -172,7 +172,6 @@ function abreWindowListaProdutos (produtos) {
         <div class="separador"></div>
         <h5 class="gridID">${produto.idProduto}</h5>
         <img src='${produto.enderecoImagem}' class="gridIMAGEM">
-        <p class="gridENDERECO" id='enderecoImagem${produto.idProduto}'>${produto.enderecoImagem}</p>
         
         <!-- Titulo -->
         <div class="input-group mb-1 gridTITULO">
@@ -240,7 +239,6 @@ function addProduto(dados){
     let descricao = dados[0].descricao;
     let endereco = dados[0].enderecoImagem;
     let precom2 = dados[0].preco_m2;
-    let precoKit = dados[0].preco_kit;
 
     //Gerenciamento de insercao
     idInterno = idInterno + 1; //Para evitar que ids se repitam nos divs dos produtos inseridos

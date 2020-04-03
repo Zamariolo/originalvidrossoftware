@@ -16,6 +16,7 @@ app.on('ready', function(){
     });
     mainWindow.webContents.loadFile('app/index.html');
     mainWindow.webContents.openDevTools();
+    mainWindow.maximize();  
     // mainWindow.removeMenu();
 
     //window ListaProdutos
@@ -25,7 +26,12 @@ app.on('ready', function(){
 
     // windowListaProdutos.removeMenu();
     global.windowListaProdutos = windowListaProdutos;
+
+    //detectar fechamento de janela > se ocorrer, fechar windowListaProdutos
+    mainWindow.on('close', function(){app.quit();});
 });
+
+
 
 
 // #################################################################

@@ -244,12 +244,12 @@ function addProduto(dados){
 
     //Gerenciamento de insercao
     idInterno = idInterno + 1; //Para evitar que ids se repitam nos divs dos produtos inseridos
-    carrinho.push({idCarrinho: id+'-'+idInterno.toString(), idOriginal: id})
+    carrinho.push({idCarrinho: id+'_'+idInterno.toString(), idOriginal: id})
     console.log(carrinho);
 
     divProdutosCarrinho.innerHTML = divProdutosCarrinho.innerHTML + 
     `<!-- Modelo produto -->
-    <div class="divProdutoAdicionado border" id='${id+'-'+idInterno.toString()}'>
+    <div class="divProdutoAdicionado border" id='${id+'_'+idInterno.toString()}'>
         <!-- Imagem -->
         <img src="${endereco}" id='' class="imagemProdutoAdd">
         <!-- Titulo -->
@@ -259,8 +259,8 @@ function addProduto(dados){
         <textarea class="descricaoProdutoAdd form-control" rows="4" readonly>${descricao}</textarea>
         <!-- Entrada das dimensoes e valor kit -->
         <div class="divEntradaProdutoAdd">
-            <input type="text" class="entrada1ProdutoAdd form-control" placeholder="" value='0'>
-            <input type="text" class="entrada2ProdutoAdd form-control" placeholder="" value='0'>
+            <input type="text" id='input1${id}_${idInterno}' class="entrada1ProdutoAdd form-control addListener" placeholder="" value='0'>
+            <input type="text" id='input2${id}_${idInterno}' class="entrada2ProdutoAdd form-control addListener" placeholder="" value='0'>
             <div class="x">x</div>
             <div class="areaProdutoAdd">= XX.XX m²</div>
             <!-- Kit -->
@@ -268,15 +268,22 @@ function addProduto(dados){
                 <div class="input-group-prepend">
                 <span class="input-group-text bg-light">Kit (R$)</span>
                 </div>
-                <input type="number" id="inputPrecoM2NovoProduto" min="0" class="form-control" width="900" placeholder="R$ KIT" aria-describedby="basic-addon1">
+                <input type="number" id="inputPrecoM2NovoProduto" min="0" class="form-control addListener" width="900" placeholder="R$ KIT" aria-describedby="basic-addon1">
             </div>
         </div>
         <!-- Preço -->
         <h5 class="precoProdutoAdd">R$ 00,00</h5>
         <!-- btn exclui produto -->
         <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
-        
     </div>`;
+
+    //Dando eventListener aos inputs
+    let inputs = document.querySelectorAll("input.addListener");
+    console.log(inputs)
+    for (let j=0; j<inputs.length; j++)
+    {
+        inputs[0].addEventListener('keyup', ()=>{atualizaCustoProduto(this.id);});
+    }
 }
 
 function addServico(){
@@ -310,6 +317,11 @@ function addServico(){
         <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
         
     </div>`;
+}
+
+function atualizaCustoProduto(idCarrinho){
+    //Atualiza somente os precos do item selecionado, nao de todos igual mostraClientes()
+    console.log('Detectado', idCarrinho);
 }
 
 // #################################################################

@@ -47,3 +47,44 @@
     cursor: pointer;
     vertical-align: middle;
 }
+
+.imagemProdutoAdd {grid-area: imagem; width: inherit;}
+.tituloProdutoAdd {grid-area: titulo; align-self: left; justify-self: left;}
+.descricaoProdutoAdd {grid-area: descricao; background-color: rgb(255, 255, 255) !important;}
+.inputKit {grid-area: inputKit;}
+.divEntradaProdutoAdd {
+    grid-area: divEntrada; 
+    display: grid;
+    width: 100%;
+    grid-template-columns: 27% 5% 27% 40%;
+    grid-template-rows: auto auto;
+    grid-template-areas: "entrada1 x entrada2 area"
+    "inputKit inputKit inputKit inputKit";
+    row-gap: 5px;
+    vertical-align: middle;
+    align-items: center;
+    justify-items: center;
+}
+.entrada1ProdutoAdd {grid-area: entrada1;}
+.entrada2ProdutoAdd {grid-area: entrada2;}
+.x {grid-area: x;}
+.areaProdutoAdd {grid-area: area;}
+
+.divPrecom2 {grid-area: divPrecom2; font-size: small; margin-bottom: 5px;}
+.precoProdutoAdd {grid-area: preco; justify-self: right; align-self: right;}
+.btnExcluiProdutoAdd {grid-area: btnExclui; align-self: right; justify-self: right;}
+.divProdutoAdicionado {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 16% 30% 24% 17% 2%;
+    column-gap: 2%;
+    grid-template-rows: 17px  auto auto 17px;
+    grid-template-areas: 
+    ". . . . btnExclui"
+    "imagem titulo divEntrada preco ."
+    "imagem descricao divEntrada preco ."
+    ". . divPrecom2 . .";
+    justify-items: center;
+    align-items: center;
+    vertical-align: middle;
+}

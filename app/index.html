@@ -373,33 +373,79 @@
 
             <!-- Produtos adicionados -->
             <div class="produtosAdicionados container border card shadow">
-                <h2>Produtos</h2>
+                <h3 class="card-title">Produtos</h3>
 
                 <div class="separador"></div>
 
                 <!-- Modelo produto -->
-                <div>
-                    <img src="" style='cursor: pointer;' id='' class="">
-                    <h5>Titulo</h5>
-                    <textarea name="" id="" cols="30" rows="4"></textarea>
-                    <input type="text" value="width">
-                    <input type="text" value="height">
-                    <p>m² x </p>
-                    <p>preco/m² = </p>
-                    <h5>R$ 39,99</h5>
-                    <a href="">Desconto</a>
-                    <p>$ kit</p>
+                <div class="divProdutoAdicionado border">
+                    <!-- Imagem -->
+                    <img src="C:\Users\vnsau\Documents\Trabalhos\originalVidros velho\media\Prints produtos\porta versatik 1.PNG" id='' class="imagemProdutoAdd">
+                    <!-- Titulo -->
+                    <h5 class="tituloProdutoAdd">Porta versatik 2</h5>
+                    <div class="divPrecom2 lead">R$ yy.y/m²</div>
+                    <!-- Descricao -->
+                    <textarea class="descricaoProdutoAdd form-control" rows="4" readonly></textarea>
+                    <!-- Entrada das dimensoes e valor kit -->
+                    <div class="divEntradaProdutoAdd">
+                        <input type="text" class="entrada1ProdutoAdd form-control" placeholder="">
+                        <input type="text" class="entrada2ProdutoAdd form-control" placeholder="">
+                        <div class="x">x</div>
+                        <div class="areaProdutoAdd">= XX.XX m²</div>
+                        <!-- Kit -->
+                        <div class="input-group inputKit">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text bg-light">Kit (R$)</span>
+                            </div>
+                            <input type="number" id="inputPrecoM2NovoProduto" min="0" class="form-control" width="900" placeholder="R$ KIT" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <!-- Preço -->
+                    <h5 class="precoProdutoAdd">R$ 39,99</h5>
+                    <!-- btn exclui produto -->
+                    <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
+                    
                 </div>
 
+                <div class="separador-sm" style="background-color: white;"></div>
+
+                <!-- Modelo servico -->
+                <div class="divProdutoAdicionado border">
+                    <!-- Imagem -->
+                    <div id='' class="imagemProdutoAdd"></div>
+                    <!-- Titulo -->
+                    <input type="text" class="form-control tituloProdutoAdd" placeholder="Nome do serviço/desconto/instalação">
+                    <div class="divPrecom2 lead"></div>
+                    <!-- Descricao -->
+                    <textarea class="descricaoProdutoAdd form-control" rows="4"></textarea>
+                    <!-- Entrada das dimensoes e valor kit -->
+                    <div class="divEntradaProdutoAdd">
+                        <!-- Valor do servico -->
+                        <div class="input-group inputKit">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text bg-light">Valor (R$)</span>
+                            </div>
+                            <input type="number" id="inputPrecoM2NovoProduto" class="form-control" width="1000" placeholder="Valor do serviço" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <!-- Preço -->
+                    <h5 class="precoProdutoAdd">R$ 39,99</h5>
+                    <!-- btn exclui produto -->
+                    <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
+                    
+                </div>
+
+                <div class="separador" style="background-color: white;"></div>
+
                 <!-- Inserir produto btn -->
-                <div class='btnAddProduto btn btn-primary bg-light shadow container border'>
+                <div class='btnAddProduto btn btn-primary container border card'>
                     <h1 class="btnVisualAddProduto">+</h1>
                     <h2 class="textoVisualAddProduto lead">Adicionar produto</h2>
                 </div>
 
                 <div class="separador"></div>
 
-            </div>
+            </div> <!-- Fecha div produtos adicionados-->
 
         </div> <!-- Fecha janela orcamento-->
     

@@ -5,6 +5,7 @@ const ipc = require('electron').ipcRenderer;
 
 //Variabel global para armazenar produtos do carrinho
 let carrinho = [];
+let idInterno = 0;
 
 //Criando janela de produtos
 // let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
@@ -231,24 +232,33 @@ function abreWindowListaProdutos (produtos) {
 }
 
 function addProduto(dados){
-    carrinho.push(dados[0].idProduto);
+
+    //Aquisicao de dados
+    let id = dados[0].idProduto;
+    let titulo = dados[0].titulo;
+    let descricao = dados[0].descricao;
+    let endereco = dados[0].enderecoImagem;
+    let precom2 = dados[0].preco_m2;
+    let precoKit = dados[0].preco_kit;
+
+    //Gerenciamento de insercao
+    idInterno = idInterno + 1; //Para evitar que ids se repitam nos divs dos produtos inseridos
+    carrinho.push({idCarrinho: id+'-'+idInterno.toString(), idOriginal: id})
+    console.log(carrinho);
+}
+
+function addServico(){
+    idInterno = idInterno + 1;
+    carrinho.push({idCarrinho: 'servico-'+idInterno.toString(), idOriginal: 'servico'})
     console.log(carrinho);
 }
 
 // #################################################################
 // #################### IPC COMMUNICATION ##########################
+//Recebe o sinal da main que por sua vez é recebido da outra janela
 
-/*Nota, neste exemplo ha apenas 1 comunicacao necessaria (apenas 2 janelas). Portanto,
-atribui-se a ipcMain no rendererOrcamento.js e nao na main.js. Conforme visto em
-https://stackoverflow.com/questions/47416799/communicate-directly-between-two-renderer-processes-in-electron
-
-Gambiarra mas facilita o trabalho neste caso simples. Em caso de mais um tipo de conexao,
-a ipcMain deve estar na main.js e para fazer renderer>renderer deve-se utilizar id das windows
-*/
 ipc.on('adicionar-produto-orcamento', function(event, arg){
     if (arg!='servico')
-    {
-        renderer.connection.query(`SELECT * FROM produtos WHERE idProduto='${arg}'`, function(err, result, fields){if(err) throw err; addProduto(result);})
-    }
-    
+    {renderer.connection.query(`SELECT * FROM produtos WHERE idProduto='${arg}'`, function(err, result, fields){if(err) throw err; addProduto(result);})}
+    else{addServico();} 
 });

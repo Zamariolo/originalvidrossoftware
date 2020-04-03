@@ -22,7 +22,6 @@ app.on('ready', function(){
     let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
         nodeIntegration: true
     }});
-    mainWindow.webContents.openDevTools();
 
     // windowListaProdutos.removeMenu();
     global.windowListaProdutos = windowListaProdutos;

@@ -12,7 +12,7 @@ let btnAddServico = document.getElementById('btnAddServico');
 
 //Inserindo eventListener aos botoes
 insereEventListenerBotoes();
-//Insere eventListener ao btnServico (ele requisita a mesma funcao mas com id de 'servico')
+// //Insere eventListener ao btnServico (ele requisita a mesma funcao mas com id de 'servico')
 btnAddServico.addEventListener('click', function(){ipc.send('adicionar-produto-main', 'servico');});
 
 
@@ -54,12 +54,7 @@ function recarregaListaProdutos(textoPesquisa, arrayProdutos)
     }
 
     //Mostra produtos
-    let listaProdutosHTML = `
-    <!-- Servico -->
-    <div class="card shadow border modeloServico">
-        <h5 class="tituloServico">Serviço</h5>
-        <button class="btn btn-outline-primary btn-sm btnServico" id="btnAddServico">Adicionar2</button>
-    </div>`;
+    let listaProdutosHTML = ``;
 
     for (let i=0; i<produtosPesquisa.length; i++)
     {
@@ -117,8 +112,8 @@ function insereEventListenerBotoes(){
     let botoesInserir = document.querySelectorAll("button.gridBTN");
     let idBotao;
 
-    btnAddServico = document.getElementById('btnAddServico');
-    btnAddServico.addEventListener('click', function(){ipc.send('adicionar-produto-main', 'servico');});
+    // btnAddServico = document.getElementById('btnAddServico');
+    // btnAddServico.addEventListener('click', function(){ipc.send('adicionar-produto-main', 'servico');});
 
     for(var j =0; j<botoesInserir.length; j++)
     {

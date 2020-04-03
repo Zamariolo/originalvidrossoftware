@@ -4,6 +4,7 @@ const fs = require('fs');
 const ipc = require('electron').ipcRenderer;
 
 //Variabel global para armazenar produtos do carrinho
+let divProdutosCarrinho = document.getElementById('divProdutosCarrinho');
 let carrinho = [];
 let idInterno = 0;
 
@@ -152,13 +153,13 @@ function abreWindowListaProdutos (produtos) {
     
     <body>
 
-    <div id="listaProdutos">
-
     <!-- Servico -->
     <div class="card shadow border modeloServico">
         <h5 class="tituloServico">Serviço</h5>
         <button class="btn btn-outline-primary btn-sm btnServico" id="btnAddServico">Adicionar</button>
     </div>
+
+    <div id="listaProdutos">
 
     `;
     let produto = null;
@@ -245,12 +246,70 @@ function addProduto(dados){
     idInterno = idInterno + 1; //Para evitar que ids se repitam nos divs dos produtos inseridos
     carrinho.push({idCarrinho: id+'-'+idInterno.toString(), idOriginal: id})
     console.log(carrinho);
+
+    divProdutosCarrinho.innerHTML = divProdutosCarrinho.innerHTML + 
+    `<!-- Modelo produto -->
+    <div class="divProdutoAdicionado border" id='${id+'-'+idInterno.toString()}'>
+        <!-- Imagem -->
+        <img src="${endereco}" id='' class="imagemProdutoAdd">
+        <!-- Titulo -->
+        <h5 class="tituloProdutoAdd">${titulo}</h5>
+        <div class="divPrecom2 lead">R$ ${precom2}/m²</div>
+        <!-- Descricao -->
+        <textarea class="descricaoProdutoAdd form-control" rows="4" readonly>${descricao}</textarea>
+        <!-- Entrada das dimensoes e valor kit -->
+        <div class="divEntradaProdutoAdd">
+            <input type="text" class="entrada1ProdutoAdd form-control" placeholder="" value='0'>
+            <input type="text" class="entrada2ProdutoAdd form-control" placeholder="" value='0'>
+            <div class="x">x</div>
+            <div class="areaProdutoAdd">= XX.XX m²</div>
+            <!-- Kit -->
+            <div class="input-group inputKit">
+                <div class="input-group-prepend">
+                <span class="input-group-text bg-light">Kit (R$)</span>
+                </div>
+                <input type="number" id="inputPrecoM2NovoProduto" min="0" class="form-control" width="900" placeholder="R$ KIT" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <!-- Preço -->
+        <h5 class="precoProdutoAdd">R$ 00,00</h5>
+        <!-- btn exclui produto -->
+        <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
+        
+    </div>`;
 }
 
 function addServico(){
     idInterno = idInterno + 1;
     carrinho.push({idCarrinho: 'servico-'+idInterno.toString(), idOriginal: 'servico'})
     console.log(carrinho);
+
+    divProdutosCarrinho.innerHTML = divProdutosCarrinho.innerHTML +
+    `<!-- Modelo servico -->
+    <div class="divProdutoAdicionado border" id='servico-${idInterno}'>
+        <!-- Imagem -->
+        <div id='' class="imagemProdutoAdd"></div>
+        <!-- Titulo -->
+        <input type="text" class="form-control tituloProdutoAdd" placeholder="Nome do serviço/desconto/instalação">
+        <div class="divPrecom2 lead"></div>
+        <!-- Descricao -->
+        <textarea class="descricaoProdutoAdd form-control" rows="4"></textarea>
+        <!-- Entrada das dimensoes e valor kit -->
+        <div class="divEntradaProdutoAdd">
+            <!-- Valor do servico -->
+            <div class="input-group inputKit">
+                <div class="input-group-prepend">
+                <span class="input-group-text bg-light">Valor (R$)</span>
+                </div>
+                <input type="number" id="inputPrecoM2NovoProduto" class="form-control" width="1000" placeholder="Valor do serviço" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <!-- Preço -->
+        <h5 class="precoProdutoAdd">R$ 00,00</h5>
+        <!-- btn exclui produto -->
+        <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
+        
+    </div>`;
 }
 
 // #################################################################
@@ -260,5 +319,5 @@ function addServico(){
 ipc.on('adicionar-produto-orcamento', function(event, arg){
     if (arg!='servico')
     {renderer.connection.query(`SELECT * FROM produtos WHERE idProduto='${arg}'`, function(err, result, fields){if(err) throw err; addProduto(result);})}
-    else{addServico();} 
+    else if(arg=='servico'){addServico();console.log('servico detectado');} 
 });

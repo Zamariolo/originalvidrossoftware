@@ -31,6 +31,10 @@ document.querySelector('.comboBoxNomeClienteOrcamento').style.display = 'none';
 let btnAddProduto = document.querySelector('.btnAddProduto');
 btnAddProduto.addEventListener('click', ()=>{renderer.connection.query("SELECT * FROM produtos", function(err, result, fields){if(err) throw err; abreWindowListaProdutos(result);})});
 
+//btn Salvar e imprimir
+let btnSalvarImprimir = document.querySelector(".btnSalvarImprimir");
+btnSalvarImprimir.addEventListener('click', ()=>{salvarImprimir();});
+
 function toggleClienteOrcamento(){
 /*  Descr: Troca a sessão de clientes da tela orçamento entre 'novo cliente' ou 'carregar
 um cliente do banco de dados'. 
@@ -383,6 +387,10 @@ function atualizaPrecoTotal(){
 function removeProdutoCarrinho(idElement){
     document.getElementById(`div${idElement.slice(6)}`).remove();
     atualizaPrecoTotal();
+}
+
+function salvarImprimir(){
+    alert("Imprimindo...")
 }
 // #################################################################
 // #################### IPC COMMUNICATION ##########################

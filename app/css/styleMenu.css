@@ -13,7 +13,7 @@ body {
 }
 
 .linhaHorizontal {
-    width: 95%;
+    width: 100%;
     background-image: linear-gradient(to right, rgb(247,248,249),rgb(0, 27, 148), rgb(247,248,249));
     height: 1px;
 }

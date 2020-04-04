@@ -13,7 +13,6 @@ let idInterno = 0;
 //     nodeIntegration: true
 // }});
 // // windowListaProdutos.removeMenu();
-// console.log(windowListaProdutos.id);,
 windowListaProdutos = require('electron').remote.getGlobal( "windowListaProdutos" );
 
 let btnOrcamentoMenu = document.getElementById('btnOrcamentoMenu');
@@ -106,7 +105,6 @@ function intermediarioCarregaDadosCliente()
     for(var i = 0; i<valueInput.length; i++){if (valueInput[i]=='('){indexAbreParenteses = i;}}
     //Obter o id do cliente
     let id = valueInput.slice(indexAbreParenteses+1, -1);
-    console.log(id);
     //Obter as demais informacoes
     renderer.connection.query(`SELECT telefone,cpf,endereco FROM clientes where idCliente='${id}'`, function(err, result, fields){if(err) throw err; carregaDadosClientes(result);})
 }
@@ -243,24 +241,23 @@ function addProduto(dados){
     //Gerenciamento de insercao
     idInterno = idInterno + 1; //Para evitar que ids se repitam nos divs dos produtos inseridos
     carrinho.push({idCarrinho: id+'_'+idInterno.toString(), idOriginal: id})
-    console.log(carrinho);
 
     divProdutosCarrinho.innerHTML = divProdutosCarrinho.innerHTML + 
     `<!-- Modelo produto -->
-    <div class="divProdutoAdicionado border" id='${id+'_'+idInterno.toString()}'>
+    <div class="divProdutoAdicionado border" id='div_${id+'_'+idInterno.toString()}'>
         <!-- Imagem -->
         <img src="${endereco}" id='' class="imagemProdutoAdd">
         <!-- Titulo -->
         <h5 class="tituloProdutoAdd">${titulo}</h5>
-        <div class="divPrecom2 lead">R$ ${precom2}/m²</div>
+        <div class="divPrecom2 lead" id='precom2_${id}_${idInterno}'>R$ ${precom2}/m²</div>
         <!-- Descricao -->
         <textarea class="descricaoProdutoAdd form-control" rows="4" readonly>${descricao}</textarea>
         <!-- Entrada das dimensoes e valor kit -->
         <div class="divEntradaProdutoAdd">
-            <input type="number" id='input1_${id}_${idInterno}' class="entrada1ProdutoAdd form-control addListener" placeholder="" value='0'>
-            <input type="number" id='input2_${id}_${idInterno}' class="entrada2ProdutoAdd form-control addListener" placeholder="" value='0'>
+            <input type="text" id='input1_${id}_${idInterno}' class="entrada1ProdutoAdd form-control addListener" placeholder="" value='0'>
+            <input type="text" id='input2_${id}_${idInterno}' class="entrada2ProdutoAdd form-control addListener" placeholder="" value='0'>
             <div class="x">x</div>
-            <div class="areaProdutoAdd">= XX.XX m²</div>
+            <div class="areaProdutoAdd" id='area_${id}_${idInterno}'>= 0.00 m²</div>
             <!-- Kit -->
             <div class="input-group inputKit">
                 <div class="input-group-prepend">
@@ -270,9 +267,9 @@ function addProduto(dados){
             </div>
         </div>
         <!-- Preço -->
-        <h5 class="precoProdutoAdd" id='valor_${id}_${idInterno}'>R$ 00,00</h5>
+        <h5 class="precoProdutoAdd" id='valor_${id}_${idInterno}'>R$ 00.00</h5>
         <!-- btn exclui produto -->
-        <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
+        <div class="btnExcluiProdutoAdd" id='remove_${id}_${idInterno}'><a class="btn btn-sm">x</a></div>
     </div>`;
 
     //Dando eventListener aos inputs
@@ -282,16 +279,22 @@ function addProduto(dados){
     {
         inputs[j].addEventListener('keyup', ()=>{atualizaCustoProduto(inputs[j].id);});
     }
+
+    //Dando eventListener aos botoes de excluir produto do carrinho
+    let btnRemover = document.querySelectorAll("div.btnExcluiProdutoAdd");
+    for (let j=0; j<btnRemover.length; j++)
+    {
+        btnRemover[j].addEventListener('click', ()=>{removeProdutoCarrinho(btnRemover[j].id);});
+    }
 }
 
 function addServico(){
     idInterno = idInterno + 1;
     carrinho.push({idCarrinho: 'servico-'+idInterno.toString(), idOriginal: 'servico'})
-    console.log(carrinho);
 
     divProdutosCarrinho.innerHTML = divProdutosCarrinho.innerHTML +
     `<!-- Modelo servico -->
-    <div class="divProdutoAdicionado border" id='servico-${idInterno}'>
+    <div class="divProdutoAdicionado border" id='div_Servico_${idInterno}'>
         <!-- Imagem -->
         <div id='' class="imagemProdutoAdd"></div>
         <!-- Titulo -->
@@ -310,9 +313,9 @@ function addServico(){
             </div>
         </div>
         <!-- Preço -->
-        <h5 class="precoProdutoAdd" id='valor_Servico_${idInterno}'>R$ 00,00</h5>
+        <h5 class="precoProdutoAdd" id='valor_Servico_${idInterno}'>R$ 0.00</h5>
         <!-- btn exclui produto -->
-        <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
+        <div class="btnExcluiProdutoAdd" id='remove_Servico_${idInterno}'><a class="btn btn-sm">x</a></div>
         
     </div>`;
 
@@ -323,11 +326,17 @@ function addServico(){
     {
         inputs[j].addEventListener('keyup', ()=>{atualizaCustoProduto(inputs[j].id);});
     }
+
+    //Dando eventListener aos botoes de excluir produto do carrinho
+    let btnRemover = document.querySelectorAll("div.btnExcluiProdutoAdd");
+    for (let j=0; j<btnRemover.length; j++)
+    {
+        btnRemover[j].addEventListener('click', ()=>{removeProdutoCarrinho(btnRemover[j].id);});
+    }
 }
 
 function atualizaCustoProduto(idElement){
     //Atualiza somente os precos do item selecionado, nao de todos igual mostraClientes()
-    console.log('Detectado', idElement);
     //Obter idCarrinho
     let posUnderline = idElement.indexOf('_');
     let idCarrinho = idElement.slice(posUnderline+1);
@@ -342,13 +351,39 @@ function atualizaCustoProduto(idElement){
         //Eh produto
         let valor1 = document.getElementById(`input1_${idCarrinho}`).value;
         let valor2 = document.getElementById(`input2_${idCarrinho}`).value;
+        let area = Number(valor1)*Number(valor2);
+        //Mostra area
+        document.getElementById(`area_${idCarrinho}`).innerHTML = area.toFixed(2) + "m²"
         let valorKit = document.getElementById(`inputKit_${idCarrinho}`).value;
+        //Obtem valor do m2
+        let textoPrecom2 = document.getElementById(`precom2_${idCarrinho}`).innerHTML;
+        let valorm2 = textoPrecom2.slice(3,textoPrecom2.indexOf('/'));
+        let precoProduto = (area*valorm2);
         //Mostra valor final
-        document.getElementById(`valor_${idCarrinho}`).innerHTML = "R$ " + (Number(valor1)+Number(valor2)+Number(valorKit)).toFixed(2);
+        document.getElementById(`valor_${idCarrinho}`).innerHTML = "R$ " + (Number(precoProduto)+Number(valorKit)).toFixed(2);
     }
+
+    //Atualiza preço total
+    atualizaPrecoTotal();
 
 }
 
+function atualizaPrecoTotal(){
+    //Obtem todos os preços dos itens
+    let precosItens = document.querySelectorAll('h5.precoProdutoAdd');
+    let valorTotal = 0;
+    //Calcula o valor total
+    for (var i = 0; i<precosItens.length; i++){
+        valorTotal = valorTotal + Number(precosItens[i].innerHTML.slice(3));
+    }
+    // Mostra o valor total
+    document.getElementById('precoTotal').innerHTML = "R$ " + valorTotal.toFixed(2);
+}
+
+function removeProdutoCarrinho(idElement){
+    document.getElementById(`div${idElement.slice(6)}`).remove();
+    atualizaPrecoTotal();
+}
 // #################################################################
 // #################### IPC COMMUNICATION ##########################
 //Recebe o sinal da main que por sua vez é recebido da outra janela
@@ -356,5 +391,5 @@ function atualizaCustoProduto(idElement){
 ipc.on('adicionar-produto-orcamento', function(event, arg){
     if (arg!='servico')
     {renderer.connection.query(`SELECT * FROM produtos WHERE idProduto='${arg}'`, function(err, result, fields){if(err) throw err; addProduto(result);})}
-    else if(arg=='servico'){addServico();console.log('servico detectado');} 
+    else if(arg=='servico'){addServico();} 
 });

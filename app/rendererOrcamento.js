@@ -257,8 +257,8 @@ function addProduto(dados){
         <textarea class="descricaoProdutoAdd form-control" rows="4" readonly>${descricao}</textarea>
         <!-- Entrada das dimensoes e valor kit -->
         <div class="divEntradaProdutoAdd">
-            <input type="text" id='input1${id}_${idInterno}' class="entrada1ProdutoAdd form-control addListener" placeholder="" value='0'>
-            <input type="text" id='input2${id}_${idInterno}' class="entrada2ProdutoAdd form-control addListener" placeholder="" value='0'>
+            <input type="number" id='input1_${id}_${idInterno}' class="entrada1ProdutoAdd form-control addListener" placeholder="" value='0'>
+            <input type="number" id='input2_${id}_${idInterno}' class="entrada2ProdutoAdd form-control addListener" placeholder="" value='0'>
             <div class="x">x</div>
             <div class="areaProdutoAdd">= XX.XX m²</div>
             <!-- Kit -->
@@ -266,21 +266,21 @@ function addProduto(dados){
                 <div class="input-group-prepend">
                 <span class="input-group-text bg-light">Kit (R$)</span>
                 </div>
-                <input type="number" id="inputPrecoM2NovoProduto" min="0" class="form-control addListener" width="900" placeholder="R$ KIT" aria-describedby="basic-addon1">
+                <input type="number" id="inputKit_${id}_${idInterno}" min="0" class="form-control addListener" width="900" placeholder="R$ KIT" aria-describedby="basic-addon1">
             </div>
         </div>
         <!-- Preço -->
-        <h5 class="precoProdutoAdd">R$ 00,00</h5>
+        <h5 class="precoProdutoAdd" id='valor_${id}_${idInterno}'>R$ 00,00</h5>
         <!-- btn exclui produto -->
         <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
     </div>`;
 
     //Dando eventListener aos inputs
     let inputs = document.querySelectorAll("input.addListener");
-    console.log(inputs)
+
     for (let j=0; j<inputs.length; j++)
     {
-        inputs[0].addEventListener('keyup', ()=>{atualizaCustoProduto(this.id);});
+        inputs[j].addEventListener('keyup', ()=>{atualizaCustoProduto(inputs[j].id);});
     }
 }
 
@@ -306,20 +306,47 @@ function addServico(){
                 <div class="input-group-prepend">
                 <span class="input-group-text bg-light">Valor (R$)</span>
                 </div>
-                <input type="number" id="inputPrecoM2NovoProduto" class="form-control" width="1000" placeholder="Valor do serviço" aria-describedby="basic-addon1">
+                <input type="number" id="input_Servico_${idInterno}" class="form-control addListener" width="1000" placeholder="Valor do serviço" aria-describedby="basic-addon1">
             </div>
         </div>
         <!-- Preço -->
-        <h5 class="precoProdutoAdd">R$ 00,00</h5>
+        <h5 class="precoProdutoAdd" id='valor_Servico_${idInterno}'>R$ 00,00</h5>
         <!-- btn exclui produto -->
         <div class="btnExcluiProdutoAdd"><a class="btn btn-sm">x</a></div>
         
     </div>`;
+
+    //Dando eventListener aos inputs
+    let inputs = document.querySelectorAll("input.addListener");
+
+    for (let j=0; j<inputs.length; j++)
+    {
+        inputs[j].addEventListener('keyup', ()=>{atualizaCustoProduto(inputs[j].id);});
+    }
 }
 
-function atualizaCustoProduto(idCarrinho){
+function atualizaCustoProduto(idElement){
     //Atualiza somente os precos do item selecionado, nao de todos igual mostraClientes()
-    console.log('Detectado', idCarrinho);
+    console.log('Detectado', idElement);
+    //Obter idCarrinho
+    let posUnderline = idElement.indexOf('_');
+    let idCarrinho = idElement.slice(posUnderline+1);
+    //Detecta se é produto ou servico e calcula o valor deste item
+    if(idCarrinho.slice(0,7)=='Servico'){
+        //Eh serviço
+        let valor = document.getElementById(`input_${idCarrinho}`).value;
+        //Mostra valor final do item
+        document.getElementById(`valor_${idCarrinho}`).innerHTML = "R$ "+ Number(valor).toFixed(2);
+    }
+    else {
+        //Eh produto
+        let valor1 = document.getElementById(`input1_${idCarrinho}`).value;
+        let valor2 = document.getElementById(`input2_${idCarrinho}`).value;
+        let valorKit = document.getElementById(`inputKit_${idCarrinho}`).value;
+        //Mostra valor final
+        document.getElementById(`valor_${idCarrinho}`).innerHTML = "R$ " + (Number(valor1)+Number(valor2)+Number(valorKit)).toFixed(2);
+    }
+
 }
 
 // #################################################################

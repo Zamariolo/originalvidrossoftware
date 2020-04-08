@@ -303,3 +303,5 @@ function inserirCliente(cpfsCadastrados){
         inputInsereEndereco.value = '';
     }
 }
+
+

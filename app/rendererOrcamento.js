@@ -2,11 +2,18 @@ let renderer = require('./renderer.js');
 var {BrowserWindow} = require('electron').remote;
 const fs = require('fs');
 const ipc = require('electron').ipcRenderer;
+var {dialog} = require('electron').remote;
+
+//Inicializando
+document.querySelector('.nomeClienteOrcamento').style.display = 'flex'
 
 //Variabel global para armazenar produtos do carrinho
 let divProdutosCarrinho = document.getElementById('divProdutosCarrinho');
 let carrinho = [];
 let idInterno = 0;
+//Variaveis globais para gerar boleto
+let idDoCliente = 0;
+let idDoServico = 0;
 
 //Criando janela de produtos
 // let windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
@@ -389,8 +396,148 @@ function removeProdutoCarrinho(idElement){
     atualizaPrecoTotal();
 }
 
+function atualizaIDDoCliente(dadosClientes){
+    for (let k = 0; k < dadosClientes.length; k++)
+    {
+        if (Number(dadosClientes[k].idCliente) >= idDoCliente){idDoCliente = Number(dadosClientes[k].idCliente); console.log(idDoCliente)}
+    }
+}
+
 function salvarImprimir(){
-    alert("Imprimindo...")
+
+    //Obtem o ultimo id cliente pra determinar o id do cliente atual (salvo em idDoCliente)
+    renderer.connection.query('SELECT idCliente FROM clientes', function(err, dadosClientes, fields){atualizaIDDoCliente(dadosClientes);});
+
+    ///////////////////// CLIENTE
+    ////////////////////////////////////
+
+    //Obtem dados (menos nome pq vai depender se é novo cliente ou nao)
+    let nomeCliente = '';
+    let cpfCliente = document.getElementById('inputCPFClienteOrcamento').value;
+    let enderecoCliente = document.getElementById('inputEnderecoClienteOrcamento').value;
+    let telefoneCliente = document.getElementById('inputTelefoneClienteOrcamento').value;
+    console.log(idDoCliente);
+
+    //Se for cliente novo => verifica e insere no banco de dados
+    if (document.querySelector('.nomeClienteOrcamento').style.display == 'flex')
+    {
+        //Obtem nomeCliente
+        nomeCliente = document.getElementById('inputNomeClienteOrcamento').value;
+        alert(nomeCliente);
+        //Verifica se as entradas (nome, telefone) são válidos
+        //Verifica se foi inserido nome
+        if (nomeCliente==''){dialog.showMessageBoxSync('',{title: `Campo 'nome' vazio!`, message: 'Não se pode inserir um cliente sem nome', type:'warning'}); return 0;}
+        //Verifica se foi inserido numero de telefone
+        if (telefoneCliente==''){dialog.showMessageBoxSync('',{title: `Campo 'telefone' vazio!`, message: 'Não se pode inserir um cliente sem telefone', type:'warning'}); return 0;}
+    
+        //Insere no banco de dados (se nao tiver falhado nas etapas acima)
+        renderer.connection.query(`INSERT INTO clientes (nome, cpf, telefone, endereco) values ('${nomeCliente}','${cpfCliente}','${telefoneCliente}','${enderecoCliente}')`);
+    }
+    else{
+        //Obtem nomeCliente
+        nomeCliente = document.getElementById('inputComboBoxClienteOrcamento').value;
+        alert(nomeCliente);
+    }
+
+    //Obtem data
+    let data = new Date();
+    let hoje = String("0" + data.getDay()).slice(-2) + '/' + String("0" + data.getMonth()).slice(-2) + '/' + data.getFullYear();
+
+    //Gera html para imprimir
+    //Html inicial
+    let htmlImprimir = `<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+        <meta name="viewport" content="width=device-width,initial-scale=1"> 
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styleWindowImprimir.css">
+    
+    
+        <title>Imprimir orçamento</title>
+    </head>
+    
+    <body>
+
+        <!-- Div cabecalho -->
+        <div class="divCabecalho container border">
+            <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg.webp" alt="" class="logo">
+            <p class="texto1">Box - Espelho - Vidros - Ferragens</p>
+            <p class="texto2">Fone: (19) 3831-1112</p>
+            <p class="texto3">Avenida Mogi Mirim, N° 503 - Areião - Mogi Guaçu - SP</p>
+            <p class="texto4">E-mail: vidracariaoriginal@hotmail.com</p>
+        </div>
+        
+        <!-- Numero do servico  -->
+        <div class="container"><h3 style="color: red;" class="float-right">0474</h3></div>
+
+        <div class="separador"></div>
+
+        <!-- div dados cliente -->
+        <div class="divCliente container">
+            <table>
+                <tr>
+                    <td>Data: </td>
+                    <td colspan="3">${hoje}</td>
+                </tr>
+
+                <tr>
+                    <td>Cliente: </td>
+                    <td colspan="3">${nomeCliente}</td>
+                </tr>
+                <tr>
+                    <td>CPF:</td>
+                    <td>${cpfCliente}</td>
+                    <td>Fone:</td>
+                    <td>${telefoneCliente}</td>
+                </tr>
+                <tr>
+                    <td>Endereço</td>
+                    <td colspan="3">${enderecoCliente}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Div lista de produtos -->
+        <div>
+        <!-- Continua no codigo -->
+        `
+
+    //Html final
+    htmlImprimir = htmlImprimir + `</div>
+
+    <!-- Div condicoes -->
+    <div class="separador"></div>
+    <div class="divCondicoes container">
+        <p>À vista 5% de desconto ou 4x no cartão; Prazo de 20 dias; Depois de instalado o vidro não tem garantia; o Kit possui garantia de 3 meses após instalação.</p>
+    </div>
+
+    <!-- div Assinatura e total -->
+    <div class="container divAssinatura">
+        <h4 class="textoAssinatura1">Concordo com os termos</h4>
+        <h4 class="linhaAssinatura">___________________________________</h4>
+        <h6 class="textoAssinatura2">Assinatura</h6>
+        <div class="divTotal">
+            <h3 class="textoTotal">Total</h3>
+            <h3 class="valorTotal">R$ 199,99</h3>
+        </div>
+        
+    </div>
+
+</body>
+</html>`
+
+    //Cria janela, abre, maximiza e carrega seu html
+    let windowImprimir = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', webPreferences: {
+        nodeIntegration: true
+    }});
+    windowImprimir.maximize();
+    //Definindo html do arquivo e o carregando
+    fs.writeFile(`${__dirname}/windowImprimir.html`, htmlImprimir, function (err) {if (err) throw err;
+        windowImprimir.loadFile(`${__dirname}/windowImprimir.html`);})
+    windowImprimir.loadFile(`${__dirname}/windowImprimir.html`);
 }
 // #################################################################
 // #################### IPC COMMUNICATION ##########################

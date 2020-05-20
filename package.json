@@ -12,7 +12,9 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "electron": "^8.0.3",
+    "electron-html-to": "^2.6.0",
     "electron-window-manager": "^1.0.6",
+    "html-pdf": "^2.2.0",
     "jQuery": "^1.7.4",
     "mysql": "^2.18.1"
   }

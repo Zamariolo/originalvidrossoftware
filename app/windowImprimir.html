@@ -5,11 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
         <meta name="viewport" content="width=device-width,initial-scale=1"> 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/styleWindowImprimir.css">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/styleWindowImprimir.css">
     
     
         <title>Imprimir orçamento</title>
+
+            <embed
+        type="application/pdf"
+        src="path_to_pdf_document.pdf"
+        id="pdfDocument"
+        width="100%"
+        height="100%" />
     </head>
     
     <body>
@@ -24,7 +31,7 @@
         </div>
         
         <!-- Numero do servico  -->
-        <div class="container"><h3 style="color: red;" class="float-right">0474</h3></div>
+        <div class="container"><h3 style="color: red;" class="float-right">22</h3></div>
 
         <div class="separador"></div>
 
@@ -33,18 +40,18 @@
             <table>
                 <tr>
                     <td>Data: </td>
-                    <td colspan="3">03/03/2020</td>
+                    <td colspan="3">03/04/2020</td>
                 </tr>
 
                 <tr>
                     <td>Cliente: </td>
-                    <td colspan="3">Gabriel (40)</td>
+                    <td colspan="3">asdasdas</td>
                 </tr>
                 <tr>
                     <td>CPF:</td>
                     <td></td>
                     <td>Fone:</td>
-                    <td>199999631839</td>
+                    <td>2332</td>
                 </tr>
                 <tr>
                     <td>Endereço</td>
@@ -53,25 +60,31 @@
             </table>
         </div>
 
+        <div class="separador"></div>
+        <div class="separador"></div>
+
         <!-- Div lista de produtos -->
-        <div>
+        <div class="container">
         <!-- Continua no codigo -->
         </div>
 
     <!-- Div condicoes -->
+    <div class="separador"></div>
+    <div class="separador"></div>
     <div class="separador"></div>
     <div class="divCondicoes container">
         <p>À vista 5% de desconto ou 4x no cartão; Prazo de 20 dias; Depois de instalado o vidro não tem garantia; o Kit possui garantia de 3 meses após instalação.</p>
     </div>
 
     <!-- div Assinatura e total -->
+    <div class="separador"></div>
     <div class="container divAssinatura">
         <h4 class="textoAssinatura1">Concordo com os termos</h4>
         <h4 class="linhaAssinatura">___________________________________</h4>
         <h6 class="textoAssinatura2">Assinatura</h6>
         <div class="divTotal">
             <h3 class="textoTotal">Total</h3>
-            <h3 class="valorTotal">R$ 199,99</h3>
+            <h3 class="valorTotal">R$ 00.00</h3>
         </div>
         
     </div>

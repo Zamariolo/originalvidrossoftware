@@ -3,6 +3,7 @@ var {BrowserWindow} = require('electron').remote;
 const fs = require('fs');
 const ipc = require('electron').ipcRenderer;
 var {dialog} = require('electron').remote;
+convertFactory = require('electron-html-to');
 
 //Inicializando
 document.querySelector('.nomeClienteOrcamento').style.display = 'flex'
@@ -62,7 +63,6 @@ um cliente do banco de dados'.
         document.getElementById('inputEnderecoClienteOrcamento').setAttribute('readonly', true);
         //Carrega clientes e popula datalist
         renderer.connection.query("SELECT nome, idCliente FROM clientes", function(err, result, fields){if(err) throw err; populateDataListClientes(result);});
-    
     }
     else
     {
@@ -102,6 +102,9 @@ function populateDataListClientes(clientes){
     }
     //Adiciona ao datalist
     document.getElementById('selectNomeClienteOrcamento').innerHTML = htmlInterior;
+
+    //Carregando dados
+    renderer.connection.query('SELECT MAX(idCliente) FROM clientes', function(err, maxID, fields){idDoCliente=maxID});
 }
 
 function intermediarioCarregaDadosCliente()
@@ -117,7 +120,7 @@ function intermediarioCarregaDadosCliente()
     //Obter o id do cliente
     let id = valueInput.slice(indexAbreParenteses+1, -1);
     //Obter as demais informacoes
-    renderer.connection.query(`SELECT telefone,cpf,endereco FROM clientes where idCliente='${id}'`, function(err, result, fields){if(err) throw err; carregaDadosClientes(result);})
+    renderer.connection.query(`SELECT idCliente,telefone,cpf,endereco FROM clientes where idCliente='${id}'`, function(err, result, fields){if(err) throw err; carregaDadosClientes(result);})
 }
 
 function carregaDadosClientes(dados){
@@ -139,6 +142,7 @@ function abreWindowListaProdutos (produtos) {
     
     //Gera html pra ser inserido no html
     // HTML introdutorio
+
     let htmlListaProdutos = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -230,7 +234,7 @@ function abreWindowListaProdutos (produtos) {
         windowListaProdutos = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', show: false, webPreferences: {
             nodeIntegration: true
         }});
-        windowListaProdutos.webContents.openDevTools();
+        // windowListaProdutos.webContents.openDevTools();
         // windowListaProdutos.removeMenu();
         // windowListaProdutos.loadFile(`${__dirname}/windowProdutosOrcamento.html`);
         windowListaProdutos.show();
@@ -252,17 +256,18 @@ function addProduto(dados){
     //Gerenciamento de insercao
     idInterno = idInterno + 1; //Para evitar que ids se repitam nos divs dos produtos inseridos
     carrinho.push({idCarrinho: id+'_'+idInterno.toString(), idOriginal: id})
+    console.log(carrinho);
 
     divProdutosCarrinho.innerHTML = divProdutosCarrinho.innerHTML + 
     `<!-- Modelo produto -->
     <div class="divProdutoAdicionado border" id='div_${id+'_'+idInterno.toString()}'>
         <!-- Imagem -->
-        <img src="${endereco}" id='' class="imagemProdutoAdd">
+        <img src="${endereco}" id="imagem_${id}_${idInterno}" class="imagemProdutoAdd">
         <!-- Titulo -->
-        <h5 class="tituloProdutoAdd">${titulo}</h5>
+        <h5 class="tituloProdutoAdd" id="titulo_${id}_${idInterno}">${titulo}</h5>
         <div class="divPrecom2 lead" id='precom2_${id}_${idInterno}'>R$ ${precom2}/m²</div>
         <!-- Descricao -->
-        <textarea class="descricaoProdutoAdd form-control" rows="4" readonly>${descricao}</textarea>
+        <textarea class="descricaoProdutoAdd form-control" rows="4" readonly id="descricao_${id}_${idInterno}">${descricao}</textarea>
         <!-- Entrada das dimensoes e valor kit -->
         <div class="divEntradaProdutoAdd">
             <input type="text" id='input1_${id}_${idInterno}' class="entrada1ProdutoAdd form-control addListener" placeholder="" value='0'>
@@ -301,7 +306,7 @@ function addProduto(dados){
 
 function addServico(){
     idInterno = idInterno + 1;
-    carrinho.push({idCarrinho: 'servico-'+idInterno.toString(), idOriginal: 'servico'})
+    carrinho.push({idCarrinho: 'Servico_'+idInterno.toString(), idOriginal: 'servico'})
 
     divProdutosCarrinho.innerHTML = divProdutosCarrinho.innerHTML +
     `<!-- Modelo servico -->
@@ -309,10 +314,10 @@ function addServico(){
         <!-- Imagem -->
         <div id='' class="imagemProdutoAdd"></div>
         <!-- Titulo -->
-        <input type="text" class="form-control tituloProdutoAdd" placeholder="Nome do serviço/desconto/instalação">
+        <input type="text" class="form-control tituloProdutoAdd" id="titulo_Servico_${idInterno}" placeholder="Nome do serviço/desconto/instalação">
         <div class="divPrecom2 lead"></div>
         <!-- Descricao -->
-        <textarea class="descricaoProdutoAdd form-control" rows="4"></textarea>
+        <textarea class="descricaoProdutoAdd form-control" rows="4" id="descricao_Servico_${idInterno}"></textarea>
         <!-- Entrada das dimensoes e valor kit -->
         <div class="divEntradaProdutoAdd">
             <!-- Valor do servico -->
@@ -393,20 +398,26 @@ function atualizaPrecoTotal(){
 
 function removeProdutoCarrinho(idElement){
     document.getElementById(`div${idElement.slice(6)}`).remove();
-    atualizaPrecoTotal();
-}
 
-function atualizaIDDoCliente(dadosClientes){
-    for (let k = 0; k < dadosClientes.length; k++)
+    // Remove do carrinho
+        //Busca pela posicao e tira do array pela posicao
+    for (i=0; i<carrinho.length; i++)
     {
-        if (Number(dadosClientes[k].idCliente) >= idDoCliente){idDoCliente = Number(dadosClientes[k].idCliente); console.log(idDoCliente)}
+        if (String(carrinho[i].idCarrinho) == idElement.slice(7))
+        {
+            pos = i;
+        }
     }
+    carrinho.splice(pos,1) //Remove elemento do array carrinho
+
+    atualizaPrecoTotal();
 }
 
 function salvarImprimir(){
 
-    //Obtem o ultimo id cliente pra determinar o id do cliente atual (salvo em idDoCliente)
-    renderer.connection.query('SELECT idCliente FROM clientes', function(err, dadosClientes, fields){atualizaIDDoCliente(dadosClientes);});
+    // Le id do cliente e servico
+    var idCliente = fs.readFileSync('app/last_idCliente.txt');
+    var idServico = fs.readFileSync('app/last_idServico.txt');
 
     ///////////////////// CLIENTE
     ////////////////////////////////////
@@ -416,14 +427,12 @@ function salvarImprimir(){
     let cpfCliente = document.getElementById('inputCPFClienteOrcamento').value;
     let enderecoCliente = document.getElementById('inputEnderecoClienteOrcamento').value;
     let telefoneCliente = document.getElementById('inputTelefoneClienteOrcamento').value;
-    console.log(idDoCliente);
 
     //Se for cliente novo => verifica e insere no banco de dados
     if (document.querySelector('.nomeClienteOrcamento').style.display == 'flex')
     {
         //Obtem nomeCliente
         nomeCliente = document.getElementById('inputNomeClienteOrcamento').value;
-        alert(nomeCliente);
         //Verifica se as entradas (nome, telefone) são válidos
         //Verifica se foi inserido nome
         if (nomeCliente==''){dialog.showMessageBoxSync('',{title: `Campo 'nome' vazio!`, message: 'Não se pode inserir um cliente sem nome', type:'warning'}); return 0;}
@@ -432,16 +441,30 @@ function salvarImprimir(){
     
         //Insere no banco de dados (se nao tiver falhado nas etapas acima)
         renderer.connection.query(`INSERT INTO clientes (nome, cpf, telefone, endereco) values ('${nomeCliente}','${cpfCliente}','${telefoneCliente}','${enderecoCliente}')`);
+        
+        fs.writeFileSync('app/last_idCliente.txt', String(parseInt(idCliente)+1));
     }
     else{
         //Obtem nomeCliente
         nomeCliente = document.getElementById('inputComboBoxClienteOrcamento').value;
-        alert(nomeCliente);
+        idCliente = nomeCliente.slice(-3,-1)
     }
+
+   
+    console.log('Idservico: ' + idServico);
+    console.log('idCliente: ' +idCliente)
+
+    fs.writeFileSync('app/last_idServico.txt', String(parseInt(idServico)+1));
+    console.log('arquivo salvo.')
 
     //Obtem data
     let data = new Date();
     let hoje = String("0" + data.getDay()).slice(-2) + '/' + String("0" + data.getMonth()).slice(-2) + '/' + data.getFullYear();
+
+    //Adiciona servico no banco de dados
+    renderer.connection.query(`INSERT INTO servicos (idCliente, dataServico, valorTotal, comentarios, status) 
+    VALUES ('${idCliente}', '${data.getFullYear()}-${String("0" + data.getMonth()).slice(-2)}-${String("0" + data.getDay()).slice(-2)}', '${String(document.getElementById('precoTotal').innerHTML).slice(3)}','' , '1')`);
+    
 
     //Gera html para imprimir
     //Html inicial
@@ -452,11 +475,18 @@ function salvarImprimir(){
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
         <meta name="viewport" content="width=device-width,initial-scale=1"> 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/styleWindowImprimir.css">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/styleWindowImprimir.css">
     
     
         <title>Imprimir orçamento</title>
+
+            <embed
+        type="application/pdf"
+        src="path_to_pdf_document.pdf"
+        id="pdfDocument"
+        width="100%"
+        height="100%" />
     </head>
     
     <body>
@@ -471,7 +501,7 @@ function salvarImprimir(){
         </div>
         
         <!-- Numero do servico  -->
-        <div class="container"><h3 style="color: red;" class="float-right">0474</h3></div>
+        <div class="container"><h3 style="color: red;" class="float-right">${idServico}</h3></div>
 
         <div class="separador"></div>
 
@@ -500,28 +530,89 @@ function salvarImprimir(){
             </table>
         </div>
 
+        <div class="separador"></div>
+        <div class="separador"></div>
+
         <!-- Div lista de produtos -->
-        <div>
+        <div class="container">
         <!-- Continua no codigo -->
         `
+    
+    // Carrega produtos e servicos na pagina
+    for (var i=0; i<carrinho.length; i++)
+    {
+        // Verifica se é servico
+        if(carrinho[i].idOriginal == 'servico')
+        {
+            id_servico = carrinho[i].idCarrinho;
+
+            // Obtem parametros do servico
+            var valor = document.getElementById(`input_${id_servico}`).value;
+            var titulo = document.getElementById(`titulo_${id_servico}`).value;
+            var descricao = document.getElementById(`descricao_${id_servico}`).value;
+
+            // Insere servico no html
+            htmlImprimir = htmlImprimir + 
+            `<div class="div_servico_imprimir border">
+                <h3 class="titulo_servico">${titulo}</h3>
+                <p class="lead descricao_servico" align="justify">${descricao}</p>
+                <h2 class="valor_servico">R$ ${valor}</h2>
+            </div>`
+        }
+        // Se for um produto...
+        else
+        {
+            id_servico = carrinho[i].idCarrinho;            
+            // Obtem parametros do produto
+            var titulo = document.getElementById(`titulo_${id_servico}`).innerHTML;
+            var descricao = document.getElementById(`descricao_${id_servico}`).value;
+            var imagem = document.getElementById(`imagem_${id_servico}`).src;
+            var input1 = document.getElementById(`input1_${id_servico}`).value;
+            var input2 = document.getElementById(`input2_${id_servico}`).value;
+            var kit = document.getElementById(`inputKit_${id_servico}`).value;
+            var area = document.getElementById(`area_${id_servico}`).innerHTML;
+            var valor = document.getElementById(`valor_${id_servico}`).innerHTML;
+
+            console.log(titulo, descricao, imagem, input1, input2, kit, area, valor);
+
+            // Insere produto no html
+            htmlImprimir = htmlImprimir + `
+            <div class="container div_produto_imprimir border">
+                <h3 class="titulo"_produto>${titulo}</h3>
+                <p class="lead descricao_produto">${descricao}</p>
+                <img src="${imagem}" class="imagem_produto">
+                <div class="div_dados_produto">
+                    <p>${input1} X ${input2} = ${area}</p>
+                    <p>Kit: ${kit}</p>
+                </div>
+                
+                <h2 class="valor_produto">${valor}</h2>
+            </div>
+            `
+        }
+
+    }
 
     //Html final
     htmlImprimir = htmlImprimir + `</div>
 
     <!-- Div condicoes -->
     <div class="separador"></div>
+    <div class="separador"></div>
+    <div class="separador"></div>
     <div class="divCondicoes container">
         <p>À vista 5% de desconto ou 4x no cartão; Prazo de 20 dias; Depois de instalado o vidro não tem garantia; o Kit possui garantia de 3 meses após instalação.</p>
     </div>
 
     <!-- div Assinatura e total -->
+    <div class="separador"></div>
     <div class="container divAssinatura">
         <h4 class="textoAssinatura1">Concordo com os termos</h4>
         <h4 class="linhaAssinatura">___________________________________</h4>
         <h6 class="textoAssinatura2">Assinatura</h6>
         <div class="divTotal">
             <h3 class="textoTotal">Total</h3>
-            <h3 class="valorTotal">R$ 199,99</h3>
+            <h3 class="valorTotal">${document.getElementById('precoTotal').innerHTML}</h3>
         </div>
         
     </div>
@@ -533,11 +624,58 @@ function salvarImprimir(){
     let windowImprimir = new BrowserWindow({width: 800, height: 650, title: 'Lista de produtos', webPreferences: {
         nodeIntegration: true
     }});
+
     windowImprimir.maximize();
     //Definindo html do arquivo e o carregando
     fs.writeFile(`${__dirname}/windowImprimir.html`, htmlImprimir, function (err) {if (err) throw err;
-        windowImprimir.loadFile(`${__dirname}/windowImprimir.html`);})
-    windowImprimir.loadFile(`${__dirname}/windowImprimir.html`);
+        windowImprimir.loadFile(`${__dirname}/windowImprimir.html`);    
+    })
+
+    // windowImprimir.loadFile(`${__dirname}/windowImprimir.html`);
+
+    //Salva copia de pdf
+    windowImprimir.webContents.on('did-finish-load', () => {
+        // Use default printing options
+        windowImprimir.webContents.printToPDF({
+            marginsType: 0,
+            printBackground: false,
+            printSelectionOnly: false,
+            landscape: false,
+            pageSize: 'A4',
+            scaleFactor: 100
+          }).then(data => {
+          fs.writeFile(`${__dirname}/pdf_servicos/serv_${idServico}.pdf`, data, (error) => {
+            if (error) throw error
+            console.log('Write PDF successfully.')
+          })
+        }).catch(error => {
+          console.log(error)
+        })
+
+         //Limpando tela de orcamento
+         divProdutosCarrinho.innerHTML = '';
+         document.getElementById('precoTotal').innerHTML = 'R$ 00.00';
+         document.getElementById('inputTelefoneClienteOrcamento').value = '';
+         document.getElementById('inputCPFClienteOrcamento').value = '';
+         document.getElementById('inputEnderecoClienteOrcamento').value = '';
+         document.querySelector('.nomeClienteOrcamento').value = '';
+         document.querySelector('.comboBoxNomeClienteOrcamento').value = '';
+         document.querySelector('.comboBoxNomeClienteOrcamento').selectedIndex = 0;
+         carrinho = [];
+
+         console.log("Abrindo impressora")
+         var options = {
+             pageSize: 'A4'
+         }
+         windowImprimir.webContents.print(options)
+
+    })
+    
+
+
+
+
+
 }
 // #################################################################
 // #################### IPC COMMUNICATION ##########################

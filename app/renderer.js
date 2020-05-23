@@ -4,6 +4,7 @@
 var {dialog} = require('electron').remote;
 var rendererClientes = require('./rendererClientes.js');
 var rendererOrcamento = require('./rendererOrcamento.js');
+var rendererServicos = require('./rendererServicos.js');
 
 //mysql connection
 var mysql = require('mysql');
@@ -72,11 +73,17 @@ setInterval(attRelogio, 1000);
 let btnProdutos = document.getElementById('btnProdutos');
 let btnClientes = document.getElementById('btnClientes');
 let btnOrcamento = document.getElementById('btnOrcamento');
+let btnServicos = document.getElementById('btnServicos');
 
 //menu -> produtos
 btnProdutos.addEventListener('click', () => {trocaTela('janelaMenu','janelaProdutos'); carregaProdutosDB();});
 btnClientes.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaClientes'); con.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; rendererClientes.mostraClientes(result);});});
-btnOrcamento.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaOrcamento');})
+btnOrcamento.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaOrcamento');});
+btnServicos.addEventListener('click', ()=>{
+    trocaTela('janelaMenu', 'janelaServicos'); 
+    con.query("SELECT servicos.idServico, servicos.dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.status = 1;", function(err, result, fields){rendererServicos.mostraServicos(result, 1)});
+    con.query("SELECT servicos.idServico, servicos.dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.status = 2;", function(err, result, fields){rendererServicos.mostraServicos(result, 2)});
+    con.query("SELECT servicos.idServico, servicos.dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.status = 3;", function(err, result, fields){rendererServicos.mostraServicos(result, 3)})});
 // =========================== fim JanelaMenu ===========================
 // ==================================================================
 

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/styleProdutos.css">
     <link rel="stylesheet" href="css/styleClientes.css">
     <link rel="stylesheet" href="css/styleOrcamento.css">
+    <link rel="stylesheet" href="css/styleServicos.css">
 
 
     <title>OriginalVidros</title>
@@ -69,7 +70,7 @@
                 </div>
 
                 <!-- Botao servicos -->
-                <div class="col botaoSecundario btn btn-primary bordaBotaoSecundario bg-light">
+                <div class="col botaoSecundario btn btn-primary bordaBotaoSecundario bg-light" id="btnServicos">
                     <h5 class="recheioBotao">Serviços</h5>
                 </div>
 
@@ -409,6 +410,63 @@
             <div id='memoryCard_idServico' style="display: none;"></div>
 
         </div> <!-- Fecha janela orcamento-->
+
+        <!-- Janela servicos -->
+        <div class="janelaServicos">
+            <!-- Menu -->
+            <div class="row bg-light" style="width: 100%;"> <!-- Menu para voltar,-->
+                <button class="btn btn-primary menuProdutos col" id='btnServicoMenu'>Menu</button>
+                <!-- <button class="btn btn-primary menuProdutos col" id=''></button>
+                <button class="btn btn-primary menuProdutos col" id=''></button> -->
+                <div class="md-form mt-0 col">
+                    <input class="form-control" type="text" placeholder="Pesquisa" aria-label="Search" id=''>
+                </div>
+
+                <div class="col">
+                    <!-- Select status -->
+                    <select style="height: 100%;">
+                        <option value="Todos" class="lead">Todos</option>
+                        <option value="Todos" class="lead">1</option>
+                        <option value="Todos" class="lead">2</option>
+                        <option value="Todos" class="lead">3</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="linhaHorizontal"></div>
+            <div class="separador-sm"></div>
+
+            <!-- Grupo 1 -->
+            <div class="grupo" style="margin-left: 20px;">
+
+                <!-- header -->
+                <div class="row" style="width: 100%;">
+                    <p class="col-1">Status</p>
+                    <p class="col-1">id</p>
+                    <p class="col-2">Data</p>
+                    <p class="col-5">Nome cliente</p>
+                    <p class="col-2"><b>Valor total</b></p>
+                    <p class="col-1"></p>
+                </div>
+
+                <div class="separador-sm"></div>
+                
+
+                <!-- Corpo -->
+                <div class="corpoGrupo">
+                <!-- Modelo de html de servico -->
+                    <div class="item_servico row">
+                        <img src="media/assets/red_circle.png" alt="" class="imagem_item_servico col-1">
+                        <p class="col-1 lead texto_item_servico">id</p>
+                        <p class="col-2 lead texto_item_servico">01/01/2020</p>
+                        <p class="col-5 lead texto_item_servico">Vinícius Augusto Zamariola Setin</p>
+                        <p class="col-2 lead texto_item_servico"><b>R$ 420.99</b></p>
+                        <img src="media/assets/comments.png" alt="" class="imagem_item_servico col-1">
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- Fecha janela servicos-->
     
     </div> <!--Fecha contentWindow -->
 
@@ -418,6 +476,7 @@
         require('./renderer.js');
         require('./rendererClientes.js');
         require('./rendererOrcamento.js');
+        require('./rendererServicos.js');
     </script>
     
 </body>

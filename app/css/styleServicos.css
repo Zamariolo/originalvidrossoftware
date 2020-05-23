@@ -1,0 +1,41 @@
+.janelaServicos {
+    display: none;
+    width: 100%;
+}
+
+.grupo {
+    height: 70vh;
+}
+
+.containerGrupos {
+    width: 100%;
+}
+
+.corpoGrupo {
+    height: 100%;
+}
+
+.item_servico {
+    background-color: rgb(252, 252, 252);
+    width: 100%;
+    border: 1px solid;
+    border-color: rgb(207, 207, 207);
+}
+
+.texto_item_servico {
+    text-align: center;
+    align-self: center;
+    vertical-align: middle;
+}
+
+.imagem_item_servico {
+    height: 20px;
+    width: 20px;
+    max-height: 80px;
+    max-width: 80px;
+    text-align: center;
+    align-self: center;
+    vertical-align: middle;
+    object-fit: contain;
+    cursor: pointer;
+}

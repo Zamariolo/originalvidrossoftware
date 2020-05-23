@@ -18,6 +18,15 @@ body {
     height: 1px;
 }
 
+.linhaVertical {
+    width: 0.1px;
+    max-width: 0.5px;
+    height: 100vh;
+    border-left: 1px solid;
+    border-image-source: linear-gradient(to bottom, rgb(247,248,249),rgb(0, 27, 148), rgb(247,248,249));
+    border-image-slice: 1;
+}
+
 .separador {
     height: 5vh;
 }

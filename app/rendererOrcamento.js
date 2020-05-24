@@ -416,7 +416,7 @@ function removeProdutoCarrinho(idElement){
 function salvarImprimir(){
 
     // Le id do cliente e servico
-    var idCliente = fs.readFileSync('app/last_idCliente.txt');
+    var idCliente = parseInt(fs.readFileSync('app/last_idCliente.txt'))+1;
     var idServico = fs.readFileSync('app/last_idServico.txt');
 
     ///////////////////// CLIENTE
@@ -447,15 +447,14 @@ function salvarImprimir(){
     else{
         //Obtem nomeCliente
         nomeCliente = document.getElementById('inputComboBoxClienteOrcamento').value;
-        idCliente = nomeCliente.slice(-3,-1)
+        idCliente = nomeCliente.slice(-3,-1) //Arrumar isso aqui pra aceitar clientes com 3digitos de id
     }
 
    
     console.log('Idservico: ' + idServico);
-    console.log('idCliente: ' +idCliente)
+    console.log('idCliente: ' +idCliente);
 
     fs.writeFileSync('app/last_idServico.txt', String(parseInt(idServico)+1));
-    console.log('arquivo salvo.')
 
     //Obtem data
     let data = new Date();

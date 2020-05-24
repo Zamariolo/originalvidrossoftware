@@ -79,11 +79,8 @@ let btnServicos = document.getElementById('btnServicos');
 btnProdutos.addEventListener('click', () => {trocaTela('janelaMenu','janelaProdutos'); carregaProdutosDB();});
 btnClientes.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaClientes'); con.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; rendererClientes.mostraClientes(result);});});
 btnOrcamento.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaOrcamento');});
-btnServicos.addEventListener('click', ()=>{
-    trocaTela('janelaMenu', 'janelaServicos'); 
-    con.query("SELECT servicos.idServico, servicos.dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.status = 1;", function(err, result, fields){rendererServicos.mostraServicos(result, 1)});
-    con.query("SELECT servicos.idServico, servicos.dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.status = 2;", function(err, result, fields){rendererServicos.mostraServicos(result, 2)});
-    con.query("SELECT servicos.idServico, servicos.dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.status = 3;", function(err, result, fields){rendererServicos.mostraServicos(result, 3)})});
+btnServicos.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaServicos'); 
+    con.query("SELECT servicos.idServico, DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') as dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente;", function(err, result, fields){rendererServicos.mostraServicos(result)})});
 // =========================== fim JanelaMenu ===========================
 // ==================================================================
 

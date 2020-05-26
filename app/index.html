@@ -439,12 +439,6 @@
             <!-- Grupo 1 -->
             <div class="grupo" style="margin-left: 20px;">
 
-                <!-- Inspec -->
-                <div>
-
-                    <button>Excluir</button>
-                </div>
-
                 <!-- header | barra de ferramentas pra ordenar -->
                 <div class="head_lista_servicos row">
                     <img src="" alt="" class="imagem_item_servico col-1">
@@ -456,7 +450,39 @@
                 </div> <!-- Fecha div item-->
 
                 <div class="separador-sm"></div>
-                
+
+                <!-- Inspec -->
+                <div class="div_inspec container card shadow" id='div_inspec'>
+                    <!-- Primeira linha: id, nomeCliente, btnExcluir -->
+                    <p class="lead id_inspec" id='id_inspec'>id</p>
+                    <p class="lead nomeCliente_inspec" id='nome_inspec'>nomeCliente</p>
+                    <button class="btn btn-danger btnExcluir_inspec" id='btnExcluir_inspec'>Excluir</button>
+                    <button class="btn btn-info btnSalvar_inspec" id='btnSalvar_inspec'>Salvar</button>
+                    <!-- Segunda linha: status, endereço pdf -->
+                    <p class="lead status_inspec">status</p>
+                    <div class="div_status_inspec">
+                        <!-- Colecao dos 3 status -->
+                        <img src="media/assets/green_circle.png" class="imagem_item_servico" alt="" id='btnTrocaStatus_1'>
+                        <img src="media/assets/yellow_circle.png" class="imagem_item_servico" alt="" id='btnTrocaStatus_2'>
+                        <img src="media/assets/red_circle.png" class="imagem_item_servico" alt="" id='btnTrocaStatus_3'>
+                    </div>
+                    
+                    <div class="input-group mb-3 endereco_inspec">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">Arquivo</span>
+                        </div>
+                        <input type="text" id='endereco_inspec' class="form-control" placeholder="Endereço" aria-label="Username" aria-describedby="basic-addon1" disabled>
+                    </div>
+                    <!-- Terceira linha: Comentarios -->
+                    <div class="input-group comentario_inspec">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">With textarea</span>
+                        </div>
+                        <textarea class="form-control" aria-label="With textarea" id='comentarios_inspec'></textarea>
+                    </div>
+                    <div class="separador"></div>
+                </div>
+                <div class="separador"></div>
 
                 <!-- Corpo -->
                 <div class="lista_servicos" id='div_lista_servicos'>

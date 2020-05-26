@@ -3,6 +3,8 @@ var {BrowserWindow} = require('electron').remote;
 var {dialog} = require('electron').remote;
 var fs = require('fs');
 
+var status_selecionado = 0;
+
 let btnServicoMenu = document.getElementById('btnServicoMenu');
 btnServicoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaServicos', 'janelaMenu');});
 
@@ -17,6 +19,11 @@ document.getElementById('btnExcluir_inspec').addEventListener('click', ()=>{excl
 document.getElementById('btnTrocaStatus_1').addEventListener('click', ()=>{trocaStatus(document.getElementById('id_inspec').innerHTML,1);});
 document.getElementById('btnTrocaStatus_2').addEventListener('click', ()=>{trocaStatus(document.getElementById('id_inspec').innerHTML,2);});
 document.getElementById('btnTrocaStatus_3').addEventListener('click', ()=>{trocaStatus(document.getElementById('id_inspec').innerHTML,3);});
+
+// Escuta barra de pesquisa
+document.getElementById('barraPesquisaServicos').addEventListener('change', ()=>{
+    atualizaLista();
+})
 
 function mostraServicos(dados_servicos){
     console.log('Mostra servicos funcionando!');
@@ -99,16 +106,19 @@ function abreInspec(id)
             document.getElementById("btnTrocaStatus_1").style.border = "2px solid black";
             document.getElementById("btnTrocaStatus_2").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_3").style.border = "0px solid black";
+            status_selecionado = 1;
             break;
         case '2':
             document.getElementById("btnTrocaStatus_1").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_2").style.border = "2px solid black";
             document.getElementById("btnTrocaStatus_3").style.border = "0px solid black";
+            status_selecionado = 2;
             break;
         case '3':
             document.getElementById("btnTrocaStatus_1").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_2").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_3").style.border = "2px solid black";
+            status_selecionado = 3;
             break;
     }
     // Recarrega servicos | atualiza tela
@@ -119,12 +129,18 @@ function atualizaLista()
 {
     // Faz o intermedio entre mysql e a funcao nodejs
     // Chamar esta funcao sempre que a lista de servicos precise ser atualizada
-    renderer.connection.query("SELECT servicos.idServico, DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') as dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente;", function(err, result, fields){mostraServicos(result)});
+    // renderer.connection.query("SELECT servicos.idServico, DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') as dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente;", function(err, result, fields){mostraServicos(result)});
+
+    // Le barra de pesquisa
+    var textoPesquisa = document.getElementById('barraPesquisaServicos').value;
+
+    renderer.connection.query(`SELECT servicos.idServico, DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') as dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.idServico LIKE '%${textoPesquisa}%' OR DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') LIKE '%${textoPesquisa}%' OR clientes.nome LIKE '%${textoPesquisa}%' OR servicos.valorTotal LIKE '%${textoPesquisa}%' OR servicos.comentarios LIKE '%${textoPesquisa}%'`, function(err, result, fields){if(err) throw err; mostraServicos(result);});
+
 }
 
 function salvarServico(id)
 {
-    renderer.connection.query(`UPDATE servicos set comentarios='${document.getElementById('comentarios_inspec').value}' where idServico='${id}'`);
+    renderer.connection.query(`UPDATE servicos set comentarios='${document.getElementById('comentarios_inspec').value}', status = '${status_selecionado}' where idServico='${id}'`);
     // Limpa e fecha janela inspec
     document.getElementById('id_inspec').innerHTML = '';
     document.getElementById('nome_inspec').innerHTML = '';
@@ -176,16 +192,19 @@ function trocaStatus(id, paraStatus)
             document.getElementById("btnTrocaStatus_1").style.border = "2px solid black";
             document.getElementById("btnTrocaStatus_2").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_3").style.border = "0px solid black";
+            status_selecionado = 1;
             break;
         case 2:
             document.getElementById("btnTrocaStatus_1").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_2").style.border = "2px solid black";
             document.getElementById("btnTrocaStatus_3").style.border = "0px solid black";
+            status_selecionado = 2;
             break;
         case 3:
             document.getElementById("btnTrocaStatus_1").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_2").style.border = "0px solid black";
             document.getElementById("btnTrocaStatus_3").style.border = "2px solid black";
+            status_selecionado = 3;
             break;
     }
 

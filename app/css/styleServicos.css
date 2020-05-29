@@ -25,12 +25,11 @@
 }
 
 .head_lista_servicos {
-    background-color: rgb(252, 252, 252);
     width: 100%;
-    margin-bottom: 10px;
-    border-bottom: 3px solid rgb(12, 12, 12);
-    /* border: 1px solid; */
-    /* border-color: rgb(207, 207, 207); */
+}
+
+.btnOrdenaServico {
+    cursor: pointer;
 }
 
 .texto_item_servico {
@@ -73,3 +72,9 @@
 .div_status_inspec {grid-area: img_status;}
 .endereco_inspec {grid-area: endereco;}
 .comentario_inspec {grid-area:comentario;}
+
+.div_filtroStatus {
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}

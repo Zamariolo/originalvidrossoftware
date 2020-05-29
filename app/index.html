@@ -133,10 +133,10 @@
 
                     <!-- Preco kit -->
                     <div class="input-group gridPRECOKIT">
-                        <div class="input-group-prepend">
+                        <!-- <div class="input-group-prepend">
                         <span class="input-group-text novoProdutoTituloInput">Preço kit</span>
                         </div>
-                        <input type="number" id="inputPrecoKitNovoProduto" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="number" id="inputPrecoKitNovoProduto" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1"> -->
                     </div>
 
                     <!-- botoes -->
@@ -181,10 +181,10 @@
 
                     <!-- Preco kit -->
                     <div class="input-group gridPRECOKIT">
-                        <div class="input-group-prepend">
+                        <!-- <div class="input-group-prepend">
                         <span class="input-group-text novoProdutoTituloInput">Preço kit</span>
                         </div>
-                        <input type="number" id="editarPrecoKitProduto" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="number" id="editarPrecoKitProduto" min="0" class="form-control novoProdutoInput" placeholder="R$/m²" aria-label="Username" aria-describedby="basic-addon1"> -->
                     </div>
 
                     <!-- botoes -->
@@ -421,35 +421,23 @@
                 <div class="md-form mt-0 col">
                     <input class="form-control" type="text" placeholder="Pesquisa" aria-label="Search" id='barraPesquisaServicos'>
                 </div>
-
-                <div class="col">
-                    <!-- Select status -->
-                    <select style="height: 100%;">
-                        <option value="Todos" class="lead">Todos</option>
-                        <option value="Todos" class="lead" style="background-image:url('media/assets/green_circle.png');"></option>
-                        <option value="Todos" class="lead">2</option>
-                        <option value="Todos" class="lead">3</option>
-                    </select>
-                </div>
             </div>
 
             <div class="linhaHorizontal"></div>
             <div class="separador-sm"></div>
 
-            <!-- Grupo 1 -->
+            <!-- Grupo -->
             <div class="grupo" style="margin-left: 20px;">
 
                 <!-- header | barra de ferramentas pra ordenar -->
                 <div class="head_lista_servicos row">
-                    <img src="" alt="" class="imagem_item_servico col-1">
-                    <p class="col-1 texto_item_servico">id</p>
-                    <p class="col-2 texto_item_servico">Data</p>
-                    <p class="col-5 texto_item_servico">Nome</p>
-                    <p class="col-2 texto_item_servico"><b>Valor final</b></p>
+                    <h6 class="col-1 texto_item_servico btnOrdenaServico" id='ordena_status'>status</h6>
+                    <h6 class="col-1 texto_item_servico btnOrdenaServico" id='ordena_id'>id</h6>
+                    <h6 class="col-2 texto_item_servico btnOrdenaServico" id='ordena_data'>Data</h6>
+                    <h6 class="col-5 texto_item_servico btnOrdenaServico" id='ordena_nome'>Nome</h6>
+                    <h6 class="col-2 texto_item_servico btnOrdenaServico" id='ordena_valor'>Valor final</h6>
                     <img src="" alt="" class="imagem_item_servico col-1">
                 </div> <!-- Fecha div item-->
-
-                <div class="separador-sm"></div>
 
                 <!-- Inspec -->
                 <div class="div_inspec container card shadow" id='div_inspec'>
@@ -476,13 +464,14 @@
                     <!-- Terceira linha: Comentarios -->
                     <div class="input-group comentario_inspec">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">With textarea</span>
+                          <span class="input-group-text">Anotações</span>
                         </div>
                         <textarea class="form-control" aria-label="With textarea" id='comentarios_inspec'></textarea>
                     </div>
                     <div class="separador"></div>
+                    <div class="separador"></div>
                 </div>
-                <div class="separador"></div>
+                
 
                 <!-- Corpo -->
                 <div class="lista_servicos" id='div_lista_servicos'>

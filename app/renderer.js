@@ -99,7 +99,7 @@ let btnEnderecoImagemNovoProduto = document.getElementById('btnEnderecoImagemNov
 let pEnderecoImagem = document.getElementById('pEnderecoImagem');
 let inputDescricaoNovoProduto = document.getElementById('inputDescricaoNovoProduto');
 let inputPrecoM2NovoProduto = document.getElementById('inputPrecoM2NovoProduto');
-let inputPrecoKitNovoProduto = document.getElementById('inputPrecoKitNovoProduto');
+// let inputPrecoKitNovoProduto = document.getElementById('inputPrecoKitNovoProduto');
 let btnFechaInsereProduto = document.getElementById('btnFechaInsereProduto');
 
 //EditarProduto
@@ -108,7 +108,7 @@ let editarEnderecoImagem = document.getElementById('editarEnderecoImagem');
 let editarTituloProduto = document.getElementById('editarTituloProduto');
 let editarDescricaoProduto = document.getElementById('editarDescricaoProduto');
 let editarPrecoM2Produto = document.getElementById('editarPrecoM2Produto');
-let editarPrecoKitProduto = document.getElementById('editarPrecoKitProduto');
+// let editarPrecoKitProduto = document.getElementById('editarPrecoKitProduto');
 let btnFechaEditaProduto = document.getElementById('btnFechaEditaProduto');
 
 let divNovoProduto = document.querySelector('.insereProduto');
@@ -120,7 +120,7 @@ let divListaProdutos = document.querySelector('.listaProdutos');
 //Barra pesquisa
 let inputBarraPesquisaProdutos = document.getElementById('inputBarraPesquisaProdutos');
 inputBarraPesquisaProdutos.addEventListener('keyup', ()=>{
-    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
+    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
 })
 
 //carregamento da janelaProdutos
@@ -203,10 +203,12 @@ function mostraProdutos(produtos){
 
         <!-- Preco kit -->
         <div class="input-group gridPRECOKIT">
+        <!--
             <div class="input-group-prepend">
             <span class="input-group-text novoProdutoTituloInput text-dark" style="background-color: inherit;">Preço kit</span>
             </div>
             <input type="number" readonly class="form-control novoProdutoInput" id='precoKitProduto${produto.idProduto}' placeholder="${produto.preco_kit}" aria-label="Username" aria-describedby="basic-addon1" style='border: 0px; background-color: inherit;'>
+        -->
         </div>
 
         <button class="btn btn-outline-secondary btn-sm btnEditarProduto" id="btnEditarProduto${produto.idProduto}">Editar</button>
@@ -276,13 +278,12 @@ function insereProduto(result){
     let tituloNovoProduto = inputTituloNovoProduto.value;
     let descricao = inputDescricaoNovoProduto.value;
     let precoM2 = inputPrecoM2NovoProduto.value;
-    let preco_kit = inputPrecoKitNovoProduto.value;
+    // let preco_kit = inputPrecoKitNovoProduto.value;
 
     //Verifica se o titulo nao esta vazio
     if (tituloNovoProduto==''){dialog.showMessageBoxSync('',{title: `Campo 'título' vazio!`, message: 'Não se pode inserir um produto sem título', type:'warning'}); return 0;}
     //Avisa se precos estao nulos
     if (precoM2==''){dialog.showMessageBoxSync('',{title: `Campo 'preço do m²' vazio!`, message: 'Como um valor não foi inserido, adotamos um preço de R$ 0 por m²', type:'warning'}); precoM2=0;}
-    if (preco_kit==''){dialog.showMessageBoxSync('',{title: `Campo 'preço do kit' vazio!`, message: 'Como um valor não foi inserido, adotamos um preço de R$ 0 de kit', type:'warning'}); preco_kit=0;}
     let titulos = []; //log all titles
     //Colocando resultados da busca pelos titulos existentes em um list
     for(let j=0; j<result.length; j++)
@@ -296,15 +297,14 @@ function insereProduto(result){
     }
     else
     {
-        con.query(`INSERT INTO produtos (enderecoImagem, titulo, descricao, preco_m2, preco_kit) values ('${enderecoImagem}','${tituloNovoProduto}','${descricao}','${precoM2}','${preco_kit}')`)
+        con.query(`INSERT INTO produtos (enderecoImagem, titulo, descricao, preco_m2) values ('${enderecoImagem}','${tituloNovoProduto}','${descricao}','${precoM2}')`)
         // carregaProdutosDB(); //Atualiza pagina
-        con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
+        con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
         //Limpa valores
         pEnderecoImagem.innerHTML = '-';
         inputTituloNovoProduto.value = '';
         inputDescricaoNovoProduto.value = '';
         inputPrecoM2NovoProduto.value = 0;
-        inputPrecoKitNovoProduto.value = 0;
     }
     
 }
@@ -324,7 +324,7 @@ function deletarProduto(idElemento){
     if (confirmacao == 0) {
         con.query(`delete from produtos where idProduto='${idProduto}'`);
         // carregaProdutosDB();
-        con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
+        con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
     }
 }
 
@@ -337,7 +337,7 @@ function editarProduto(idElemento){
     btnCarregarProdutosDB.disabled = true;
     //Atualiza valores dos produtos direto do banco de dados
     // carregaProdutosDB();
-    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
+    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
     //Abre janela de edicao
     divEditarProduto.style.display = 'inline'
     //Mostrar valores na tela de edicao com aquisicao direto da tela grafica
@@ -346,7 +346,7 @@ function editarProduto(idElemento){
     editarTituloProduto.value = document.getElementById('tituloProduto'+idProduto).innerHTML;
     editarDescricaoProduto.value = document.getElementById('descricaoProduto'+idProduto).value;
     editarPrecoM2Produto.value = document.getElementById('precoM2Produto' + idProduto).placeholder;
-    editarPrecoKitProduto.value = document.getElementById('precoKitProduto'+idProduto).placeholder;
+    // editarPrecoKitProduto.value = document.getElementById('precoKitProduto'+idProduto).placeholder;
     //Desativa botoes listaProdutos
     let botoesListaProdutos = document.querySelectorAll(".modeloProduto > button");
     for (var k=0; k<botoesListaProdutos.length; k++)
@@ -366,13 +366,13 @@ function salvarEdicaoProduto(){
     titulo = editarTituloProduto.value;
     descricao = editarDescricaoProduto.value;
     precoM2 = editarPrecoM2Produto.value;
-    precoKit = editarPrecoKitProduto.value;
+    // precoKit = editarPrecoKitProduto.value;
     //Atualiza db
-    con.query(`update produtos set enderecoImagem='${enderecoImagem}', titulo='${titulo}', descricao='${descricao}', preco_m2='${precoM2}', preco_kit='${precoKit}' where idProduto='${idProduto}'`);
+    con.query(`update produtos set enderecoImagem='${enderecoImagem}', titulo='${titulo}', descricao='${descricao}', preco_m2='${precoM2}' where idProduto='${idProduto}'`);
     //Esconde janela edicao
     divEditarProduto.style.display = 'none';
     //Recarrega banco de dados e exibe
-    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_kit LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
+    con.query(`SELECT * FROM produtos WHERE titulo LIKE '%${inputBarraPesquisaProdutos.value}%' OR descricao LIKE '%${inputBarraPesquisaProdutos.value}%' OR preco_m2 LIKE '%${inputBarraPesquisaProdutos.value}%'`, function(err, result, fields){if(err) throw err; mostraProdutos(result);});
     //Reativa menu superior
     btnProdutosMenu.disabled = false;
     btnNovoProduto.disabled = false;

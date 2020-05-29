@@ -6,7 +6,13 @@ var fs = require('fs');
 var status_selecionado = 0;
 
 let btnServicoMenu = document.getElementById('btnServicoMenu');
-btnServicoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaServicos', 'janelaMenu');});
+btnServicoMenu.addEventListener('click', ()=>{renderer.trocaTela('janelaServicos', 'janelaMenu');ordenaStatus.style.fontWeight = "normal";
+ordenaId.style.fontWeight = "bolder";
+ordenaNome.style.fontWeight = "normal";
+ordenaData.style.fontWeight = "normal";
+ordenaValor.style.fontWeight = "normal";
+ordena_por = 'idServico';
+atualizaLista();});
 
 // Escondendo o inspec ao inicializar
 document.getElementById('div_inspec').style.display = 'none';
@@ -21,13 +27,66 @@ document.getElementById('btnTrocaStatus_2').addEventListener('click', ()=>{troca
 document.getElementById('btnTrocaStatus_3').addEventListener('click', ()=>{trocaStatus(document.getElementById('id_inspec').innerHTML,3);});
 
 // Escuta barra de pesquisa
-document.getElementById('barraPesquisaServicos').addEventListener('change', ()=>{
+document.getElementById('barraPesquisaServicos').addEventListener('keyup', ()=>{
     atualizaLista();
 })
 
+// Botoes de ordenar
+var ordenaStatus = document.getElementById('ordena_status');
+var ordenaId = document.getElementById('ordena_id');
+var ordenaNome = document.getElementById('ordena_nome');
+var ordenaData = document.getElementById('ordena_data');
+var ordenaValor = document.getElementById('ordena_valor');
+ordenaId.style.fontWeight = 'bolder';
+var ordena_por = 'id'
+
+ordenaStatus.addEventListener('click', ()=>{
+    ordenaStatus.style.fontWeight = "bolder";
+    ordenaId.style.fontWeight = "normal";
+    ordenaNome.style.fontWeight = "normal";
+    ordenaData.style.fontWeight = "normal";
+    ordenaValor.style.fontWeight = "normal";
+    ordena_por = 'status';
+    atualizaLista();
+});
+ordenaId.addEventListener('click', ()=>{
+    ordenaStatus.style.fontWeight = "normal";
+    ordenaId.style.fontWeight = "bolder";
+    ordenaNome.style.fontWeight = "normal";
+    ordenaData.style.fontWeight = "normal";
+    ordenaValor.style.fontWeight = "normal";
+    ordena_por = 'idServico';
+    atualizaLista();
+});
+ordenaNome.addEventListener('click', ()=>{
+    ordenaStatus.style.fontWeight = "normal";
+    ordenaId.style.fontWeight = "normal";
+    ordenaNome.style.fontWeight = "bolder";
+    ordenaData.style.fontWeight = "normal";
+    ordenaValor.style.fontWeight = "normal";
+    ordena_por = 'nome';
+    atualizaLista();
+});
+ordenaData.addEventListener('click', ()=>{
+    ordenaStatus.style.fontWeight = "normal";
+    ordenaId.style.fontWeight = "normal";
+    ordenaNome.style.fontWeight = "normal";
+    ordenaData.style.fontWeight = "bolder";
+    ordenaValor.style.fontWeight = "normal";
+    ordena_por = 'dataServico';
+    atualizaLista();
+});
+ordenaValor.addEventListener('click', ()=>{
+    ordenaStatus.style.fontWeight = "normal";
+    ordenaId.style.fontWeight = "normal";
+    ordenaNome.style.fontWeight = "normal";
+    ordenaData.style.fontWeight = "normal";
+    ordenaValor.style.fontWeight = "bolder";
+    ordena_por = 'valorTotal';
+    atualizaLista();
+});
+
 function mostraServicos(dados_servicos){
-    console.log('Mostra servicos funcionando!');
-    console.log(dados_servicos);
 
     // Percorrer os servicos
     // Funcionamento: Vai olhar o status e adicionar o novo html para seu respectivo lugar
@@ -84,8 +143,6 @@ module.exports.mostraServicos = mostraServicos; //deixa func visivel pra rendere
 function abreInspec(id)
 {
     // id numerico
-    console.log('id numerico:')
-    console.log(id.slice(14))
     var id_num = id.slice(14);
 
     // Abre inspec
@@ -97,9 +154,7 @@ function abreInspec(id)
     document.getElementById('nome_inspec').innerHTML = document.getElementById(`nomeCliente_${id_num}`).innerHTML;
     document.getElementById('endereco_inspec').value = `${__dirname}\\app\\pdf_servicos\\serv_${id_num}.pdf`;
     document.getElementById('comentarios_inspec').value = document.getElementById(`comentario_${id_num}`).innerHTML;
-    
-    console.log("Status:" + document.getElementById(`status_num_${id_num}`).innerHTML)
-    
+     
     switch (document.getElementById(`status_num_${id_num}`).innerHTML)
     {
         case '1':
@@ -134,12 +189,13 @@ function atualizaLista()
     // Le barra de pesquisa
     var textoPesquisa = document.getElementById('barraPesquisaServicos').value;
 
-    renderer.connection.query(`SELECT servicos.idServico, DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') as dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.idServico LIKE '%${textoPesquisa}%' OR DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') LIKE '%${textoPesquisa}%' OR clientes.nome LIKE '%${textoPesquisa}%' OR servicos.valorTotal LIKE '%${textoPesquisa}%' OR servicos.comentarios LIKE '%${textoPesquisa}%'`, function(err, result, fields){if(err) throw err; mostraServicos(result);});
+    renderer.connection.query(`SELECT servicos.idServico, DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') as dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente WHERE servicos.idServico LIKE '%${textoPesquisa}%' OR DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') LIKE '%${textoPesquisa}%' OR clientes.nome LIKE '%${textoPesquisa}%' OR servicos.valorTotal LIKE '%${textoPesquisa}%' OR servicos.comentarios LIKE '%${textoPesquisa}%' ORDER BY ${ordena_por}`, function(err, result, fields){if(err) throw err; mostraServicos(result);});
 
 }
 
 function salvarServico(id)
 {
+    console.log(id)
     renderer.connection.query(`UPDATE servicos set comentarios='${document.getElementById('comentarios_inspec').value}', status = '${status_selecionado}' where idServico='${id}'`);
     // Limpa e fecha janela inspec
     document.getElementById('id_inspec').innerHTML = '';
@@ -182,10 +238,6 @@ function excluirServico(id)
 
 function trocaStatus(id, paraStatus)
 {
-    console.log('troca status');
-    console.log('paraStatus' + String(paraStatus));
-    console.log(id);
-
     switch (paraStatus)
     {
         case 1:

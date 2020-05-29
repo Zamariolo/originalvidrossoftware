@@ -417,7 +417,7 @@ function salvarImprimir(){
 
     // Le id do cliente e servico
     var idCliente = parseInt(fs.readFileSync('app/last_idCliente.txt'))+1;
-    var idServico = fs.readFileSync('app/last_idServico.txt');
+    var idServico = parseInt(fs.readFileSync('app/last_idServico.txt'))+1;
 
     ///////////////////// CLIENTE
     ////////////////////////////////////
@@ -442,19 +442,22 @@ function salvarImprimir(){
         //Insere no banco de dados (se nao tiver falhado nas etapas acima)
         renderer.connection.query(`INSERT INTO clientes (nome, cpf, telefone, endereco) values ('${nomeCliente}','${cpfCliente}','${telefoneCliente}','${enderecoCliente}')`);
         
-        fs.writeFileSync('app/last_idCliente.txt', String(parseInt(idCliente)+1));
+        fs.writeFileSync('app/last_idCliente.txt', String(parseInt(idCliente)));
     }
     else{
         //Obtem nomeCliente
         nomeCliente = document.getElementById('inputComboBoxClienteOrcamento').value;
-        idCliente = nomeCliente.slice(-3,-1) //Arrumar isso aqui pra aceitar clientes com 3digitos de id
-    }
+        // ------------ Capturando id pelo nomeCliente
+        //Pega index do ultimo '('
+        let indexParenteses = nomeCliente.indexOf('(',-6);
+        idCliente = nomeCliente.slice(indexParenteses+1,-1) //Arrumar isso aqui pra aceitar clientes com 3digitos de id
+        }
 
    
     console.log('Idservico: ' + idServico);
     console.log('idCliente: ' +idCliente);
 
-    fs.writeFileSync('app/last_idServico.txt', String(parseInt(idServico)+1));
+    fs.writeFileSync('app/last_idServico.txt', String(parseInt(idServico)));
 
     //Obtem data
     let data = new Date();
@@ -476,20 +479,10 @@ function salvarImprimir(){
         <meta name="viewport" content="width=device-width,initial-scale=1"> 
         <link rel="stylesheet" href="./css/bootstrap.min.css">
         <link rel="stylesheet" href="./css/styleWindowImprimir.css">
-    
-    
         <title>Imprimir orçamento</title>
-
-            <embed
-        type="application/pdf"
-        src="path_to_pdf_document.pdf"
-        id="pdfDocument"
-        width="100%"
-        height="100%" />
     </head>
     
     <body>
-
         <!-- Div cabecalho -->
         <div class="divCabecalho container border">
             <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg.webp" alt="" class="logo">

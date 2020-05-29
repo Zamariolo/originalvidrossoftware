@@ -79,13 +79,7 @@ function mostraClientes(clientes){
             <p class="gridCPF" id='cpfCliente${cliente.idCliente}'>${cliente.cpf}</p>
             <h6 class="gridTelefone" id='telefoneCliente${cliente.idCliente}'>${cliente.telefone}</h6>
             <p class="gridEndereco" id='enderecoCliente${cliente.idCliente}'>${cliente.endereco}</p>
-            <div class="gridDivOrdens">
-                <p>034</p>
-                <p>038</p>
-                <p>042</p>
-                <p>022</p>
-                <p>012</p>
-            </div>
+            <div class="gridDivOrdens"></div>
             <button class="gridBtnEditarCliente btn btn-sm btn-outline-secondary" id='btnEditarCliente${cliente.idCliente}'>Editar</button>
             <button class="gridBtnExcluirCliente btn btn-sm btn-outline-danger" id='btnExcluirCliente${cliente.idCliente}'>Excluir</button>
         </div>

@@ -17,5 +17,8 @@
     "html-pdf": "^2.2.0",
     "jQuery": "^1.7.4",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "electron-packager": "^14.2.1"
   }
 }

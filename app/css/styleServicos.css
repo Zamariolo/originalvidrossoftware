@@ -24,6 +24,10 @@
     /* border-color: rgb(207, 207, 207); */
 }
 
+.comentario_servico {
+    min-width: 200px;
+}
+
 .head_lista_servicos {
     width: 100%;
 }

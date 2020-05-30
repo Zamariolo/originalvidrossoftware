@@ -461,7 +461,9 @@ function salvarImprimir(){
 
     //Obtem data
     let data = new Date();
-    let hoje = String("0" + data.getDay()).slice(-2) + '/' + String("0" + data.getMonth()).slice(-2) + '/' + data.getFullYear();
+    let hoje = String("0" + data.getDate()).slice(-2) + '/' + String("0" + parseInt(data.getMonth()+1)).slice(-2) + '/' + data.getFullYear();
+    console.log(data.getDate());
+    console.log(hoje);
 
     //Adiciona servico no banco de dados
     renderer.connection.query(`INSERT INTO servicos (idCliente, dataServico, valorTotal, comentarios, status) 
@@ -548,7 +550,7 @@ function salvarImprimir(){
             `<div class="div_servico_imprimir border">
                 <h3 class="titulo_servico">${titulo}</h3>
                 <p class="lead descricao_servico" align="justify">${descricao}</p>
-                <h2 class="valor_servico">R$ ${valor}</h2>
+                <h3 class="valor_servico">R$ ${valor}</h3>
             </div>`
         }
         // Se for um produto...
@@ -575,10 +577,10 @@ function salvarImprimir(){
                 <img src="${imagem}" class="imagem_produto">
                 <div class="div_dados_produto">
                     <p>${input1} X ${input2} = ${area}</p>
-                    <p>Kit: ${kit}</p>
+                    <p>Kit: R$ ${kit}</p>
                 </div>
                 
-                <h2 class="valor_produto">${valor}</h2>
+                <h3 class="valor_produto">${valor}</h3>
             </div>
             `
         }
@@ -608,6 +610,8 @@ function salvarImprimir(){
         </div>
         
     </div>
+
+    <div class="separador"></div>
 
 </body>
 </html>`
@@ -650,10 +654,13 @@ function salvarImprimir(){
          document.getElementById('inputTelefoneClienteOrcamento').value = '';
          document.getElementById('inputCPFClienteOrcamento').value = '';
          document.getElementById('inputEnderecoClienteOrcamento').value = '';
-         document.querySelector('.nomeClienteOrcamento').value = '';
-         document.querySelector('.comboBoxNomeClienteOrcamento').value = '';
-         document.querySelector('.comboBoxNomeClienteOrcamento').selectedIndex = 0;
+         document.getElementById('inputNomeClienteOrcamento').value = '';
+         document.getElementById('inputComboBoxClienteOrcamento').selectedIndex = 0;
+         document.getElementById('inputComboBoxClienteOrcamento').value = '';
          carrinho = [];
+         
+        //  Volta pro menu principal
+        renderer.trocaTela('janelaOrcamento', 'janelaMenu');
 
          console.log("Abrindo impressora")
          var options = {

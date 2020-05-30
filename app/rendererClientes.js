@@ -173,7 +173,10 @@ function salvarEditarCliente(resultQueryCPFs){
 }
 
 function validaCPF(cpf, resultQuery, cpfExcecao) {
-    /*  Descr: valida se o cpf fornecido pelo usuario é valido, segundo a lógica
+    /*  Essa funcao foi alterada e agora ela nao cancela a operacao, apenas alerta que
+    existe uma irregularidade nos valores de CPF inseridos
+      
+    Descr: valida se o cpf fornecido pelo usuario é valido, segundo a lógica
     matematica de cadastros, a quantidade de digitos inseridos e se ele já não se 
     encontra no banco de dados
 
@@ -218,7 +221,7 @@ function validaCPF(cpf, resultQuery, cpfExcecao) {
         segundoDigito = numerosCPF[10];
     
         //Verificando se contem 11 digitos
-        if (numerosCPF.length != 11) {dialog.showMessageBoxSync('',{title: 'CPF inválido!', message: 'Quantidade de digitos inseridos invalidos!', type:'warning'}); return 0;}
+        if (numerosCPF.length != 11) {dialog.showMessageBoxSync('',{title: 'CPF inválido!', message: 'Quantidade de digitos inseridos para CPF é invalido!No entanto a operação foi realizada mesmo assim.', type:'warning'}); return 1;}
         inputInsereCPF.focus();
     
         //Verifica validez do primeiro digito
@@ -230,14 +233,14 @@ function validaCPF(cpf, resultQuery, cpfExcecao) {
         somaSegundoDigito = (somaSegundoDigito*10)%11;
 
         if (primeiroDigito!=somaPrimeiroDigito || segundoDigito!=somaSegundoDigito){
-            dialog.showMessageBoxSync('',{title: 'CPF inválido!', message: 'O CPF inserido é inválido',detail:'Os digitos inseridos não respeitam a lógica do Governo Federal de cadastros', type:'warning'}); return 0;
+            dialog.showMessageBoxSync('',{title: 'CPF inválido!', message: 'O CPF inserido é inválido porém a operação foi realizada mesmo assim',detail:'Os digitos inseridos não respeitam a lógica do Governo Federal para CPFs mas os dados foram salvos assim mesmo', type:'warning'}); return 1;
         }
         //Verifica se o cpf nao é repetido
         // console.log(numerosCPF.join(''));
         // console.log(cpfExcecao);
         if (cpfsCadastrados.includes(numerosCPF.join('')) && numerosCPF.join('')!=cpfExcecao)
         {
-            dialog.showMessageBoxSync('',{title: 'CPF já cadastrado!', message: 'O CPF inserido já consta na base de dados', type:'warning'}); return 0;
+            dialog.showMessageBoxSync('',{title: 'CPF já cadastrado!', message: 'O CPF inserido já consta na base de dados', type:'warning'}); return 1;
         }
         else
         {

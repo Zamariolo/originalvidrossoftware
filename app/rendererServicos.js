@@ -31,6 +31,12 @@ document.getElementById('barraPesquisaServicos').addEventListener('keyup', ()=>{
     atualizaLista();
 })
 
+// Conecta endereco do arquivo pra abrir pasta
+document.getElementById('endereco_inspec').addEventListener('click', ()=>{
+    var endereco = document.getElementById('endereco_inspec').value;
+    require('child_process').exec('start ""'+endereco);
+})
+
 // Botoes de ordenar
 var ordenaStatus = document.getElementById('ordena_status');
 var ordenaId = document.getElementById('ordena_id');
@@ -116,7 +122,7 @@ function mostraServicos(dados_servicos){
             <p class="col-5 lead texto_item_servico" id='nomeCliente_${dados_servicos[i].idServico}'>${dados_servicos[i].nome}</p>
             <p class="col-2 lead texto_item_servico"><b>R$ ${dados_servicos[i].valorTotal}</b></p>
             <img src="media/assets/comments.png" alt="" class="imagem_item_servico col-1 inspec" id='statusServico_${dados_servicos[i].idServico}'>
-            <p class="lead small" id='comentario_${dados_servicos[i].idServico}'>${dados_servicos[i].comentarios}</p>
+            <p class="lead small comentario_servico" id='comentario_${dados_servicos[i].idServico}'>${dados_servicos[i].comentarios}</p>
             <p id='status_num_${dados_servicos[i].idServico}' style='display: none'>${dados_servicos[i].status}</p>
         </div> <!-- Fecha div item-->
         `
@@ -152,7 +158,7 @@ function abreInspec(id)
     // Carrega dados ao inspec
     document.getElementById('id_inspec').innerHTML = document.getElementById(`idServico_${id_num}`).innerHTML;
     document.getElementById('nome_inspec').innerHTML = document.getElementById(`nomeCliente_${id_num}`).innerHTML;
-    document.getElementById('endereco_inspec').value = `${__dirname}\\app\\pdf_servicos\\serv_${id_num}.pdf`;
+    document.getElementById('endereco_inspec').value = `${__dirname}'\\pdf_servicos\\serv_${id_num}.pdf`;
     document.getElementById('comentarios_inspec').value = document.getElementById(`comentario_${id_num}`).innerHTML;
      
     switch (document.getElementById(`status_num_${id_num}`).innerHTML)

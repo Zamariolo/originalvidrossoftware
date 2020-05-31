@@ -1,19 +1,29 @@
 // =========================== GLOBAL ===============================
 // ==================================================================
 
+var fs = require('fs');
 var {dialog} = require('electron').remote;
 var rendererClientes = require('./rendererClientes.js');
+var rendererConfiguracoes = require('./rendererConfiguracoes.js');
 var rendererOrcamento = require('./rendererOrcamento.js');
 var rendererServicos = require('./rendererServicos.js');
+var rendererConfiguracoes = require('./rendererConfiguracoes.js');
+
+// Carrega logo e credenciais do banco de dados
+let leituraConfig = fs.readFileSync('app/config.txt', 'utf8');
+[logo, host, port, user, password, database] = leituraConfig.split(',');
+
+// Coloca logo no header
+document.getElementById('btnConfiguracoes').src = logo;
 
 //mysql connection
 var mysql = require('mysql');
 con = mysql.createConnection({  //Conectando ao banco de dados
-    host: "localhost",
-    port: 3306,
-    user: "admin",
-    password: "admin",
-    database: 'databaseOriginalVidros'
+    host: host,
+    port: port,
+    user: user,
+    password: password,
+    database: database
   });
   
   con.connect(function(err) {
@@ -43,7 +53,9 @@ let idProduto = null;
 // getting global elements
 let janelaMenu = document.querySelector('.janelaMenu');
 let janelaProdutos = document.querySelector('.janelaProdutos');
-let janelaClientes = document.querySelector('.janelaClientes')
+let janelaClientes = document.querySelector('.janelaClientes');
+document.querySelector('.janelaConfiguracoes').style.display = 'none';
+
 
 // >>>>>>>>>>>>>>>>>>>>>>> Relogio
 let relogio = document.querySelector('.relogio');
@@ -74,14 +86,16 @@ let btnProdutos = document.getElementById('btnProdutos');
 let btnClientes = document.getElementById('btnClientes');
 let btnOrcamento = document.getElementById('btnOrcamento');
 let btnServicos = document.getElementById('btnServicos');
+let btnConfiguracoes = document.getElementById('btnConfiguracoes');
 
-//menu -> produtos
+//menu -> outras janelas
 btnProdutos.addEventListener('click', () => {trocaTela('janelaMenu','janelaProdutos'); carregaProdutosDB();});
 btnClientes.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaClientes'); con.query("SELECT * FROM clientes", function(err, result, fields){if(err) throw err; rendererClientes.mostraClientes(result);});});
 btnOrcamento.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaOrcamento');});
 btnServicos.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaServicos'); 
     con.query("SELECT servicos.idServico, DATE_FORMAT(servicos.dataServico, '%d-%m-%Y') as dataServico, servicos.valorTotal, servicos.comentarios, servicos.status, clientes.nome FROM servicos LEFT JOIN clientes ON servicos.idCliente = clientes.idCliente;", function(err, result, fields){rendererServicos.mostraServicos(result)})});
-// =========================== fim JanelaMenu ===========================
+btnConfiguracoes.addEventListener('click', ()=>{trocaTela('janelaMenu', 'janelaConfiguracoes'); rendererConfiguracoes.carregaTelaConfiguracoes();});
+    // =========================== fim JanelaMenu ===========================
 // ==================================================================
 
 

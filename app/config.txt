@@ -1,0 +1,1 @@
+C:\Users\vnsau\Documents\Trabalhos\originalVidros\app\media\logo.png,localhost,3306,admin,admin,databaseOriginalVidros

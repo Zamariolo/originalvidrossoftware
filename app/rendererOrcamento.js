@@ -465,6 +465,10 @@ function salvarImprimir(){
     console.log(data.getDate());
     console.log(hoje);
 
+    // Obtem logo
+    let leituraConfig = fs.readFileSync('app/config.txt', 'utf8');
+    [logo, host, port, user, password, database] = leituraConfig.split(',');
+
     //Adiciona servico no banco de dados
     renderer.connection.query(`INSERT INTO servicos (idCliente, dataServico, valorTotal, comentarios, status) 
     VALUES ('${idCliente}', '${data.getFullYear()}-${String("0" + data.getMonth()).slice(-2)}-${String("0" + data.getDay()).slice(-2)}', '${String(document.getElementById('precoTotal').innerHTML).slice(3)}','' , '1')`);
@@ -487,7 +491,7 @@ function salvarImprimir(){
     <body>
         <!-- Div cabecalho -->
         <div class="divCabecalho container border">
-            <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg.webp" alt="" class="logo">
+            <img src="${logo}" style="max-height:150;" alt="" class="logo">
             <p class="texto1">Box - Espelho - Vidros - Ferragens</p>
             <p class="texto2">Fone: (19) 3831-1112</p>
             <p class="texto3">Avenida Mogi Mirim, N° 503 - Areião - Mogi Guaçu - SP</p>

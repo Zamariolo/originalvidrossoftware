@@ -20,7 +20,7 @@
     <!-------------------------------------------- Menu superior -->
     <div class=" navbar menuSuperior bg-dark">
          
-        <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg" class="logo_img">
+        <img src="https://comerciomogiguacu.com.br/wp-content/uploads/2019/10/logovidracaria-1.jpg" class="logo_img" id='btnConfiguracoes'>
 
         <h2 class="textoMenuSuperior relogio">00:00:00</h2>
         <h3 class="textoMenuSuperior logo" style="cursor: pointer;">prompt</h3>
@@ -492,6 +492,8 @@
         <!-- Janela de configuracoes -->
         <div class="janelaConfiguracoes">
 
+            <button class="btn btn-primary" id='btnConfiguracoesMenu'>Voltar pro menu</button>
+
             <h1>Configurações do aplicativo</h1>
 
             <!-- Imagem para logomarca -->
@@ -501,7 +503,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1">Endereço da imagem da sua logomarca</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Selecione algum arquivo.." aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" style="cursor: pointer;" id='inputLogo' class="form-control" placeholder="Selecione algum arquivo.." aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <!-- Conexão com banco de dados -->
@@ -513,7 +515,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1">Host</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Host" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" id='inputHost' class="form-control" placeholder="Host" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <!-- port -->
@@ -521,7 +523,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1">Port</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Port" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" id='inputPort' class="form-control" placeholder="Port" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <!-- user -->
@@ -529,7 +531,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1">User</span>
                 </div>
-                <input type="text" class="form-control" placeholder="User" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" id='inputUser' class="form-control" placeholder="User" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <!-- password -->
@@ -537,7 +539,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1">Password</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" id='inputPassword' class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <!-- database -->
@@ -545,9 +547,10 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1">Database</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Database" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" id='inputDatabase' class="form-control" placeholder="Database" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
+            <button class="btn btn-success" id='btnSalvarConfiguracoes'>Salvar</button>
         </div>
     
     </div> <!--Fecha contentWindow -->

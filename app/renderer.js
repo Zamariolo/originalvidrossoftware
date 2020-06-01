@@ -74,6 +74,11 @@ function attRelogio() {
 setInterval(attRelogio, 1000);
 // <<<<<<<<<<<<<<<<<<<<<<<< fim relogio
 
+// Creditos
+document.getElementById('btnDev').addEventListener('click', ()=>{
+    dialog.showMessageBox(null, {type: 'info', title: 'Sobre', message: "Para: Original Vidros\n\nDesenvolvido por Vinícius Zamariola\nContato: zzamariola@gmail.com\n\nVersão 1.0: 31/05/2020"});
+})
+
 // ======================= fim menuSuperior ====================
 // ==================================================================
 
@@ -325,6 +330,7 @@ function insereProduto(result){
 
 function deletarProduto(idElemento){
     let idProduto = idElemento.slice(17);
+    console.log('Idproduto1: ' + String(idProduto));
     const confirmOptions = {
         type: 'warning',
         defaultId: 0,
@@ -344,6 +350,7 @@ function deletarProduto(idElemento){
 
 function editarProduto(idElemento){
     idProduto = idElemento.slice(16);
+    console.log('Idproduto2: ' + String(idProduto));
     
     //Desativa menuSuperior
     btnProdutosMenu.disabled = true;

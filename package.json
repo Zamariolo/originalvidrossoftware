@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.4.1",
-    "electron": "^8.0.3",
+    "electron": "^8.2.4",
     "electron-html-to": "^2.6.0",
     "electron-window-manager": "^1.0.6",
     "html-pdf": "^2.2.0",
